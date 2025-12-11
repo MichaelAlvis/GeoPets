@@ -11,16 +11,16 @@ body {
 /* ==========================================================
    HEADER PRINCIPAL (PC)
    ========================================================== */
-/* Aguamarina un poco más oscuro y elegante */
+/* Color homogéneo basado en botón “Inicio”, pero más claro */
 .header {
-    background: #b2dfda; /* color ajustado más oscuro */
+    background: #b2eceb; /* Aguamarina homogéneo suave */
     color: #004d4d;
     height: 90px;
     padding: 0 20px;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    position: relative;
 
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.10);
@@ -28,30 +28,29 @@ body {
     max-width: 900px;
 }
 
-/* IMPORTANTE: colocamos orden para que GeoPets quede a la IZQUIERDA en PC,
-   y los botones queden a la derecha. En móvil el orden se revierte vía @media. */
-
-/* Contenedor del título (si necesitas espaciarlo) */
+/* GeoPets centrado PERFECTO en PC */
 .header h1 {
     margin: 0;
     font-size: 2.6rem;
     font-weight: bold;
-    text-align: left;
-    order: 1; /* aparece primero en el flex (izquierda) */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 
-    padding-left: 8px;
-
-    background: linear-gradient(90deg, #00bfa6, #009688);
+    background: linear-gradient(90deg, #00a3a3, #008b86);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Contenedor botones (ahora a la derecha en PC) */
+/* Botones alineados a la izquierda */
 .header-top {
     display: flex;
     align-items: center;
     gap: 10px;
-    order: 2; /* aparece después (derecha) */
+    position: relative;
+    z-index: 3; /* Para quedar encima del título */
 }
 
 /* Navegación */
@@ -63,7 +62,7 @@ body {
 
 .nav a {
     padding: 6px 12px;
-    background-color: #008b86; /* tono ligeramente más serio para contraste */
+    background-color: #00a3a3;
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -73,7 +72,7 @@ body {
 }
 
 .nav a:hover {
-    background-color: #006e6b;
+    background-color: #008b86;
     transform: scale(1.04);
 }
 
@@ -144,7 +143,7 @@ body {
    ========================================================== */
 @media (max-width: 768px) {
 
-    /* En móvil queremos el título centrado arriba y los botones debajo */
+    /* En móvil: centrado y compacto */
     .header {
         height: auto;
         padding: 12px;
@@ -153,6 +152,7 @@ body {
         flex-direction: column;
         justify-content: center;
         text-align: center;
+        position: relative;
     }
 
     .header h1 {
@@ -161,15 +161,14 @@ body {
         font-size: 2rem;
         margin-bottom: 8px;
         text-align: center;
-        order: 1; /* título primero en móvil */
-        padding-left: 0;
     }
 
     .header-top {
         justify-content: center;
         margin-top: 8px;
         flex-wrap: wrap;
-        order: 2; /* botones después en móvil */
+        position: relative;
+        z-index: 5;
     }
 
     .nav a {
@@ -197,7 +196,7 @@ body {
 }
 
 /* ==========================================================
-   Pequeño ajuste visual para pantallas muy grandes
+   Pantallas muy grandes
    ========================================================== */
 @media (min-width: 1200px) {
     .header {
@@ -207,3 +206,4 @@ body {
         max-width: 1100px;
     }
 }
+
