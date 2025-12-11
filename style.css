@@ -1,28 +1,22 @@
-/* ===== Estilo general ===== */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f5f5f5;
-}
-
 /* ===== Header GeoPets ===== */
 .header {
-    background: linear-gradient(135deg, #003333, #005f5f5, #007a7a);
+    background: linear-gradient(135deg, #003333, #005f5f, #007a7a);
     color: white;
-    padding: 10px 15px;
+    height: 120px; /* altura similar a la original */
+    padding: 0 20px;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     position: relative;
-    height: auto; /* ya no fijo */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
-/* Contenedor flex para botones */
+/* Contenedor de botones */
 .header-top {
     display: flex;
     align-items: center;
     gap: 10px;
+    z-index: 2; /* botones arriba del título */
 }
 
 /* ===== Navegación ===== */
@@ -34,13 +28,16 @@ body {
 }
 
 .nav a {
-    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
     background-color: #00a3a3;
     color: white;
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     transition: background 0.3s, transform 0.2s;
 }
 
@@ -49,24 +46,19 @@ body {
     transform: scale(1.05);
 }
 
-/* Botón Contacto */
 .nav a.btn-contacto {
     background-color: #66d9d9;
 }
-.nav a.btn-contacto:hover {
-    background-color: #4db8b8;
-}
 
-/* Título centrado */
+/* ===== Título ===== */
 .header h1 {
     position: absolute;
     left: 50%;
-    top: 8px;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     margin: 0;
-    font-size: 2.8rem;
+    font-size: 3rem;
     font-weight: bold;
-    letter-spacing: 2px;
     text-align: center;
 
     background: linear-gradient(90deg, #00fff2, #00bfa6, #009688);
@@ -81,114 +73,30 @@ body {
     to { background-position: 200%; }
 }
 
-/* ===== Mapa ===== */
-#map {
-    height: 65vh;
-    width: 100%;
-    z-index: 1;
-    margin-top: 20px;
-}
 
-/* ===== Secciones generales ===== */
-#inicio,
-#quienes-somos,
-#contacto {
-    padding: 20px;
-    background: white;
-    max-width: 900px;
-    margin: 20px auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* ===== Servicios ===== */
-#servicios {
-    padding: 40px 20px;
-    background: #e0e0e0;
-    text-align: center;
-}
-
-#servicios h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-}
-
-.servicios-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 20px;
-}
-
-.servicio {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.servicio:hover {
-    transform: translateY(-5px);
-}
-
-/* ===== Responsividad global ===== */
 @media (max-width: 768px) {
 
-    /* Header */
-    .header h1 {
-        font-size: 2rem;
-        position: static;
-        transform: none;
+    .header {
+        height: auto;
+        padding: 15px 20px;
+        flex-direction: column;
+        justify-content: center;
         text-align: center;
-        margin-bottom: 10px;
     }
 
     .header-top {
-        flex-wrap: wrap;
         justify-content: center;
+        order: 2;
+        margin-top: 8px;
     }
 
-    /* Mapa más pequeño para móviles */
-    #map {
-        height: 55vh;
+    .header h1 {
+        position: static;
+        transform: none;
+        font-size: 2.5rem;
+        order: 1;
+        margin-bottom: 10px;
     }
 
-    /* Secciones en columna */
-    #inicio,
-    #quienes-somos,
-    #contacto {
-        padding: 15px;
-        text-align: center;
-    }
-
-    /* Flex → columnas */
-    #inicio > div,
-    #quienes-somos > div,
-    #contacto > div {
-        width: 100%;
-    }
-
-    /* Imágenes siempre al 100% */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-
-    /* Botón flotante ↓ */
-    #scrollBtn {
-        width: 45px !important;
-        height: 45px !important;
-    }
-
-    /* WhatsApp flotante */
-    #whatsappBtn {
-        width: 55px !important;
-        height: 55px !important;
-        left: 15px !important;
-    }
-
-    /* Carrusel */
-    .carrusel-container {
-        border-radius: 10px !important;
-    }
 }
+
