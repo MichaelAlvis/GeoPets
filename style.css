@@ -195,4 +195,27 @@ body {
     }
 }
 
+/* ==========================================================
+   BOTONES FLOTANTES VISIBLES EN TODO MOMENTO (CELULAR)
+   ========================================================== */
+@media (max-width: 768px) {
+
+    /* Botón de WhatsApp siempre visible */
+    .whatsapp-btn {
+        position: fixed !important;
+        bottom: 80px !important;   /* más arriba para que no moleste */
+        right: 15px !important;
+        z-index: 9999 !important;
+    }
+
+    /* Botón flecha subir siempre visible */
+    .subir-btn {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 15px !important;
+        z-index: 9999 !important;
+    }
+}
+
+
 
