@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GeoPets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+  <!-- Tu style.css -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="imagenes/icono.jpg">
+</head>
+
+<body>
+<!-- Header con degradado y título -->
+<div class="header">
+  <div class="header-top">
+    <nav class="nav">
+      <a href="#inicio" class="btn-inicio">Inicio</a>
+      <a href="#quienes-somos" class="btn-quienes">Quiénes Somos</a>
+      <a href="#contacto" class="btn-contacto">Contacto / Ayuda</a>
+    </nav>
+    <h1>GeoPets</h1>
+  </div>
+</div>
+
+<!-- Mapa -->
+<div id="map" style="height:500px;"></div>
+
+<!-- Sección Inicio -->
+<div id="inicio" style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin:20px 0;">
+  <div style="flex:1; min-width:250px;">
+    <h2 style="margin-bottom:15px;">Historia de GeoPets</h2>
+    <p>
+      GeoPets nació con el propósito de ayudar a las personas a encontrar y proteger a sus mascotas,
+      utilizando mapas interactivos y tecnología geoespacial. La idea surgió al notar que muchos
+      animales se pierden cada día y no existe una herramienta accesible que integre comunidad y geolocalización.
+    </p>
+  </div> 
+  <div style="flex:1; min-width:250px; max-width:300px;">
+    <img src="imagenes/Historia de Geopets.jpg" alt="Perrito de GeoPets" style="width:100%; border-radius:10px;">
+  </div>
+</div>
+
+<!-- Sección Quiénes Somos -->
+<div id="quienes-somos" style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin:20px 0 20px auto; padding:20px; background:white; max-width:700px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+  <div style="flex:0 0 200px; max-width:200px;">
+    <img src="imagenes/quienes_somos.png" alt="Quiénes Somos GeoPets" style="width:100%; border-radius:10px;">
+  </div>
+  <div style="flex:1; text-align:left;">
+    <h2 style="margin-bottom:10px;">Quiénes Somos</h2>
+    <p style="font-size:0.95rem;">
+      Somos un equipo especializado en los sistemas de Informacion Geografica, apasionado por las mascotas y la tecnología. Nuestro objetivo es conectar a la
+      comunidad para proteger y localizar mascotas perdidas usando mapas interactivos y soluciones geoespaciales.
+    </p>
+  </div>
+</div>
+
+<!-- Sección Contacto / Ayuda -->
+<div id="contacto" style="display:flex; align-items:center; gap:20px; padding:40px; background:white; max-width:900px; margin:40px 0 40px 0; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+    <div style="flex:1; min-width:250px;">
+      <h2 style="margin-bottom:15px;">Contacto / Ayuda</h2>
+      <p>
+        Si tienes alguna pregunta, necesitas ayuda para encontrar tu mascota o quieres colaborar con GeoPets, 
+        contáctanos al correo <b>gepetscol@gmail.com</b> o al teléfono <b>313 428 9145</b>.
+      </p>
+      
+      <!-- Botón WhatsApp -->
+      <a href="https://wa.me/573134289145?text=Hola%20quiero%20más%20información%20sobre%20GeoPets" target="_blank" 
+         style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; margin-top:10px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+             alt="WhatsApp" style="width:28px; height:28px;">
+        <span style="color:#007a7a; font-weight:bold;">Hablar por WhatsApp</span>
+      </a>
+    </div>
+  
+    <div style="flex:1; min-width:250px; max-width:300px;">
+      <img src="imagenes/perro_perdido.jpeg" alt="Perro perdido" style="width:100%; border-radius:10px; object-fit:cover;">
+    </div>
+  </div>
+  
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    const map = L.map('map').setView([4.65, -74.1], 12);
+  
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+  
+    </script>
+  
+
+
+
+
+<!-- Botón flotante -->
+<div style="position: fixed; right: 20px; bottom: 20px; text-align: center; z-index: 1000;">
+    <button id="scrollBtn" style="
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      background-color: #007a7a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">↓</button>
+    <div id="scrollLabel" style="font-size: 12px; color: #555; margin-top: 4px;">Info</div>
+  </div>
+  
+  <script>
+    const scrollBtn = document.getElementById('scrollBtn');
+    const scrollLabel = document.getElementById('scrollLabel');
+    const mapSection = document.getElementById('map');
+    const inicioSection = document.getElementById('inicio');
+  
+    let atMap = true; // true si estamos en mapa, false si estamos en historia
+  
+    scrollBtn.addEventListener('click', () => {
+      if (atMap) {
+        // Ir a Historia de GeoPets
+        inicioSection.scrollIntoView({ behavior: 'smooth' });
+        scrollBtn.innerHTML = '↑';
+        scrollLabel.innerText = 'Ir mapa';
+        atMap = false;
+      } else {
+        // Ir hasta arriba de toda la página (incluyendo header)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollBtn.innerHTML = '↓';
+        scrollLabel.innerText = 'Info';
+        atMap = true;
+      }
+    });
+  
+    window.addEventListener('scroll', () => {
+      const mapBottom = mapSection.getBoundingClientRect().bottom;
+      const inicioTop = inicioSection.getBoundingClientRect().top;
+  
+      if (mapBottom < window.innerHeight / 2) {
+        scrollBtn.innerHTML = '↑';
+        scrollLabel.innerText = 'Ir mapa';
+        atMap = false;
+      } else if (inicioTop > 0) {
+        scrollBtn.innerHTML = '↓';
+        scrollLabel.innerText = 'Info';
+        atMap = true;
+      }
+    });
+  </script>
+  
+  
+  
+<!-- Botón flotante WhatsApp -->
+<a href="https://wa.me/573134289145?text=Hola%20quiero%20más%20información%20sobre%20GeoPets" target="_blank"
+   id="whatsappBtn" style="
+     position: fixed;
+     left: 20px;
+     bottom: 20px;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     background-color: #25D366;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+     cursor: pointer;
+     transition: transform 0.2s ease;
+     z-index: 1000;
+   ">
+   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+        alt="WhatsApp" style="width:26px; height:26px;">
+</a>
+
+<script>
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  whatsappBtn.addEventListener('mouseover', () => {
+    whatsappBtn.style.transform = 'scale(1.1)';
+  });
+  whatsappBtn.addEventListener('mouseout', () => {
+    whatsappBtn.style.transform = 'scale(1)';
+  });
+</script>
+
+
+
+<!-- Sección Servicios -->
+<section id="servicios">
+    <h2>Servicios</h2>
+    <div class="servicios-container">
+  
+      <!-- Servicio 1 -->
+      <div class="servicio">
+        <h3>Búsqueda con tecnologías geoespaciales</h3>
+        <img src="imagenes/servicio_1.png" alt="Servicio 1" class="servicio-img">
+        <p>
+          Utilizamos sistemas de información geográfica, modelos de localización y análisis espacial con publicidad geolocalizada
+          para aumentar las probabilidades de encontrar a tu mascota.
+        </p>
+        <a href="documentos/servicio1.pdf" target="_blank" class="btn-servicio">Más información</a>
+      </div>
+  
+      <!-- Servicio 2 -->
+      <div class="servicio">
+        <h3>📦 Paquetes y planes</h3>
+        <img src="imagenes/servicio_2.png" alt="Paquetes y Planes" class="servicio-img">
+        <p>
+          Contamos con diferentes paquetes y planes diseñados para ayudarte según tus necesidades y presupuesto.
+        </p>
+        <a href="documentos/servicio2.pdf" target="_blank" class="btn-servicio">Más información</a>
+      </div>
+  
+      <!-- Servicio 3 (Próximamente) -->
+      <div class="servicio">
+        <h3>🧭 Localización en tiempo real <span style="color:#e67e22; font-size:0.8em;">(Próximamente)</span></h3>
+        <img src="imagenes/servicio_3.png" alt="Servicio 3" class="servicio-img">
+        <p>
+          Integramos dispositivos GPS para monitorear la ubicación de tu mascota en todo momento.
+        </p>
+        <a href="#" class="btn-servicio" style="background:#ccc; cursor:not-allowed;" onclick="return false;">Disponible pronto</a>
+      </div>
+  
+    </div>
+</section>
+  
+<!-- CSS sugerido -->
+<style>
+  #servicios {
+    text-align: center;
+    padding: 50px 20px;
+  }
+
+  .servicios-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .servicio {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 300px;
+    flex: 1 1 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .servicio h3 {
+    margin-bottom: 15px;
+    color: #004d4d;
+  }
+
+  .servicio-img {
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto 15px;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .servicio p {
+    margin-bottom: 20px;
+    color: #444;
+    flex-grow: 1;
+  }
+
+  .btn-servicio {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #007a7a;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+    margin-top: auto;
+  }
+
+  .btn-servicio:hover {
+    background: #005f5f;
+  }
+</style>
+
+
+
+  
+  
+  
+  
+  <script>
+    // Agregar capa WMS desde GeoServer
+    L.tileLayer.wms("http://localhost:8080/geoserver/geopets/wms", {
+      layers: "geopets:localidades", // workspace:nombre_capa
+      format: "image/png",
+      transparent: true,
+      attribution: "GeoPets"
+    }).addTo(map);
+  </script>
+  
+
+  <script>
+    // Definir la capa base
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+  
+
+  
+    // Panel de control de capas
+    var baseMaps = {
+      "OpenStreetMap": osm
+    };
+  
+    var overlayMaps = {
+      "Localidades": localidades
+    };
+  
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
+  </script>
+  
+  <script>
+    // Agregar capa WMS desde GeoServer
+    L.tileLayer.wms("http://localhost:8080/geoserver/geopets/wms", {
+      layers: "geopets:perros_perdidos", // workspace:nombre_capa
+      format: "image/png",
+      transparent: true,
+      attribution: "GeoPets"
+    }).addTo(map);
+  </script>
+
+ 
+<script>
+    // Icono personalizado para los perros
+    var perroIcon = L.icon({
+      iconUrl: 'imagenes/icono.jpg', // ícono que quieras usar para los puntos
+      iconSize: [35, 35],
+      iconAnchor: [17, 35],
+      popupAnchor: [0, -30]
+    });
+  
+    // Función para cargar los puntos desde WFS (PostGIS)
+    function cargarPerros() {
+      fetch("http://localhost:8080/geoserver/geopets/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geopets:perros_perdidos&outputFormat=application/json")
+        .then(response => response.json())
+        .then(data => {
+          // Limpiar capa anterior si existe
+          if (window.perrosLayer) {
+            window.perrosLayer.clearLayers();
+          }
+  
+          window.perrosLayer = L.geoJSON(data, {
+            pointToLayer: function(feature, latlng) {
+              return L.marker(latlng, { icon: perroIcon });
+            },
+            onEachFeature: function(feature, layer) {
+              if (feature.properties) {
+                const props = feature.properties;
+                layer.bindPopup(`
+                  <div style="font-family: Arial; font-size: 14px;">
+                    <h3>${props.nombre}</h3>
+                    <p><b>Descripción:</b> ${props.descripcion}</p>
+                    <p><b>Teléfono:</b> ${props.telefono}</p>
+                    <img src="perro_perdidos/${props.img}" 
+                         alt="${props.nombre}" 
+                         style="width:150px; border-radius:8px;"/>
+                  </div>
+                `);
+              }
+            }
+          }).addTo(map);
+        })
+        .catch(err => console.error('Error cargando puntos WFS:', err));
+    }
+  
+    // Cargar la primera vez
+    cargarPerros();
+  
+    // Opcional: refrescar automáticamente cada 30 segundos
+    setInterval(cargarPerros, 30000);
+  </script>
+  
+
+  
+<!-- Leaflet MarkerCluster CSS y JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<!-- Modal estilo -->
+<style>
+  #modalPerdido {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  #modalPerdido .contenido {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+  }
+  #modalPerdido .cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  #modalPerdido img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+</style>
+
+<div id="modalPerdido">
+  <div class="contenido">
+    <span class="cerrar">&times;</span>
+    <div id="modalContenido"></div>
+  </div>
+</div>
+
+<script>
+  // Iconos modernos
+  var perroIcon = L.icon({
+    iconUrl: 'imagenes/perro_punto.png', 
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -35]
+  });
+
+  var gatoIcon = L.icon({
+    iconUrl: 'imagenes/gato_punto.png', 
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -35]
+  });
+
+  // Datos de perros
+  var perros = [
+    { nombre: "Lupita", descripcion: "Perra blanca con manchas negras, muy asustadiza cerca de Chapinero.", telefono: "3102223344", img: "lupita.jpg", lat: 4.623316, lng: -74.113519 },
+    { nombre: "Max", descripcion: "Perro perdido cerca del parque", telefono: "321123456", img: "max.jpg", lat: 4.625000, lng: -74.110000 },
+    { nombre: "Jerry", descripcion: "Se perdió el 21 de agosto, responde al nombre de JERRY, raza Pinscher. Es macho de color negro con café. No se encuentra esterilizado, es un perro muy amigable, y se deja consentir.\n\nEn el momento que se extravió no tenía puesto su collar, ni su placa.\n\nCualquier información, contáctanos al celular", telefono: "321123456", img: "max.jpg", lat: 6.248815, lng: -75.574342 },
+    { nombre: "Mayu", descripcion: "Responde al nombre de Mayu, es macho de color negro con blanco de raza Husky.", telefono: "3156337230", img: "mayu.jpg", lat: 4.673387, lng: -74.054791 }
+  ];
+
+  // Datos de gatos
+  var gatos = [
+    { nombre: "Mia", descripcion: "Responde al nombre de Mía, es hembra, criolla, es miedos y está bien de salud.\n\nNo tenía collar cuando se perdió.\n\nCualquier información, contáctanos al celular.", telefono: "3246838810", img: "mia.jpg", lat: 10.445541, lng: -75.523523 },
+    { nombre: "Nina", descripcion: "Gata negra, responde al nombre de Nina, muy amigable.\n\nSe perdió cerca de la biblioteca central.\n\nContáctanos al celular.", telefono: "3123456789", img: "nina.jpg", lat: 4.628000, lng: -74.118000 }
+  ];
+
+  // Crear grupo de clusters
+  var markers = L.markerClusterGroup();
+
+  // Función para agregar animales
+  function agregarAnimal(lista, icon, carpeta) {
+    lista.forEach(function(animal){
+      var marker = L.marker([animal.lat, animal.lng], {icon: icon});
+      var rutaImg = carpeta + "/" + animal.img;
+
+      var popupContent = `
+        <div style="font-family: Arial; font-size: 14px;">
+          <b>${animal.nombre} <span style="color:white; background:red; padding:2px 5px; border-radius:4px; font-size:0.8em;">PERDIDO</span></b><br>
+          <img src="${rutaImg}" alt="${animal.nombre}" style="width:100%; border-radius:8px; margin:5px 0;">
+          <p style="margin:0;"><b>Teléfono:</b> ${animal.telefono}</p>
+          <button class="verMasBtn" data-nombre="${animal.nombre}" data-img="${rutaImg}" data-descripcion="${animal.descripcion}" data-telefono="${animal.telefono}" 
+            style="margin-top:5px; padding:5px 8px; cursor:pointer; border:none; background:#007a7a; color:white; border-radius:5px;">Ver más</button>
+        </div>
+      `;
+
+      marker.bindPopup(popupContent);
+      markers.addLayer(marker);
+    });
+  }
+
+  agregarAnimal(perros, perroIcon, "perro_perdidos");
+  agregarAnimal(gatos, gatoIcon, "gato_perdido");
+
+  map.addLayer(markers);
+
+  // Modal funcionalidad
+  var modal = document.getElementById('modalPerdido');
+  var modalContenido = document.getElementById('modalContenido');
+  var cerrar = document.querySelector('#modalPerdido .cerrar');
+
+  // Delegar evento click para todos los botones "Ver más"
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.classList.contains('verMasBtn')){
+      var btn = e.target;
+      var nombre = btn.getAttribute('data-nombre');
+      var img = btn.getAttribute('data-img');
+      var descripcion = btn.getAttribute('data-descripcion');
+      var telefono = btn.getAttribute('data-telefono');
+
+      modalContenido.innerHTML = `
+        <h2>${nombre} <span style="color:white; background:red; padding:3px 6px; border-radius:4px; font-size:0.85em;">PERDIDO</span></h2>
+        <img src="${img}" alt="${nombre}">
+        <p><b>Descripción:</b> ${descripcion}</p>
+        <p><b>Contacto:</b> 📞 ${telefono}</p>
+      `;
+      modal.style.display = 'flex';
+    }
+  });
+
+  cerrar.addEventListener('click', function(){
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', function(e){
+    if(e.target == modal){
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
+
+<!-- Sección informativa con carrusel full width -->
+<section id="informacion" style="margin:40px 0; width:100%; padding:0 20px; box-sizing:border-box;">
+    <h2 style="text-align:center; margin-bottom:20px;">Información útil</h2>
+    
+    <div class="carrusel-container" style="position:relative; overflow:hidden; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.2); width:100%; max-width:1200px; margin:0 auto;">
+      <div class="carrusel-track" style="display:flex; transition:transform 0.5s ease;">
+        <img src="imagenes/como_actuar.png" style="width:100%; flex-shrink:0;">
+        <img src="imagenes/prevencion.png" style="width:100%; flex-shrink:0;">
+      </div>
+      
+      <!-- Flechas -->
+      <button class="carrusel-btn prev" style="position:absolute; top:50%; left:10px; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; font-size:20px;">&#10094;</button>
+      <button class="carrusel-btn next" style="position:absolute; top:50%; right:10px; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:white; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; font-size:20px;">&#10095;</button>
+    </div>
+</section>
+
+<script>
+    const track = document.querySelector('.carrusel-track');
+    const slides = Array.from(track.children);
+    const prevBtn = document.querySelector('.carrusel-btn.prev');
+    const nextBtn = document.querySelector('.carrusel-btn.next');
+    
+    let currentIndex = 0;
+    
+    function updateSlide() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+    
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSlide();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlide();
+    });
+    
+    // Cambio automático cada 30 segundos
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlide();
+    }, 30000);
+    
+    // Ajuste en caso de redimensionar
+    window.addEventListener('resize', updateSlide);
+</script>
+
+
+
+<!-- Sección Acerca del CEO -->
+<section id="ceo" style="padding:40px 20px; max-width:800px; margin:40px auto; text-align:center;">
+    <h2 style="font-size:28px; margin-bottom:25px; font-weight:700; color:#007a7a;">Acerca del CEO</h2>
+    
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:25px; background:#f5f5f5; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+      <img src="imagenes/michael_chaguala.jpg" alt="Michael" style="width:150px; height:150px; border-radius:50%; object-fit:cover; border:3px solid #007a7a;">
+      <h3 style="margin:0; font-size:22px; color:#333; font-weight:600;">Michael</h3>
+      <p style="margin:0; font-size:14px; color:#777;">Bogotá, Colombia</p>
+      <p style="font-size:15px; color:#555; max-width:600px; line-height:1.5; margin-top:15px;">
+        Soy profesional en tecnologías geoespaciales, apasionado por la inteligencia artificial y con un gran amor por los animales. Mi inspiración es mi mascota. 
+        Mi misión es convertir a Geopets en una gran ayuda para la comunidad utilizando datos, localización e inteligencia artificial.
+      </p>
+      <div style="display:flex; gap:15px; margin-top:10px;">
+        <a href="https://www.facebook.com/profile.php?id=61571915857775&locale=es_LA" target="_blank"><img src="imagenes/facebook.png" alt="Facebook" style="width:35px; height:35px;"></a>
+        <a href="https://wa.me/3134289145" target="_blank"><img src="imagenes/wasap.jpg" alt="WhatsApp" style="width:35px; height:35px;"></a>
+        <a href="mailto:geopetscol@gmail.com" target="_blank"><img src="imagenes/gmail.png" alt="Gmail" style="width:35px; height:35px;"></a>
+      </div>
+    </div>
+</section>
+
+
+
+
+  

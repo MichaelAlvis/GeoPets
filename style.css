@@ -1,0 +1,149 @@
+/* ===== Estilo general ===== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+}
+
+/* ===== Header GeoPets ===== */
+.header {
+    background: linear-gradient(135deg, #003333, #005f5f, #007a7a);
+    color: white;
+    height: 2cm; /* altura fija */
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    position: relative; /* necesario para centrar título absoluto */
+}
+
+/* Contenedor flex para botones a la izquierda */
+.header-top {
+    display: flex;
+    align-items: center;
+}
+
+/* ===== Navegación ===== */
+.nav {
+    display: flex;
+    gap: 10px;
+    align-items: center; /* centra verticalmente los botones */
+}
+
+.nav a {
+    display: flex;           /* centra el texto dentro del botón */
+    align-items: center;     /* vertical */
+    justify-content: center; /* horizontal */
+    padding: 6px 12px;       /* ajusta altura y ancho del botón */
+    background-color: #00a3a3;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.nav a:hover {
+    background-color: #007a7a;
+    transform: scale(1.05);
+}
+
+/* ===== Botón Contacto / Ayuda ===== */
+.nav a.btn-contacto {
+    background-color: #66d9d9; /* aguamarina claro */
+    color: white; /* texto blanco */
+    border-radius: 8px; /* esquinas redondeadas */
+    transition: background-color 0.3s ease;
+}
+
+.nav a.btn-contacto:hover {
+    background-color: #4db8b8; /* aguamarina un poco más oscuro al pasar el mouse */
+}
+
+
+/* ===== Título centrado absoluto ===== */
+.header h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 3.5rem; /* ajusta según prefieras */
+    font-weight: bold;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #00fff2, #00bfa6, #009688);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s infinite linear;
+    background-size: 200%;
+}
+
+@keyframes shine {
+    from { background-position: 0%; }
+    to { background-position: 200%; }
+}
+
+/* ===== Contenedor del mapa ===== */
+#map {
+    height: calc(100vh - 2cm);
+    width: 100%;
+    z-index: 1;
+}
+
+/* ===== Sección inicio ===== */
+#inicio {
+    padding: 40px;
+    background: white;
+    max-width: 900px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* ===== Ajustes responsivos ===== */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.2rem; /* grande pero quepa en móvil */
+    }
+    #map {
+        height: calc(100vh - 8rem);
+    }
+    .nav {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+}
+
+
+/* ===== Sección Servicios ===== */
+#servicios {
+    padding: 50px 20px;
+    background: #e0e0e0; /* gris más oscuro */
+    text-align: center;
+  }
+  
+  
+  #servicios h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .servicios-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .servicio {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .servicio:hover {
+    transform: translateY(-5px);
+  }
+  

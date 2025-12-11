@@ -1,0 +1,18 @@
+[
+  {
+    "nombre": "Luna",
+    "descripcion": "Perra perdida",
+    "telefono": "342422324",
+    "lat": 4.623316,
+    "lng": -74.113519,
+    "img": "lupita.jpg"
+  },
+  {
+    "nombre": "Bobby",
+    "descripcion": "Perro perdido ayer",
+    "telefono": "314555123",
+    "lat": 4.624000,
+    "lng": -74.115000,
+    "img": "bobby.jpg"
+  }
+]
