@@ -261,50 +261,30 @@ body {
         overflow: visible !important;
     }
 }
-
-/* ===== Solución rápida: evitar recorte de la imagen en #contacto ===== */
+/* ==========================================================
+   Corrección: mantener pequeño el icono de WhatsApp
+   ========================================================== */
 @media (max-width: 768px) {
-  /* Forzar que el contenedor no recorte y se organice en columna si hace falta */
-  #contacto {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 18px !important;
-    overflow: visible !important;
-    height: auto !important;
-  }
 
-  /* Forzar que la primera columna (texto) ocupe 100% y la imagen quede centrada */
-  #contacto > div:first-child {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
+    /* Icono de WhatsApp vuelve a su tamaño original */
+    #contacto img[alt="WhatsApp"] {
+        width: 28px !important;
+        height: 28px !important;
+        object-fit: contain !important;
+        margin: 0 !important;
+    }
 
-  #contacto > div:last-child {
-    width: 100% !important;
-    max-width: 360px !important; /* ajustar si quieres más/menos */
-    min-width: 0 !important;
-    margin: 0 auto !important;
-  }
-
-  /* Imagen: no recortar, respetar proporción y no sobresalir */
-  #contacto img {
-    width: 100% !important;
-    max-width: 360px !important;
-    height: auto !important;
-    object-fit: contain !important;   /* evita recorte */
-    display: block !important;
-    margin: 0 auto 6px auto !important;
-    border-radius: 10px !important;
-  }
-
-  /* Asegurar que no haya scroll horizontal */
-  html, body {
-    overflow-x: hidden !important;
-  }
+    /* Ajuste SOLO para la foto del perro perdido */
+    #contacto img:not([alt="WhatsApp"]) {
+        width: 100% !important;
+        max-width: 320px !important;
+        height: auto !important;
+        object-fit: contain !important;
+        border-radius: 10px !important;
+        display: block;
+        margin: 0 auto 12px auto !important;
+    }
 }
-
 
 
 
