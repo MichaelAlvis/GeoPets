@@ -9,31 +9,29 @@ body {
 }
 
 /* ==========================================================
-   HEADER PRINCIPAL (PC + MOVIL)
+   HEADER PRINCIPAL (PC)
    ========================================================== */
 .header {
-    background: white;
+    background: #e0f7f5; /* Aguamarina muy suave */
     color: #004d4d;
     height: 90px; /* Más pequeño */
     padding: 0 20px;
 
     display: flex;
     align-items: center;
-    position: relative;
+    justify-content: space-between; /* Botones izq – GeoPets der */
 
-    /* MISMO ESTILO DE TARJETA QUE EL RESTO */
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
     margin: 15px auto 0 auto;
     max-width: 900px;
 }
 
-/* Contenedor de botones */
+/* Contenedor botones */
 .header-top {
     display: flex;
     align-items: center;
     gap: 10px;
-    z-index: 2;
 }
 
 /* Navegación */
@@ -63,17 +61,12 @@ body {
     background-color: #66d9d9;
 }
 
-/* Título GeoPets centrado */
+/* Título GeoPets a la derecha (PC) */
 .header h1 {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     margin: 0;
-
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-weight: bold;
-    text-align: center;
+    text-align: right;
 
     background: linear-gradient(90deg, #00bfa6, #009688);
     -webkit-background-clip: text;
@@ -99,7 +92,6 @@ body {
     background: white;
     max-width: 900px;
 
-    /* MISMO ESTILO DE TARJETA */
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     padding: 20px;
@@ -144,7 +136,7 @@ body {
    ========================================================== */
 @media (max-width: 768px) {
 
-    /* Header móvil más pequeño */
+    /* Header móvil */
     .header {
         height: auto;
         padding: 12px;
@@ -155,15 +147,14 @@ body {
         text-align: center;
     }
 
-    /* GeoPets centrado arriba */
     .header h1 {
         position: static;
         transform: none;
         font-size: 2rem;
         margin-bottom: 8px;
+        text-align: center;
     }
 
-    /* Botones centrados */
     .header-top {
         justify-content: center;
         margin-top: 8px;
@@ -175,7 +166,7 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Secciones con mejor espaciado */
+    /* Secciones */
     #inicio,
     #quienes-somos,
     #contacto {
@@ -183,12 +174,11 @@ body {
         margin: 15px 10px;
     }
 
-    /* Mapa un poco más bajo */
+    /* Ajustes mapa */
     #map {
         height: 55vh;
     }
 
-    /* Todas las imágenes responsivas */
     img {
         max-width: 100%;
         height: auto;
