@@ -1,13 +1,31 @@
-/* ===== Header GeoPets SIN COLOR ===== */
+/* ==========================================================
+   ESTILOS GENERALES
+   ========================================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+}
+
+/* ==========================================================
+   HEADER PRINCIPAL (PC + MOVIL)
+   ========================================================== */
 .header {
-    background: white;         /* fondo blanco */
+    background: white;
     color: #004d4d;
-    height: 120px;
+    height: 90px; /* Más pequeño */
     padding: 0 20px;
+
     display: flex;
     align-items: center;
     position: relative;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* sombra suave */
+
+    /* MISMO ESTILO DE TARJETA QUE EL RESTO */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    margin: 15px auto 0 auto;
+    max-width: 900px;
 }
 
 /* Contenedor de botones */
@@ -18,7 +36,7 @@
     z-index: 2;
 }
 
-/* ===== Navegación ===== */
+/* Navegación */
 .nav {
     display: flex;
     gap: 10px;
@@ -41,18 +59,18 @@
     transform: scale(1.05);
 }
 
-/* Botón contacto */
 .nav a.btn-contacto {
     background-color: #66d9d9;
 }
 
-/* ===== Título GEO PETS CENTRADO ===== */
+/* Título GeoPets centrado */
 .header h1 {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
+
     font-size: 3rem;
     font-weight: bold;
     text-align: center;
@@ -62,35 +80,117 @@
     -webkit-text-fill-color: transparent;
 }
 
+/* ==========================================================
+   MAPA
+   ========================================================== */
+#map {
+    height: 65vh;
+    width: 100%;
+    z-index: 1;
+    margin-top: 20px;
+}
 
-/* ===== MOBILE ===== */
+/* ==========================================================
+   SECCIONES TIPO TARJETA (Historia, Quiénes Somos, Contacto)
+   ========================================================== */
+#inicio,
+#quienes-somos,
+#contacto {
+    background: white;
+    max-width: 900px;
+
+    /* MISMO ESTILO DE TARJETA */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    padding: 20px;
+
+    margin: 20px auto;
+}
+
+/* ==========================================================
+   SERVICIOS
+   ========================================================== */
+#servicios {
+    padding: 40px 20px;
+    background: #e0e0e0;
+    text-align: center;
+}
+
+#servicios h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.servicios-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.servicio {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.servicio:hover {
+    transform: translateY(-5px);
+}
+
+/* ==========================================================
+   RESPONSIVE - CELULAR
+   ========================================================== */
 @media (max-width: 768px) {
 
+    /* Header móvil más pequeño */
     .header {
-        height: auto;              /* el header se ajusta al contenido */
-        padding: 15px;
+        height: auto;
+        padding: 12px;
+        margin: 10px 10px 0 10px;
+        border-radius: 10px;
         flex-direction: column;
         justify-content: center;
         text-align: center;
     }
 
-    /* Botones centrados en celular */
-    .header-top {
-        margin-top: 10px;
-        justify-content: center;
-    }
-
-    /* Título arriba y centrado */
+    /* GeoPets centrado arriba */
     .header h1 {
-        position: static;          /* ya no absolute */
+        position: static;
         transform: none;
-        font-size: 2.2rem;
-        margin-bottom: 10px;
+        font-size: 2rem;
+        margin-bottom: 8px;
     }
 
-    /* Botones más compactos */
+    /* Botones centrados */
+    .header-top {
+        justify-content: center;
+        margin-top: 8px;
+        flex-wrap: wrap;
+    }
+
     .nav a {
         padding: 6px 10px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    /* Secciones con mejor espaciado */
+    #inicio,
+    #quienes-somos,
+    #contacto {
+        padding: 15px;
+        margin: 15px 10px;
+    }
+
+    /* Mapa un poco más bajo */
+    #map {
+        height: 55vh;
+    }
+
+    /* Todas las imágenes responsivas */
+    img {
+        max-width: 100%;
+        height: auto;
     }
 }
