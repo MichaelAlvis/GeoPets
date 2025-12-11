@@ -262,6 +262,26 @@ body {
     }
 }
 
+/* ==========================================================
+   SOLUCIÓN DEFINITIVA: imagen de Contacto nunca recortada
+   ========================================================== */
+@media (max-width: 768px) {
+
+    #contacto {
+        overflow: visible !important;   /* permite que la imagen salga completa */
+        height: auto !important;        /* elimina límites de altura */
+    }
+
+    #contacto img {
+        width: 100% !important;         /* usa todo el ancho disponible */
+        max-width: 350px !important;    /* tamaño máximo para que no sea gigante */
+        height: auto !important;        /* mantiene proporciones reales */
+        object-fit: contain !important; /* evita cualquier recorte */
+        display: block;
+        margin: 0 auto 20px auto;       /* centrada */
+    }
+}
+
 
 
 
