@@ -8,40 +8,39 @@ body {
 
 /* ===== Header GeoPets ===== */
 .header {
-    background: linear-gradient(135deg, #003333, #005f5f, #007a7a);
+    background: linear-gradient(135deg, #003333, #005f5f5, #007a7a);
     color: white;
-    height: 2cm; /* altura fija */
-    padding: 0 20px;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    position: relative; /* necesario para centrar título absoluto */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    position: relative;
+    height: auto; /* ya no fijo */
 }
 
-/* Contenedor flex para botones a la izquierda */
+/* Contenedor flex para botones */
 .header-top {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 /* ===== Navegación ===== */
 .nav {
     display: flex;
     gap: 10px;
-    align-items: center; /* centra verticalmente los botones */
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .nav a {
-    display: flex;           /* centra el texto dentro del botón */
-    align-items: center;     /* vertical */
-    justify-content: center; /* horizontal */
-    padding: 6px 12px;       /* ajusta altura y ancho del botón */
+    padding: 6px 10px;
     background-color: #00a3a3;
     color: white;
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     transition: background 0.3s, transform 0.2s;
 }
 
@@ -50,28 +49,26 @@ body {
     transform: scale(1.05);
 }
 
-/* ===== Botón Contacto / Ayuda ===== */
+/* Botón Contacto */
 .nav a.btn-contacto {
-    background-color: #66d9d9; /* aguamarina claro */
-    color: white; /* texto blanco */
-    border-radius: 8px; /* esquinas redondeadas */
-    transition: background-color 0.3s ease;
+    background-color: #66d9d9;
 }
-
 .nav a.btn-contacto:hover {
-    background-color: #4db8b8; /* aguamarina un poco más oscuro al pasar el mouse */
+    background-color: #4db8b8;
 }
 
-
-/* ===== Título centrado absoluto ===== */
+/* Título centrado */
 .header h1 {
     position: absolute;
     left: 50%;
+    top: 8px;
     transform: translateX(-50%);
     margin: 0;
-    font-size: 3.5rem; /* ajusta según prefieras */
+    font-size: 2.8rem;
     font-weight: bold;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
+    text-align: center;
+
     background: linear-gradient(90deg, #00fff2, #00bfa6, #009688);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -84,66 +81,114 @@ body {
     to { background-position: 200%; }
 }
 
-/* ===== Contenedor del mapa ===== */
+/* ===== Mapa ===== */
 #map {
-    height: calc(100vh - 2cm);
+    height: 65vh;
     width: 100%;
     z-index: 1;
+    margin-top: 20px;
 }
 
-/* ===== Sección inicio ===== */
-#inicio {
-    padding: 40px;
+/* ===== Secciones generales ===== */
+#inicio,
+#quienes-somos,
+#contacto {
+    padding: 20px;
     background: white;
     max-width: 900px;
-    margin: 40px auto;
+    margin: 20px auto;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ===== Ajustes responsivos ===== */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 2.2rem; /* grande pero quepa en móvil */
-    }
-    #map {
-        height: calc(100vh - 8rem);
-    }
-    .nav {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
+/* ===== Servicios ===== */
+#servicios {
+    padding: 40px 20px;
+    background: #e0e0e0;
+    text-align: center;
 }
 
+#servicios h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
 
-/* ===== Sección Servicios ===== */
-#servicios {
-    padding: 50px 20px;
-    background: #e0e0e0; /* gris más oscuro */
-    text-align: center;
-  }
-  
-  
-  #servicios h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  
-  .servicios-container {
+.servicios-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 20px;
-  }
-  
-  .servicio {
+}
+
+.servicio {
     background: white;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
-  }
-  
-  .servicio:hover {
+}
+
+.servicio:hover {
     transform: translateY(-5px);
-  }
-  
+}
+
+/* ===== Responsividad global ===== */
+@media (max-width: 768px) {
+
+    /* Header */
+    .header h1 {
+        font-size: 2rem;
+        position: static;
+        transform: none;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .header-top {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Mapa más pequeño para móviles */
+    #map {
+        height: 55vh;
+    }
+
+    /* Secciones en columna */
+    #inicio,
+    #quienes-somos,
+    #contacto {
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Flex → columnas */
+    #inicio > div,
+    #quienes-somos > div,
+    #contacto > div {
+        width: 100%;
+    }
+
+    /* Imágenes siempre al 100% */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Botón flotante ↓ */
+    #scrollBtn {
+        width: 45px !important;
+        height: 45px !important;
+    }
+
+    /* WhatsApp flotante */
+    #whatsappBtn {
+        width: 55px !important;
+        height: 55px !important;
+        left: 15px !important;
+    }
+
+    /* Carrusel */
+    .carrusel-container {
+        border-radius: 10px !important;
+    }
+}
