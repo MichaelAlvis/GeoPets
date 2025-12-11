@@ -9,18 +9,18 @@ body {
 }
 
 /* ==========================================================
-   HEADER PRINCIPAL (PC)
+   HEADER (PC)
    ========================================================== */
-/* Color homogéneo basado en botón “Inicio”, pero más claro */
+/* Verde esmeralda suave */
 .header {
-    background: #b2eceb; /* Aguamarina homogéneo suave */
+    background: #a7e4c2; /* VERDE ESMERALDA HOMOGÉNEO */
     color: #004d4d;
     height: 90px;
     padding: 0 20px;
 
     display: flex;
     align-items: center;
-    position: relative;
+    justify-content: space-between;
 
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.10);
@@ -28,32 +28,32 @@ body {
     max-width: 900px;
 }
 
-/* GeoPets centrado PERFECTO en PC */
-.header h1 {
-    margin: 0;
-    font-size: 2.6rem;
-    font-weight: bold;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-
-    background: linear-gradient(90deg, #00a3a3, #008b86);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Botones alineados a la izquierda */
+/* Botones a la izquierda */
 .header-top {
     display: flex;
     align-items: center;
     gap: 10px;
-    position: relative;
-    z-index: 3; /* Para quedar encima del título */
 }
 
-/* Navegación */
+/* GEO PETS CENTRADO EN PC SIN ENCIMARSE */
+.header h1 {
+    margin: 0 auto;          /* CENTRADO REAL */
+    position: static;        /* SIN ABSOLUTOS */
+    transform: none;         /* SIN TRUCOS NI DESPLAZOS */
+    text-align: center;
+
+    font-size: 2.5rem;
+    font-weight: bold;
+
+    background: linear-gradient(90deg, #00a36c, #007a52); /* verde esmeralda intenso */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================
+   NAV
+   ========================================================== */
+/* Botones iguales pero en verde esmeralda */
 .nav {
     display: flex;
     gap: 10px;
@@ -62,7 +62,7 @@ body {
 
 .nav a {
     padding: 6px 12px;
-    background-color: #00a3a3;
+    background-color: #00a36c; /* VERDE ESMERALDA PROFUNDO */
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -72,12 +72,12 @@ body {
 }
 
 .nav a:hover {
-    background-color: #008b86;
+    background-color: #007a52;
     transform: scale(1.04);
 }
 
 .nav a.btn-contacto {
-    background-color: #4fbdb7;
+    background-color: #4dd6a4;
 }
 
 /* ==========================================================
@@ -86,12 +86,11 @@ body {
 #map {
     height: 65vh;
     width: 100%;
-    z-index: 1;
     margin-top: 20px;
 }
 
 /* ==========================================================
-   SECCIONES TIPO TARJETA (Historia, Quiénes Somos, Contacto)
+   SECCIONES TARJETA
    ========================================================== */
 #inicio,
 #quienes-somos,
@@ -102,7 +101,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     padding: 20px;
-
     margin: 20px auto;
 }
 
@@ -143,7 +141,6 @@ body {
    ========================================================== */
 @media (max-width: 768px) {
 
-    /* En móvil: centrado y compacto */
     .header {
         height: auto;
         padding: 12px;
@@ -152,14 +149,11 @@ body {
         flex-direction: column;
         justify-content: center;
         text-align: center;
-        position: relative;
     }
 
     .header h1 {
-        position: static;
-        transform: none;
+        margin: 0;
         font-size: 2rem;
-        margin-bottom: 8px;
         text-align: center;
     }
 
@@ -167,8 +161,6 @@ body {
         justify-content: center;
         margin-top: 8px;
         flex-wrap: wrap;
-        position: relative;
-        z-index: 5;
     }
 
     .nav a {
@@ -176,7 +168,6 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Secciones */
     #inicio,
     #quienes-somos,
     #contacto {
@@ -184,19 +175,13 @@ body {
         margin: 15px 10px;
     }
 
-    /* Ajustes mapa */
     #map {
         height: 55vh;
-    }
-
-    img {
-        max-width: 100%;
-        height: auto;
     }
 }
 
 /* ==========================================================
-   Pantallas muy grandes
+   Pantallas grandes
    ========================================================== */
 @media (min-width: 1200px) {
     .header {
