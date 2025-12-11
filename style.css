@@ -1,14 +1,13 @@
-/* ===== Header GeoPets ===== */
+/* ===== Header GeoPets SIN COLOR ===== */
 .header {
-    background: linear-gradient(135deg, #003333, #005f5f, #007a7a);
-    color: white;
-    height: 120px; /* altura similar a la original */
+    background: white;         /* fondo blanco */
+    color: #004d4d;
+    height: 120px;
     padding: 0 20px;
     display: flex;
     align-items: center;
     position: relative;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* sombra suave */
 }
 
 /* Contenedor de botones */
@@ -16,7 +15,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    z-index: 2; /* botones arriba del título */
+    z-index: 2;
 }
 
 /* ===== Navegación ===== */
@@ -24,13 +23,9 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .nav a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 6px 12px;
     background-color: #00a3a3;
     color: white;
@@ -46,11 +41,12 @@
     transform: scale(1.05);
 }
 
+/* Botón contacto */
 .nav a.btn-contacto {
     background-color: #66d9d9;
 }
 
-/* ===== Título ===== */
+/* ===== Título GEO PETS CENTRADO ===== */
 .header h1 {
     position: absolute;
     left: 50%;
@@ -61,42 +57,40 @@
     font-weight: bold;
     text-align: center;
 
-    background: linear-gradient(90deg, #00fff2, #00bfa6, #009688);
+    background: linear-gradient(90deg, #00bfa6, #009688);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shine 3s infinite linear;
-    background-size: 200%;
-}
-
-@keyframes shine {
-    from { background-position: 0%; }
-    to { background-position: 200%; }
 }
 
 
+/* ===== MOBILE ===== */
 @media (max-width: 768px) {
 
     .header {
-        height: auto;
-        padding: 15px 20px;
+        height: auto;              /* el header se ajusta al contenido */
+        padding: 15px;
         flex-direction: column;
         justify-content: center;
         text-align: center;
     }
 
+    /* Botones centrados en celular */
     .header-top {
+        margin-top: 10px;
         justify-content: center;
-        order: 2;
-        margin-top: 8px;
     }
 
+    /* Título arriba y centrado */
     .header h1 {
-        position: static;
+        position: static;          /* ya no absolute */
         transform: none;
-        font-size: 2.5rem;
-        order: 1;
+        font-size: 2.2rem;
         margin-bottom: 10px;
     }
 
+    /* Botones más compactos */
+    .nav a {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
 }
-
