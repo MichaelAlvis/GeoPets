@@ -217,5 +217,34 @@ body {
     }
 }
 
+/* ==========================================================
+   CORRECCIÓN DE IMÁGENES Y CONTENEDORES EN CELULAR
+   ========================================================== */
+@media (max-width: 768px) {
+
+    /* Cualquier imagen será RESPONSIVA y nunca sobresale */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* Ajusta los contenedores de secciones para evitar pantallas gigantes */
+    #inicio,
+    #quienes-somos,
+    #contacto {
+        max-width: 100% !important;
+        overflow: hidden !important;
+        margin: 10px auto !important;
+    }
+
+    /* Evita zoom out o desbordamientos en celular */
+    body, html {
+        overflow-x: hidden !important;
+    }
+}
+
+
 
 
