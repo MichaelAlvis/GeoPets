@@ -245,6 +245,23 @@ body {
     }
 }
 
+/* Ajuste específico para la imagen del apartado de contacto */
+@media (max-width: 768px) {
+
+    #contacto img {
+        max-width: 90% !important;   /* más pequeña */
+        height: auto !important;     /* mantiene proporción */
+        display: block;
+        margin: 0 auto 15px auto;    /* centrada y con aire */
+        object-fit: contain !important; /* evita recorte */
+    }
+
+    /* Asegurar que el contenedor no recorte la imagen */
+    #contacto {
+        overflow: visible !important;
+    }
+}
+
 
 
 
