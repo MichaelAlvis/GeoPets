@@ -210,41 +210,69 @@ Por favor ayúdenme a volver a casa 🙏
   </script>
 
 
-  <!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  // 🔑 Inicializar EmailJS (PUBLIC KEY)
-  (function () {
-    emailjs.init("-SdCbCtUZl1XbPNEr");
-  })();
+  // 🔐 Inicializar EmailJS
+  emailjs.init("-SdCbCtUZl1XbPNEr"); // TU PUBLIC KEY
 
-  // 📧 CORREO AUTOMÁTICO AL ESCANEAR EL QR
-  window.onload = function () {
-    const fecha = new Date().toLocaleDateString("es-CO");
-    const hora = new Date().toLocaleTimeString("es-CO");
+  const SERVICE_ID = "service_ehersct";
+  const TEMPLATE_ID = "template_tj7zkee";
 
-    emailjs.send(
-      "service_ehersct",   // Service ID
-      "template_tj7zkee",  // Template ID
-      {
-        placa_id: "GP-0001",
-        mascota: "Milu",
-        fecha: fecha,
-        hora: hora,
-        mapa_url: "Ubicación no compartida"
-      }
-    ).then(
-      function () {
-        console.log("Correo de escaneo enviado");
+  const PLACA_ID = "GP-MILU-001";
+  const MASCOTA = "Milu";
+
+  function fechaHoraActual() {
+    const now = new Date();
+    return {
+      fecha: now.toLocaleDateString("es-CO"),
+      hora: now.toLocaleTimeString("es-CO")
+    };
+  }
+
+  // 📩 1️⃣ EMAIL AUTOMÁTICO AL ESCANEAR (al cargar la página)
+  window.addEventListener("load", function () {
+    const fh = fechaHoraActual();
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      placa_id: PLACA_ID,
+      mascota: MASCOTA,
+      fecha: fh.fecha,
+      hora: fh.hora,
+      coordenadas: "No compartida"
+    });
+  });
+
+  // 📍 2️⃣ EMAIL AUTOMÁTICO AL COMPARTIR UBICACIÓN
+  function reportarUbicacion() {
+    if (!navigator.geolocation) {
+      alert("Tu dispositivo no permite compartir ubicación");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const fh = fechaHoraActual();
+
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+          placa_id: PLACA_ID,
+          mascota: MASCOTA,
+          fecha: fh.fecha,
+          hora: fh.hora,
+          coordenadas: `${lat}, ${lon}`
+        });
+
+        alert("📍 Ubicación enviada correctamente. ¡Gracias por ayudar a Milu!");
       },
-      function (error) {
-        console.error("Error enviando correo", error);
+      function () {
+        alert("No se pudo obtener la ubicación");
       }
     );
-  };
+  }
 </script>
 
 </body>
 </html>
+
 
