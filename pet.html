@@ -210,86 +210,9 @@ Por favor ayúdenme a volver a casa 🙏
   </script>
 
 
- <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  // 🔐 Inicializar EmailJS
-  emailjs.init("-SdCbCtUZl1XbPNEr"); // TU PUBLIC KEY
-
-  const SERVICE_ID = "service_ehersct";
-  const TEMPLATE_ID = "template_tj7zkee";
-
-  const PLACA_ID = "GP-MILU-001";
-  const MASCOTA = "Milu";
-  const TELEFONO_WHATSAPP = "573134289145";
-
-  function fechaHoraActual() {
-    const now = new Date();
-    return {
-      fecha: now.toLocaleDateString("es-CO"),
-      hora: now.toLocaleTimeString("es-CO")
-    };
-  }
-
-  // 📩 1️⃣ EMAIL AUTOMÁTICO AL ESCANEAR (SIN UBICACIÓN)
-  window.addEventListener("load", function () {
-    const fh = fechaHoraActual();
-
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-      placa_id: PLACA_ID,
-      mascota: MASCOTA,
-      fecha: fh.fecha,
-      hora: fh.hora,
-      coordenadas: "No compartida"
-    });
-  });
-
-  // 📍 2️⃣ AL COMPARTIR UBICACIÓN:
-  // 📩 correo silencioso + 📲 WhatsApp normal
-  function reportarUbicacion() {
-    if (!navigator.geolocation) {
-      alert("Tu dispositivo no permite compartir ubicación");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        const fh = fechaHoraActual();
-
-        // 📩 ENVÍO SILENCIOSO DEL CORREO
-        emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-          placa_id: PLACA_ID,
-          mascota: MASCOTA,
-          fecha: fh.fecha,
-          hora: fh.hora,
-          coordenadas: `${lat}, ${lon}`
-        });
-
-        // 📲 REDIRECCIÓN NORMAL A WHATSAPP
-        const mensajeWhatsapp =
-`🐶 Hola, encontré a Milu
-
-📍 Mi ubicación actual es:
-https://www.google.com/maps?q=${lat},${lon}
-
-Quiero ayudarte a que vuelva a casa 🙏`;
-
-        const urlWhatsapp =
-          "https://wa.me/" + TELEFONO_WHATSAPP + "?text=" + encodeURIComponent(mensajeWhatsapp);
-
-        window.location.href = urlWhatsapp;
-      },
-      function () {
-        alert("No se pudo obtener la ubicación");
-      }
-    );
-  }
-</script>
-
-
 </body>
 </html>
+
 
 
 
