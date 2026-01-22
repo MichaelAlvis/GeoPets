@@ -17,7 +17,6 @@
       padding: 12px;
     }
 
-    /* HEADER */
     .header {
       display: flex;
       align-items: center;
@@ -37,7 +36,6 @@
       color: #1f2937;
     }
 
-    /* CARD */
     .card {
       background: #ffffff;
       border-radius: 14px;
@@ -78,7 +76,6 @@
       color: #1e40af;
     }
 
-    /* BUTTONS */
     .actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -121,13 +118,11 @@
 
 <body>
 
-  <!-- HEADER -->
   <div class="header">
     <img src="imagenes/icono.jpg" alt="GeoPets">
     <span>GeoPets</span>
   </div>
 
-  <!-- CARD -->
   <div class="card">
 
     <img src="mascotasqr/milu_001.jpeg" alt="Milu" class="pet-photo">
@@ -166,18 +161,32 @@
   </div>
 
   <script>
-  function reportarUbicacion() {
-    if (!navigator.geolocation) {
-      alert("Tu dispositivo no permite compartir ubicación");
-      return;
+    // ✅ FUNCIÓN QUE FALTABA
+    function contactarWhatsapp() {
+      const telefono = "573134289145"; // mismo número
+      const mensaje = `
+🐶 Hola, soy Milu 😢
+
+Estoy perdida y necesito volver a casa.
+Por favor ayúdame a contactar a mi humano 🙏
+      `;
+
+      const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+      window.location.href = url;
     }
 
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+    function reportarUbicacion() {
+      if (!navigator.geolocation) {
+        alert("Tu dispositivo no permite compartir ubicación");
+        return;
+      }
 
-        const mensaje = `
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const mensaje = `
 🐶 Hola, soy Milu y estoy perdida 😢
 
 Una persona acaba de reportar mi última ubicación:
@@ -186,19 +195,19 @@ Una persona acaba de reportar mi última ubicación:
 https://www.google.com/maps?q=${lat},${lon}
 
 Por favor ayúdenme a volver a casa 🙏
-        `;
+          `;
 
-        const telefono = "573134289145"; // 👈 CAMBIA ESTE NÚMERO
-        const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+          const telefono = "573134289145";
+          const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
 
-        window.location.href = url;
-      },
-      function () {
-        alert("No se pudo obtener la ubicación");
-      }
-    );
-  }
-</script>
+          window.location.href = url;
+        },
+        function () {
+          alert("No se pudo obtener la ubicación");
+        }
+      );
+    }
+  </script>
 
 </body>
 </html>
