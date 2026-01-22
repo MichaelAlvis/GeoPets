@@ -3,172 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoPets – Mascota encontrada</title>
+  <title>GeoPets | Milu</title>
 
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
       margin: 0;
-      padding: 0;
-      background: #f7f7f7;
-      color: #333;
+      background: #f4f6f9;
+      padding: 12px;
     }
 
-    /* Logo */
-    .logo {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      width: 45px;
-      z-index: 1000;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
-    .container {
+    .header img {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+    }
+
+    .header span {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px;
       max-width: 420px;
       margin: auto;
-      padding: 20px;
-      text-align: center;
-      background: #ffffff;
-      min-height: 100vh;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .pet-photo {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin-top: 40px;
-      font-size: 26px;
+      text-align: center;
+      font-size: 20px;
+      margin: 6px 0 10px;
     }
 
-    img.pet-photo {
-      width: 100%;
-      max-width: 260px;
-      border-radius: 16px;
-      margin: 15px 0;
+    .info-box {
+      background: #eef2ff;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .info-box strong {
+      color: #1e40af;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     .btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      font-size: 18px;
+      height: 44px;
       border-radius: 10px;
-      text-decoration: none;
-      color: #fff;
+      border: none;
+      font-size: 14px;
+      font-weight: bold;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .btn-call {
-      background: #2b7cff;
-    }
-
-    .btn-wa {
-      background: #25d366;
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
     }
 
     .btn-location {
-      background: #ff9800;
-    }
-
-    .medical {
-      margin-top: 20px;
-      padding: 15px;
-      background: #ffe5e5;
-      color: #b00000;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 15px;
+      background: #2563eb;
+      color: #fff;
     }
 
     .footer {
-      margin-top: 30px;
-      font-size: 13px;
-      color: #777;
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Logo GeoPets -->
-  <img src="./imagenes/icono.jpg" alt="GeoPets" class="logo">
+  <div class="header">
+    <img src="/imagenes/icono.jpg" alt="GeoPets">
+    <span>GeoPets</span>
+  </div>
 
-  <div class="container">
-    <h1 id="pet-name">🐾 GeoPets</h1>
+  <div class="card">
 
-    <img id="pet-photo" class="pet-photo" src="" alt="Foto de la mascota">
+    <img src="/mascotasqr/milu_001_jpeg.jpg" alt="Milu" class="pet-photo">
 
-    <a id="call-btn" class="btn btn-call">📞 Llamar al dueño</a>
-    <a id="wa-btn" class="btn btn-wa" target="_blank">💬 Escribir por WhatsApp</a>
+    <h1>🐶 Milu</h1>
 
-    <button id="location-btn" class="btn btn-location">
-      📍 Compartir ubicación donde encontré a Milu
-    </button>
-
-    <div id="medical-info" class="medical"></div>
-
-    <div class="footer">
-      GeoPets · Ayudando a regresar mascotas a casa 🐶
+    <div class="info-box">
+      <strong>⚠️ Condición médica:</strong><br>
+      Milu sufre de <strong>pénfigo</strong> y necesita <strong>medicamentos diarios con urgencia</strong>.
     </div>
+
+    <div class="info-box">
+      <strong>📞 Dueño:</strong><br>
+      313 428 9145
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-whatsapp" onclick="contactarWhatsapp()">
+        WhatsApp
+      </button>
+
+      <button class="btn btn-location" onclick="compartirUbicacion()">
+        Compartir ubicación
+      </button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Si encontraste a Milu, por favor contacta al dueño 🙏
   </div>
 
   <script>
-    const PETS = {
-      "GP-0001": {
-        petName: "Milu",
-        phone: "3134289145",
-        photo: "./mascotasqr/milu_001.jpeg",
-        medical: "⚠️ Milu sufre de Pénfigo y necesita medicamentos diarios con urgencia."
-      }
-    };
+    function contactarWhatsapp() {
+      const telefono = "573134289145";
+      const mensaje = encodeURIComponent("Hola, encontré a Milu");
+      window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
+    }
 
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const pet = PETS[code];
-
-    if (!pet) {
-      document.querySelector(".container").innerHTML = `
-        <h2>🐾 Este QR aún no ha sido activado</h2>
-        <p>Por favor contacta a GeoPets para activarlo.</p>
-      `;
-    } else {
-      document.getElementById("pet-name").innerText = "🐶 " + pet.petName;
-      document.getElementById("pet-photo").src = pet.photo;
-
-      // Llamar
-      document.getElementById("call-btn").href = "tel:" + pet.phone;
-
-      // WhatsApp básico
-      const baseMessage = "Hola, encontré a Milu";
-      document.getElementById("wa-btn").href =
-        `https://wa.me/57${pet.phone}?text=${encodeURIComponent(baseMessage)}`;
-
-      // Información médica
-      document.getElementById("medical-info").innerText = pet.medical;
-
-      // Compartir ubicación
-      document.getElementById("location-btn").addEventListener("click", () => {
-        if (!navigator.geolocation) {
-          alert("La geolocalización no está disponible en este dispositivo.");
-          return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-
-            const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
-            const message = `Hola, encontré a Milu. Mi ubicación es: ${mapsLink}`;
-
-            window.open(
-              `https://wa.me/57${pet.phone}?text=${encodeURIComponent(message)}`,
-              "_blank"
-            );
-          },
-          () => {
-            alert("No se pudo obtener la ubicación.");
-          }
-        );
-      });
+    function compartirUbicacion() {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const url = `https://www.google.com/maps?q=${lat},${lon}`;
+          window.open(url, "_blank");
+        },
+        () => alert("No se pudo obtener la ubicación")
+      );
     }
   </script>
 
