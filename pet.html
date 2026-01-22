@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GeoPets</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    img {
+      width: 250px;
+      border-radius: 12px;
+    }
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #2b7cff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="pet-name">🐾 GeoPets</h1>
+  <img id="pet-photo" src="" alt="">
+  <p id="owner-name"></p>
+  <a id="phone-link"></a>
+
+  <script>
+    const PETS = {
+      "GP-0001": {
+        petName: "Max",
+        ownerName: "Juan Pérez",
+        phone: "3001234567",
+        photo: "https://placedog.net/500"
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    const pet = PETS[code];
+
+    if (!pet) {
+      document.body.innerHTML = `
+        <h2>🐾 Este QR aún no ha sido activado</h2>
+        <p>Escríbenos a WhatsApp para activarlo.</p>
+      `;
+    } else {
+      document.getElementById("pet-name").innerText = "🐶 " + pet.petName;
+      document.getElementById("pet-photo").src = pet.photo;
+      document.getElementById("owner-name").innerText =
+        "Dueño: " + pet.ownerName;
+      const phoneLink = document.getElementById("phone-link");
+      phoneLink.href = "tel:" + pet.phone;
+      phoneLink.innerText = "📞 Llamar al dueño";
+    }
+  </script>
+
+</body>
+</html>
