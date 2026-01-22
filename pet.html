@@ -209,5 +209,42 @@ Por favor ayúdenme a volver a casa 🙏
     }
   </script>
 
+
+  <!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+  // 🔑 Inicializar EmailJS (PUBLIC KEY)
+  (function () {
+    emailjs.init("-SdCbCtUZl1XbPNEr");
+  })();
+
+  // 📧 CORREO AUTOMÁTICO AL ESCANEAR EL QR
+  window.onload = function () {
+    const fecha = new Date().toLocaleDateString("es-CO");
+    const hora = new Date().toLocaleTimeString("es-CO");
+
+    emailjs.send(
+      "service_ehersct",   // Service ID
+      "template_tj7zkee",  // Template ID
+      {
+        placa_id: "GP-0001",
+        mascota: "Milu",
+        fecha: fecha,
+        hora: hora,
+        mapa_url: "Ubicación no compartida"
+      }
+    ).then(
+      function () {
+        console.log("Correo de escaneo enviado");
+      },
+      function (error) {
+        console.error("Error enviando correo", error);
+      }
+    );
+  };
+</script>
+
 </body>
 </html>
+
