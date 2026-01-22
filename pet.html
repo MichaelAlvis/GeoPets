@@ -1,207 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoPets | Milu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoPets - Milu</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      background: #f4f6f9;
-      padding: 12px;
+      background: #f6f7f9;
     }
 
-    /* HEADER */
-    .header {
+    header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .header img {
-      width: 34px;
-      height: 34px;
-      border-radius: 6px;
-    }
-
-    .header span {
-      font-size: 18px;
-      font-weight: bold;
-      color: #1f2937;
-    }
-
-    /* CARD */
-    .card {
+      gap: 10px;
+      padding: 12px 16px;
       background: #ffffff;
-      border-radius: 14px;
-      padding: 14px;
-      max-width: 420px;
-      margin: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-bottom: 1px solid #ddd;
     }
 
-    .pet-photo {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 10px;
+    header img {
+      height: 40px;
     }
 
-    h1 {
-      text-align: center;
+    header h1 {
       font-size: 20px;
-      margin: 6px 0 6px;
+      margin: 0;
+      color: #2c3e50;
     }
 
-    .pet-message {
-      text-align: center;
-      font-size: 14px;
-      color: #374151;
-      margin-bottom: 10px;
+    .container {
+      padding: 16px;
     }
 
-    .info-box {
-      background: #eef2ff;
+    .card {
+      background: white;
       border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 8px;
-      font-size: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      text-align: center;
     }
 
-    .info-box strong {
-      color: #1e40af;
-    }
-
-    /* BUTTONS */
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 10px;
+    .card img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 10px;
     }
 
     .btn {
-      height: 48px;
-      border-radius: 10px;
-      border: none;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6px;
-    }
-
-    .btn-whatsapp {
-      background: #25D366;
-      color: #fff;
-    }
-
-    .btn-location {
-      background: #2563eb;
-      color: #fff;
-    }
-
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: #6b7280;
+      display: block;
+      width: 100%;
+      padding: 12px;
       margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      background: #25d366;
+      color: white;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #1ebe5d;
+    }
+
+    .text {
+      font-size: 15px;
+      color: #333;
+      line-height: 1.4;
+      margin-top: 8px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <img src="imagenes/icono.jpg" alt="GeoPets">
-    <span>GeoPets</span>
-  </div>
+<header>
+  <img src="logo_geopets.png" alt="GeoPets">
+  <h1>GeoPets</h1>
+</header>
 
-  <!-- CARD -->
+<div class="container">
+
   <div class="card">
-
-    <img src="mascotasqr/milu_001.jpeg" alt="Milu" class="pet-photo">
-
-    <h1>🐶 Soy Milu</h1>
-
-    <div class="pet-message">
+    <img src="milu_001.jpeg" alt="Milu">
+    <p class="text">
+      🐶 <strong>Soy Milu</strong><br>
       Estoy perdida y tengo mucho miedo.<br>
-      Si me encontraste, por favor ayúdame a volver a casa 🙏
-    </div>
+      Si me ves, por favor repórtale mi última ubicación a mi familia 💔
+    </p>
 
-    <div class="info-box">
-      <strong>⚠️ Información importante:</strong><br>
-      Tengo <strong>pénfigo</strong> y necesito <strong>medicamentos diarios con urgencia</strong>.
-    </div>
-
-    <div class="info-box">
-      <strong>📞 Mi humano:</strong><br>
-      313 428 9145
-    </div>
-
-    <div class="actions">
-      <button class="btn btn-whatsapp" onclick="contactarWhatsapp()">
-        Escribir por WhatsApp
-      </button>
-
-      <button class="btn btn-location" onclick="reportarUbicacion()">
-        Reportar última ubicación de Milu
-      </button>
-    </div>
-
+    <button class="btn" onclick="reportarUbicacion()">
+      📍 Reportar última ubicación de Milu
+    </button>
   </div>
 
-  <div class="footer">
-    Gracias por ayudar 💙 GeoPets conecta mascotas con sus familias
-  </div>
+</div>
 
-  <script>
-    function contactarWhatsapp() {
-      const telefono = "573134289145";
-      const mensaje = encodeURIComponent(
-        "Hola, encontré a Milu 🐶 y quiero ayudar a que vuelva a casa."
-      );
-      window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
+<script>
+  function reportarUbicacion() {
+    if (!navigator.geolocation) {
+      alert("Tu dispositivo no permite compartir ubicación");
+      return;
     }
 
-    function reportarUbicacion() {
-      if (!navigator.geolocation) {
-        alert("Tu dispositivo no permite compartir ubicación.");
-        return;
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const mensaje = `
+🐶 Hola, soy Milu y estoy perdida 😢
+
+Una persona acaba de reportar mi última ubicación:
+
+📍 Latitud: ${lat}
+📍 Longitud: ${lon}
+
+🗺️ Ver en el mapa:
+https://www.google.com/maps?q=${lat},${lon}
+
+Por favor ayúdenme a volver a casa 🙏
+        `;
+
+        const telefono = "573134289145"; // 👈 CAMBIA ESTE NÚMERO
+        const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+
+        window.location.href = url;
+      },
+      function () {
+        alert("No se pudo obtener la ubicación");
       }
-
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-
-          const telefono = "573134289145";
-
-          const mensaje = encodeURIComponent(
-            `Hola, encontré a Milu 🐶.\n\n` +
-            `Esta es su última ubicación:\n` +
-            `https://www.google.com/maps?q=${lat},${lon}\n\n` +
-            `Quiero ayudar a que vuelva a casa.`
-          );
-
-          window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
-        },
-        () => {
-          alert("No se pudo obtener la ubicación.");
-        }
-      );
-    }
-  </script>
+    );
+  }
+</script>
 
 </body>
 </html>
