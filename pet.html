@@ -210,7 +210,7 @@ Por favor ayúdenme a volver a casa 🙏
   </script>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
   // 🔐 Inicializar EmailJS
   emailjs.init("-SdCbCtUZl1XbPNEr"); // TU PUBLIC KEY
@@ -220,6 +220,7 @@ Por favor ayúdenme a volver a casa 🙏
 
   const PLACA_ID = "GP-MILU-001";
   const MASCOTA = "Milu";
+  const TELEFONO_WHATSAPP = "573134289145";
 
   function fechaHoraActual() {
     const now = new Date();
@@ -229,7 +230,7 @@ Por favor ayúdenme a volver a casa 🙏
     };
   }
 
-  // 📩 1️⃣ EMAIL AUTOMÁTICO AL ESCANEAR (al cargar la página)
+  // 📩 1️⃣ EMAIL AUTOMÁTICO AL ESCANEAR (SIN UBICACIÓN)
   window.addEventListener("load", function () {
     const fh = fechaHoraActual();
 
@@ -242,7 +243,8 @@ Por favor ayúdenme a volver a casa 🙏
     });
   });
 
-  // 📍 2️⃣ EMAIL AUTOMÁTICO AL COMPARTIR UBICACIÓN
+  // 📍 2️⃣ AL COMPARTIR UBICACIÓN:
+  // 📩 correo silencioso + 📲 WhatsApp normal
   function reportarUbicacion() {
     if (!navigator.geolocation) {
       alert("Tu dispositivo no permite compartir ubicación");
@@ -255,6 +257,7 @@ Por favor ayúdenme a volver a casa 🙏
         const lon = position.coords.longitude;
         const fh = fechaHoraActual();
 
+        // 📩 ENVÍO SILENCIOSO DEL CORREO
         emailjs.send(SERVICE_ID, TEMPLATE_ID, {
           placa_id: PLACA_ID,
           mascota: MASCOTA,
@@ -263,7 +266,19 @@ Por favor ayúdenme a volver a casa 🙏
           coordenadas: `${lat}, ${lon}`
         });
 
-        alert("📍 Ubicación enviada correctamente. ¡Gracias por ayudar a Milu!");
+        // 📲 REDIRECCIÓN NORMAL A WHATSAPP
+        const mensajeWhatsapp =
+`🐶 Hola, encontré a Milu
+
+📍 Mi ubicación actual es:
+https://www.google.com/maps?q=${lat},${lon}
+
+Quiero ayudarte a que vuelva a casa 🙏`;
+
+        const urlWhatsapp =
+          "https://wa.me/" + TELEFONO_WHATSAPP + "?text=" + encodeURIComponent(mensajeWhatsapp);
+
+        window.location.href = urlWhatsapp;
       },
       function () {
         alert("No se pudo obtener la ubicación");
@@ -272,7 +287,9 @@ Por favor ayúdenme a volver a casa 🙏
   }
 </script>
 
+
 </body>
 </html>
+
 
 
