@@ -14,6 +14,15 @@
       color: #333;
     }
 
+    /* Logo */
+    .logo {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 45px;
+      z-index: 1000;
+    }
+
     .container {
       max-width: 420px;
       margin: auto;
@@ -24,11 +33,11 @@
     }
 
     h1 {
-      margin-top: 10px;
+      margin-top: 40px;
       font-size: 26px;
     }
 
-    img {
+    img.pet-photo {
       width: 100%;
       max-width: 260px;
       border-radius: 16px;
@@ -44,6 +53,7 @@
       border-radius: 10px;
       text-decoration: none;
       color: #fff;
+      cursor: pointer;
     }
 
     .btn-call {
@@ -52,6 +62,10 @@
 
     .btn-wa {
       background: #25d366;
+    }
+
+    .btn-location {
+      background: #ff9800;
     }
 
     .medical {
@@ -74,13 +88,20 @@
 
 <body>
 
+  <!-- Logo GeoPets -->
+  <img src="./imagenes/icono.jpg" alt="GeoPets" class="logo">
+
   <div class="container">
     <h1 id="pet-name">🐾 GeoPets</h1>
 
-    <img id="pet-photo" src="" alt="Foto de la mascota">
+    <img id="pet-photo" class="pet-photo" src="" alt="Foto de la mascota">
 
     <a id="call-btn" class="btn btn-call">📞 Llamar al dueño</a>
     <a id="wa-btn" class="btn btn-wa" target="_blank">💬 Escribir por WhatsApp</a>
+
+    <button id="location-btn" class="btn btn-location">
+      📍 Compartir ubicación donde encontré a Milu
+    </button>
 
     <div id="medical-info" class="medical"></div>
 
@@ -112,16 +133,42 @@
       document.getElementById("pet-name").innerText = "🐶 " + pet.petName;
       document.getElementById("pet-photo").src = pet.photo;
 
-      // Llamada
+      // Llamar
       document.getElementById("call-btn").href = "tel:" + pet.phone;
 
-      // WhatsApp con mensaje automático
-      const message = encodeURIComponent("Hola, encontré a Milu");
+      // WhatsApp básico
+      const baseMessage = "Hola, encontré a Milu";
       document.getElementById("wa-btn").href =
-        `https://wa.me/57${pet.phone}?text=${message}`;
+        `https://wa.me/57${pet.phone}?text=${encodeURIComponent(baseMessage)}`;
 
       // Información médica
       document.getElementById("medical-info").innerText = pet.medical;
+
+      // Compartir ubicación
+      document.getElementById("location-btn").addEventListener("click", () => {
+        if (!navigator.geolocation) {
+          alert("La geolocalización no está disponible en este dispositivo.");
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
+            const message = `Hola, encontré a Milu. Mi ubicación es: ${mapsLink}`;
+
+            window.open(
+              `https://wa.me/57${pet.phone}?text=${encodeURIComponent(message)}`,
+              "_blank"
+            );
+          },
+          () => {
+            alert("No se pudo obtener la ubicación.");
+          }
+        );
+      });
     }
   </script>
 
