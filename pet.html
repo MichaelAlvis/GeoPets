@@ -17,6 +17,7 @@
       padding: 12px;
     }
 
+    /* HEADER */
     .header {
       display: flex;
       align-items: center;
@@ -36,6 +37,7 @@
       color: #1f2937;
     }
 
+    /* CARD */
     .card {
       background: #ffffff;
       border-radius: 14px;
@@ -76,6 +78,7 @@
       color: #1e40af;
     }
 
+    /* BUTTONS */
     .actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -84,7 +87,7 @@
     }
 
     .btn {
-      height: 46px;
+      height: 48px;
       border-radius: 10px;
       border: none;
       font-size: 13px;
@@ -181,11 +184,21 @@
         (pos) => {
           const lat = pos.coords.latitude;
           const lon = pos.coords.longitude;
-          const link = `https://www.google.com/maps?q=${lat},${lon}`;
-          alert("Gracias 💙 Ahora compártenos tu ubicación.");
-          window.open(link, "_blank");
+
+          const telefono = "573134289145";
+
+          const mensaje = encodeURIComponent(
+            `Hola, encontré a Milu 🐶.\n\n` +
+            `Esta es su última ubicación:\n` +
+            `https://www.google.com/maps?q=${lat},${lon}\n\n` +
+            `Quiero ayudar a que vuelva a casa.`
+          );
+
+          window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
         },
-        () => alert("No se pudo obtener la ubicación.")
+        () => {
+          alert("No se pudo obtener la ubicación.");
+        }
       );
     }
   </script>
