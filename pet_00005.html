@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoPets | Placa 00005</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6f9;
+      padding: 12px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .header img {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+    }
+
+    .header span {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .welcome-icon {
+      text-align: center;
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin: 10px 0;
+      color: #1f2937;
+    }
+
+    .welcome-message {
+      text-align: center;
+      font-size: 15px;
+      color: #374151;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .info-box {
+      background: #eef2ff;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: #1e40af;
+    }
+
+    .info-box ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    .info-box li {
+      margin: 4px 0;
+    }
+
+    .placa-info {
+      background: #fef3c7;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .placa-info strong {
+      color: #92400e;
+      font-size: 16px;
+    }
+
+    .btn {
+      width: 100%;
+      height: 52px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #25D366;
+      color: #fff;
+      margin-top: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <img src="imagenes/icono.jpg" alt="GeoPets">
+    <span>GeoPets</span>
+  </div>
+
+  <div class="card">
+
+    <div class="welcome-icon">
+      🎉
+    </div>
+
+    <h1>¡Bienvenido a GeoPets!</h1>
+
+    <div class="welcome-message">
+      Has escaneado una placa que aún no tiene mascota registrada.<br>
+      Por favor sigue estas instrucciones para activarla:
+    </div>
+
+    <div class="placa-info">
+      <strong>🏷️ Placa ID: 00005</strong>
+    </div>
+
+    <div class="info-box">
+      <strong>📋 Instrucciones:</strong>
+      <ul>
+        <li>Escribe al WhatsApp haciendo clic en el botón de abajo</li>
+        <li>Envía los datos de tu mascota</li>
+        <li>Tu información aparecerá aquí una vez registrada</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <strong>📱 Datos que necesitamos:</strong>
+      <ul>
+        <li>Nombre de tu mascota</li>
+        <li>Foto de tu mascota</li>
+        <li>Tu número de contacto</li>
+        <li>Información médica importante (opcional)</li>
+      </ul>
+    </div>
+
+    <button class="btn" onclick="contactarWhatsapp()">
+      💬 Escribir por WhatsApp
+    </button>
+
+  </div>
+
+  <div class="footer">
+    Gracias por confiar en GeoPets 💙 Conectamos mascotas con sus familias
+  </div>
+
+  <script>
+    function contactarWhatsapp() {
+      const telefono = "573214768734";
+      const mensaje = `
+🎉 Hola GeoPets!
+
+Acabo de escanear la placa ID: 00005 y quiero registrar los datos de mi mascota.
+
+Por favor indícame qué información necesitan para activar la placa.
+
+¡Gracias! 🐾
+      `;
+
+      const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+      window.location.href = url;
+    }
+  </script>
+
+</body>
+</html>
