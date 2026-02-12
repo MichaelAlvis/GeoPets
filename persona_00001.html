@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoUbica | Inés Romero</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6f9;
+      padding: 12px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .header img {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+    }
+
+    .header span {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .person-photo {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 20px;
+      margin: 6px 0 6px;
+    }
+
+    .person-message {
+      text-align: center;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 10px;
+    }
+
+    .info-box {
+      background: #fef2f2;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .info-box strong {
+      color: #dc2626;
+    }
+
+    .info-box.contact {
+      background: #eef2ff;
+    }
+
+    .info-box.contact strong {
+      color: #1e40af;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      height: 48px;
+      border-radius: 10px;
+      border: none;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
+    }
+
+    .btn-location {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <img src="imagenes/geoubica_logo.jpg" alt="GeoUbica">
+    <span>GeoUbica</span>
+  </div>
+
+  <div class="card">
+
+    <img src="mascotasqr/geoubica_ines_0001.jpeg" alt="Inés Romero" class="person-photo">
+
+    <h1>👤 Inés Romero</h1>
+
+    <div class="person-message">
+      Si me encontraste desorientada o perdida,<br>
+      por favor ayúdame a regresar a casa 🙏
+    </div>
+
+    <div class="info-box">
+      <strong>⚠️ Información médica importante:</strong><br>
+      Persona con <strong>accidente cerebrovascular</strong>.<br>
+      Puede estar desorientada.
+    </div>
+
+    <div class="info-box contact">
+      <strong>📞 En caso de emergencia contactar a:</strong><br>
+      3174199958<br>
+      3203013598<br>
+      3201218479
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-whatsapp" onclick="contactarWhatsapp()">
+        Escribir por WhatsApp
+      </button>
+
+      <button class="btn btn-location" onclick="reportarUbicacion()">
+        Reportar ubicación de Inés
+      </button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Gracias por ayudar 💙 GeoUbica conecta personas con sus familias
+  </div>
+
+  <script>
+    function contactarWhatsapp() {
+      const telefono = "573174199958";
+      const mensaje = `
+👤 Hola, encontré a Inés Romero
+
+Está desorientada y necesita ayuda para regresar a casa.
+
+Por favor comuníquense lo antes posible.
+      `;
+
+      const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+      window.location.href = url;
+    }
+
+    function reportarUbicacion() {
+      if (!navigator.geolocation) {
+        alert("Tu dispositivo no permite compartir ubicación");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const mensaje = `
+👤 URGENTE - Ubicación de Inés Romero
+
+Una persona acaba de reportar su ubicación:
+
+🗺️ Ver en el mapa:
+https://www.google.com/maps?q=${lat},${lon}
+
+Por favor acudan lo antes posible.
+          `;
+
+          const telefono = "573174199958";
+          const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+
+          window.location.href = url;
+        },
+        function () {
+          alert("No se pudo obtener la ubicación");
+        }
+      );
+    }
+  </script>
+    
+
+</body>
+</html>
