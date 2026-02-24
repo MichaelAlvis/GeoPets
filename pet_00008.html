@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoPets | Placa 00008</title>
+  <title>GeoPets | Toor</title>
 
   <style>
     * {
@@ -39,91 +39,79 @@
     .card {
       background: #ffffff;
       border-radius: 14px;
-      padding: 20px;
+      padding: 14px;
       max-width: 420px;
       margin: auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    .welcome-icon {
-      text-align: center;
-      font-size: 64px;
-      margin-bottom: 16px;
+    .pet-photo {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
     }
 
     h1 {
       text-align: center;
-      font-size: 22px;
-      margin: 10px 0;
-      color: #1f2937;
+      font-size: 20px;
+      margin: 6px 0 6px;
     }
 
-    .welcome-message {
+    .pet-message {
       text-align: center;
-      font-size: 15px;
+      font-size: 14px;
       color: #374151;
-      margin-bottom: 20px;
-      line-height: 1.6;
+      margin-bottom: 10px;
     }
 
     .info-box {
       background: #eef2ff;
       border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 12px;
+      padding: 10px;
+      margin-bottom: 8px;
       font-size: 14px;
-      line-height: 1.6;
     }
 
     .info-box strong {
       color: #1e40af;
     }
 
-    .info-box ul {
-      margin: 8px 0;
-      padding-left: 20px;
-    }
-
-    .info-box li {
-      margin: 4px 0;
-    }
-
-    .placa-info {
-      background: #fef3c7;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 16px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .placa-info strong {
-      color: #92400e;
-      font-size: 16px;
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     .btn {
-      width: 100%;
-      height: 52px;
+      height: 48px;
       border-radius: 10px;
       border: none;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      padding: 6px;
+    }
+
+    .btn-whatsapp {
       background: #25D366;
       color: #fff;
-      margin-top: 12px;
+    }
+
+    .btn-location {
+      background: #2563eb;
+      color: #fff;
     }
 
     .footer {
       text-align: center;
       font-size: 12px;
       color: #6b7280;
-      margin-top: 14px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -137,81 +125,96 @@
 
   <div class="card">
 
-    <div class="welcome-icon">
-      🎉
-    </div>
+    <img src="mascotasqr/toor_00008.jpeg" alt="Toor" class="pet-photo">
 
-    <h1>¡Bienvenido a GeoPets!</h1>
+    <h1>🐶 Soy Toor</h1>
 
-    <div class="welcome-message">
-      Has escaneado una placa que aún no tiene mascota registrada.<br>
-      Por favor sigue estas instrucciones para activarla:
-    </div>
-
-    <div class="placa-info">
-      <strong>🏷️ Placa ID: 00008</strong>
+    <div class="pet-message">
+      Estoy perdido y tengo mucho miedo.<br>
+      Si me encontraste, por favor ayúdame a volver a casa 🙏
     </div>
 
     <div class="info-box">
-      <strong>📋 Instrucciones:</strong>
-      <ul>
-        <li>Escribe al WhatsApp haciendo clic en el botón de abajo</li>
-        <li>Envía los datos de tu mascota</li>
-        <li>Tu información aparecerá aquí una vez registrada</li>
-      </ul>
+      <strong>📞 Mi humano:</strong><br>
+      321 966 3090
     </div>
 
-    <div class="info-box">
-      <strong>📱 Datos que necesitamos:</strong>
-      <ul>
-        <li>Nombre de tu mascota</li>
-        <li>Foto de tu mascota</li>
-        <li>Tu número de contacto</li>
-        <li>Información médica importante (opcional)</li>
-      </ul>
-    </div>
+    <div class="actions">
+      <button class="btn btn-whatsapp" onclick="contactarWhatsapp()">
+        Escribir por WhatsApp
+      </button>
 
-    <button class="btn" onclick="contactarWhatsapp()">
-      💬 Escribir por WhatsApp
-    </button>
+      <button class="btn btn-location" onclick="reportarUbicacion()">
+        Reportar última ubicación de Toor
+      </button>
+    </div>
 
   </div>
 
   <div class="footer">
-    Gracias por confiar en GeoPets 💙 Conectamos mascotas con sus familias
+    Gracias por ayudar 💙 GeoPets conecta mascotas con sus familias
   </div>
 
   <script>
     function contactarWhatsapp() {
-      const telefono = "573214768734";
+      const telefono = "573219663090";
       const mensaje = `
-🎉 Hola GeoPets!
+🐶 Hola, soy Toor 😢
 
-Acabo de escanear la placa ID: 00008 y quiero registrar los datos de mi mascota.
-
-Por favor indícame qué información necesitan para activar la placa.
-
-¡Gracias! 🐾
+alguien me encontró y quiere ayudarme a estar contigo de nuevo 😢
+Estoy perdido y necesito volver a casa.
       `;
 
       const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
       window.location.href = url;
     }
+
+    function reportarUbicacion() {
+      if (!navigator.geolocation) {
+        alert("Tu dispositivo no permite compartir ubicación");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const mensaje = `
+🐶 Hola, soy Toor y estoy perdido 😢
+
+Una persona acaba de reportar mi última ubicación:
+
+🗺️ Ver en el mapa:
+https://www.google.com/maps?q=${lat},${lon}
+
+Por favor ayúdenme a volver a casa 🙏
+          `;
+
+          const telefono = "573219663090";
+          const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+
+          window.location.href = url;
+        },
+        function () {
+          alert("No se pudo obtener la ubicación");
+        }
+      );
+    }
   </script>
- </script>
+
+  <div style="margin-top: 12px; display: flex; gap: 10px; justify-content: center; align-items: center;">
+    <a href="https://soygeopets.vercel.app/" target="_blank" style="color: #2563eb; text-decoration: none; font-size: 13px;">
+      🌐 Sitio Web
+    </a>
     
-    <div style="margin-top: 12px; display: flex; gap: 10px; justify-content: center; align-items: center;">
-      <a href="https://soygeopets.vercel.app/" target="_blank" style="color: #2563eb; text-decoration: none; font-size: 13px;">
-        🌐 Sitio Web
-      </a>
-      
-      <span style="color: #d1d5db;">|</span>
-      
-      <a href="https://www.facebook.com/profile.php?id=61571915857775" target="_blank" 
-         style="background: #1877f2; color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
-        Facebook
-      </a>
-    </div>
+    <span style="color: #d1d5db;">|</span>
+    
+    <a href="https://www.facebook.com/profile.php?id=61571915857775" target="_blank" 
+       style="background: #1877f2; color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+      Facebook
+    </a>
   </div>
+
 </body>
 </html>
