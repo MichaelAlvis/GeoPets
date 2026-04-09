@@ -775,3 +775,17 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+@media (max-width: 768px) {
+
+    .header-container {
+        padding: 10px; /* 👈 reduce espacio lateral */
+    }
+
+    .header {
+        max-width: 100%; /* 👈 ocupa todo el ancho */
+        margin: 0; /* 👈 quita centrado raro */
+        border-radius: 20px; /* opcional, se ve mejor en móvil */
+    }
+
+}
