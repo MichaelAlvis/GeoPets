@@ -12,10 +12,30 @@
   <link rel="icon" type="image/png" href="imagenes/icono.jpg">
 </head>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let lastScroll = 0;
+    const navbar = document.getElementById("navbar");
+
+    window.addEventListener("scroll", function () {
+      let currentScroll = window.pageYOffset;
+
+      if (currentScroll > lastScroll && currentScroll > 50) {
+        navbar.classList.add("header-hidden");
+      } else {
+        navbar.classList.remove("header-hidden");
+      }
+
+      lastScroll = currentScroll;
+    });
+  });
+</script>
+
 <body>
 
   <!-- NAVBAR FLOTANTE GLASSMORPHISM -->
-  <div class="header-container">
+  <!-- NAVBAR -->
+  <div class="header-container" id="navbar">
     <header class="header">
       <div class="header-logo">
         <img src="imagenes/icono.jpg" alt="GeoPets Logo" onerror="this.style.display='none'">
@@ -25,14 +45,18 @@
         <a href="mapa.html">Ver Mapa</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#servicios">Servicios</a>
-        <a href="https://wa.me/573214768734?text=Hola%20quiero%20más%20información%20sobre%20GeoPets" target="_blank"
-          class="btn-primary">Contacto WhatsApp</a>
       </nav>
     </header>
   </div>
 
+  <!-- BOTÓN WHATSAPP FIJO -->
+  <a href="https://wa.me/573214768734?text=Hola,%20quiero%20activar%20el%20servicio%20de%20GeoPets%20para%20encontrar%20mi%20mascota%20perdida"
+    target="_blank" class="whatsapp-float">
+    Ayuda
+  </a>
+
   <!-- HERO SECTION PRINCIPAL -->
-<section class="hero">
+  <section class="hero">
     <div class="hero-badge">Protegiendo a los que más amas 🐾</div>
     <h1>La plataforma inteligente para encontrar <span>Mascotas Perdidas</span></h1>
     <p>Utilizamos tecnología geoespacial, análisis de datos y una red de comunidad activa para conectar mascotas
