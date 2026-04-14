@@ -230,7 +230,8 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 /* MAP TOPBAR */
 .map-topbar{
   position:absolute;top:16px;right:16px;
-  display:flex;gap:8px;z-index:500;align-items:center;
+  display:flex;gap:8px;z-index:1000;align-items:center;
+  pointer-events:auto;
 }
 .map-btn{
   background:var(--bg-800);
@@ -387,7 +388,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
     left:0;
     right:0;
     top:auto;
-    z-index:500;
+    z-index:2000;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -586,10 +587,10 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="map-topbar">
-      <a class="map-btn" href="https://soygeopets.vercel.app" style="text-decoration:none;">
+      <button class="map-btn" onclick="navigateHome()" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         Volver al inicio
-      </a>
+      </button>
       <button class="map-btn" id="btnSatelite" onclick="toggleBasemap()" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Satélite
@@ -609,7 +610,17 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   </div>
 </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js">
+// Evitar que Leaflet capture toques en la barra de botones inferior
+document.addEventListener('DOMContentLoaded', function(){
+  var topbar = document.querySelector('.map-topbar');
+  if(topbar){
+    topbar.addEventListener('touchstart', function(e){ e.stopPropagation(); }, {passive:true, capture:true});
+    topbar.addEventListener('touchend', function(e){ e.stopPropagation(); }, {passive:true, capture:true});
+  }
+});
+
+</script>
 <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 <script>
 // =============================================
@@ -876,7 +887,7 @@ function geolocate(){
 }
 
 function navigateHome(){
-  window.location.href = 'https://soygeopets.vercel.app';
+  location.replace('https://soygeopets.vercel.app');
 }
 
 // =============================================
