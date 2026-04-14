@@ -353,16 +353,17 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 @media(max-width:768px){
   .sidebar{position:absolute;left:0;top:0;height:100%;transform:translateX(-100%);transition:transform 0.3s ease;z-index:600}
   .sidebar.open{transform:translateX(0)}
-  .sidebar-toggle{display:flex;align-items:center;justify-content:center}
+  .sidebar-toggle{display:flex;align-items:center;justify-content:center;z-index:700}
   .map-topbar{right:auto;left:56px}
 
   /* Cambios para móvil */
   .map-topbar {
     position: absolute;
-    bottom: 16px;
+    bottom: 60px;
     left: 16px;
     top: auto;
     right: auto;
+    z-index: 500;
   }
   .map-legend {
     position: absolute;
@@ -370,13 +371,15 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     right: 16px;
     bottom: auto;
     left: auto;
+    z-index: 400;
   }
   .sidebar-toggle {
     position: absolute;
-    bottom: 16px;
+    bottom: 60px;
     right: 16px;
     top: auto;
     left: auto;
+    z-index: 700;
   }
 }
 
