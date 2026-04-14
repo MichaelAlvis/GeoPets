@@ -586,11 +586,11 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="map-topbar">
-      <button class="map-btn" onclick="window.location.href='./index.html'">
+      <button class="map-btn" onclick="navigateHome()" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         Volver al inicio
       </button>
-      <button class="map-btn" id="btnSatelite" onclick="toggleBasemap()">
+      <button class="map-btn" id="btnSatelite" onclick="toggleBasemap()" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Satélite
       </button>
@@ -873,6 +873,11 @@ function geolocate(){
       .bindPopup('<b>Tu ubicación</b>').openPopup();
     showToast('¡Listo!','Mapa centrado en tu ubicación');
   },()=>showToast('Error','No se pudo obtener la ubicación'));
+}
+
+function navigateHome(){
+  const basePath = location.pathname.replace(/\/[^\/]*$/, '/index.html');
+  window.location.href = basePath;
 }
 
 // =============================================
