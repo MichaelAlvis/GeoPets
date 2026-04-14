@@ -379,7 +379,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     padding:9px 8px;
   }
 
-  /* Leyenda → esquina superior derecha */
+  /* Leyenda → esquina superior derecha, compacta */
   .map-legend{
     position:fixed;
     top:12px;
@@ -387,6 +387,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     bottom:auto;
     left:auto;
     z-index:490;
+    width:auto;
+    min-width:0;
+    max-width:150px;
+    padding:8px 12px;
   }
 
   /* Hamburguesa → esquina inferior derecha, sobre la barra */
@@ -425,7 +429,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
   position:absolute;bottom:30px;left:16px;z-index:400;
   background:var(--bg-800);border:1px solid var(--border);
   border-radius:var(--radius-md);padding:12px 14px;
-  font-size:11px;min-width:130px;
+  font-size:11px;width:fit-content;
 }
 .map-legend-title{font-weight:600;color:var(--text-secondary);margin-bottom:8px;font-size:10px;text-transform:uppercase;letter-spacing:0.06em}
 .legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
