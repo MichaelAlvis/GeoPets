@@ -916,16 +916,20 @@ window.addEventListener('load',()=>{
       document.getElementById('sidebar').classList.add('open');
       const toggleBtn=document.getElementById('sidebarToggle');
       toggleBtn.classList.add('pulse');
-      // Remover la animación después de que termine
+      // Remover la animación y guardar (cerrar) después de que termine
       setTimeout(()=>{
         toggleBtn.classList.remove('pulse');
+        document.getElementById('sidebar').classList.remove('open');
       },1400);
     },800);
   }
   
   setTimeout(()=>{
     document.getElementById('loadingOverlay').classList.add('hidden');
-    showToast('¡GeoPets cargado!',MASCOTAS.length+' mascotas en el mapa');
+    // Solo mostrar toast en PC, no en móvil
+    if(!isMobile){
+      showToast('¡GeoPets cargado!',MASCOTAS.length+' mascotas en el mapa');
+    }
   },1200);
 });
 </script>
