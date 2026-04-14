@@ -353,33 +353,70 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 @media(max-width:768px){
   .sidebar{position:absolute;left:0;top:0;height:100%;transform:translateX(-100%);transition:transform 0.3s ease;z-index:600}
   .sidebar.open{transform:translateX(0)}
-  .sidebar-toggle{display:flex;align-items:center;justify-content:center;z-index:700}
-  .map-topbar{right:auto;left:56px}
 
-  /* Cambios para móvil */
-  .map-topbar {
-    position: absolute;
-    bottom: 60px;
-    left: 16px;
-    top: auto;
-    right: auto;
-    z-index: 500;
+  /* Botones de acción → barra inferior centrada */
+  .map-topbar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    top:auto;
+    z-index:500;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    background:var(--bg-900);
+    border-top:1px solid var(--border);
+    padding:10px 16px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));
   }
-  .map-legend {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    bottom: auto;
-    left: auto;
-    z-index: 400;
+  .map-topbar .map-btn{
+    flex:1;
+    max-width:120px;
+    justify-content:center;
+    font-size:11px;
+    padding:9px 8px;
   }
-  .sidebar-toggle {
-    position: absolute;
-    bottom: 60px;
-    right: 16px;
-    top: auto;
-    left: auto;
-    z-index: 700;
+
+  /* Leyenda → esquina superior derecha */
+  .map-legend{
+    position:fixed;
+    top:12px;
+    right:12px;
+    bottom:auto;
+    left:auto;
+    z-index:490;
+  }
+
+  /* Hamburguesa → esquina inferior derecha, sobre la barra */
+  .sidebar-toggle{
+    position:fixed;
+    bottom:calc(64px + env(safe-area-inset-bottom));
+    right:16px;
+    top:auto;
+    left:auto;
+    z-index:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:44px;
+    height:44px;
+    border-radius:var(--radius-full);
+    background:var(--bg-700);
+    border:1px solid var(--border-light);
+    box-shadow:0 4px 16px rgba(0,0,0,0.4);
+  }
+
+  /* Toast no tape la barra inferior */
+  .toast{
+    bottom:calc(80px + env(safe-area-inset-bottom));
+    right:12px;
+  }
+
+  /* Zoom controls del mapa, no tapar barra inferior */
+  .leaflet-control-zoom{
+    margin-bottom:calc(80px + env(safe-area-inset-bottom)) !important;
   }
 }
 
