@@ -876,8 +876,8 @@ function geolocate(){
 }
 
 function navigateHome(){
-  const basePath = location.pathname.replace(/\/[^\/]*$/, '/index.html');
-  window.location.href = basePath;
+  const url = new URL('./index.html', window.location.href);
+  window.location.href = url.href;
 }
 
 // =============================================
