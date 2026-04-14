@@ -270,6 +270,11 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   animation:spin 0.8s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse-hamburger{
+  0%{box-shadow:0 4px 16px rgba(16,185,129,0.8);}
+  50%{box-shadow:0 4px 16px rgba(16,185,129,0.2);}
+  100%{box-shadow:0 4px 16px rgba(16,185,129,0.8);}
+}
 .loading-text{color:var(--text-secondary);font-size:14px}
 .loading-sub{color:var(--text-muted);font-size:12px}
 
@@ -432,6 +437,10 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
     background:var(--bg-700);
     border:1px solid var(--border-light);
     box-shadow:0 4px 16px rgba(0,0,0,0.4);
+    transition:all 0.3s ease;
+  }
+  .sidebar-toggle.pulse{
+    animation:pulse-hamburger 0.6s ease-in-out 2;
   }
 
   /* Toast no tape la barra inferior */
@@ -899,6 +908,21 @@ function showToast(text,sub){
 // =============================================
 window.addEventListener('load',()=>{
   loadMarkers(MASCOTAS);
+  
+  // Auto-abrir sidebar y animar botón en móvil
+  const isMobile=window.innerWidth<=768;
+  if(isMobile){
+    setTimeout(()=>{
+      document.getElementById('sidebar').classList.add('open');
+      const toggleBtn=document.getElementById('sidebarToggle');
+      toggleBtn.classList.add('pulse');
+      // Remover la animación después de que termine
+      setTimeout(()=>{
+        toggleBtn.classList.remove('pulse');
+      },1400);
+    },800);
+  }
+  
   setTimeout(()=>{
     document.getElementById('loadingOverlay').classList.add('hidden');
     showToast('¡GeoPets cargado!',MASCOTAS.length+' mascotas en el mapa');
