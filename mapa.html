@@ -349,6 +349,18 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .custom-marker.encontrado{background:#10b981}
 .custom-marker.adopcion{background:#3b82f6}
 
+/* HEATMAP LEGEND */
+.map-legend{
+  position:absolute;bottom:30px;left:16px;z-index:400;
+  background:var(--bg-800);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:12px 14px;
+  font-size:11px;width:fit-content;height:fit-content;
+}
+.map-legend-title{font-weight:600;color:var(--text-secondary);margin-bottom:8px;font-size:10px;text-transform:uppercase;letter-spacing:0.06em}
+.legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-label{color:var(--text-secondary)}
+
 /* MOBILE */
 @media(max-width:768px){
   .sidebar{position:absolute;left:0;top:0;height:100%;transform:translateX(-100%);transition:transform 0.3s ease;z-index:600}
@@ -381,16 +393,17 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
   /* Leyenda → esquina superior derecha, compacta */
   .map-legend{
-    position:fixed;
-    top:12px;
-    right:12px;
-    bottom:auto;
-    left:auto;
-    z-index:490;
-    width:auto;
-    min-width:0;
-    max-width:150px;
-    padding:8px 12px;
+    position:fixed !important;
+    top:12px !important;
+    right:12px !important;
+    bottom:auto !important;
+    left:auto !important;
+    z-index:490 !important;
+    width:fit-content !important;
+    height:fit-content !important;
+    min-width:0 !important;
+    max-width:160px !important;
+    padding:8px 12px !important;
   }
 
   /* Hamburguesa → esquina inferior derecha, sobre la barra */
@@ -424,17 +437,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
   }
 }
 
-/* HEATMAP LEGEND */
-.map-legend{
-  position:absolute;bottom:30px;left:16px;z-index:400;
-  background:var(--bg-800);border:1px solid var(--border);
-  border-radius:var(--radius-md);padding:12px 14px;
-  font-size:11px;width:fit-content;
-}
-.map-legend-title{font-weight:600;color:var(--text-secondary);margin-bottom:8px;font-size:10px;text-transform:uppercase;letter-spacing:0.06em}
-.legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.legend-label{color:var(--text-secondary)}
+
+
 </style>
 </head>
 <body>
