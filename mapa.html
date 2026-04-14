@@ -930,10 +930,17 @@ window.addEventListener('load',()=>{
       document.getElementById('sidebar').classList.add('open');
       const toggleBtn=document.getElementById('sidebarToggle');
       toggleBtn.classList.add('pulse');
-      // Remover la animación y guardar (cerrar) después de que termine
+      // Remover la animación, guardar (cerrar) y animar nuevamente
       setTimeout(()=>{
         toggleBtn.classList.remove('pulse');
         document.getElementById('sidebar').classList.remove('open');
+        // Volver a animar al cerrar
+        setTimeout(()=>{
+          toggleBtn.classList.add('pulse');
+          setTimeout(()=>{
+            toggleBtn.classList.remove('pulse');
+          },2100);
+        },100);
       },2100);
     },800);
   }
