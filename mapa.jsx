@@ -1,18 +1,990 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-
-export default function Mapa() {
-  return (
-    <div className="h-screen w-full">
-      <MapContainer center={[4.6097, -74.0817]} zoom={13} style={{ height: "100%", width: "100%" }}>
-        <TileLayer
-          attribution='&copy; OpenStreetMap'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[4.6097, -74.0817]}>
-          <Popup>Ejemplo de punto en Bogotá</Popup>
-        </Marker>
-      </MapContainer>
-    </div>
-  );
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GeoPets | Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-900:#0a0f1e;
+  --bg-800:#0f1629;
+  --bg-700:#151e35;
+  --bg-600:#1c2840;
+  --bg-card:#1a2236;
+  --primary:#10b981;
+  --primary-dim:#0d9167;
+  --primary-glow:rgba(16,185,129,0.15);
+  --accent-blue:#3b82f6;
+  --accent-blue-dim:rgba(59,130,246,0.15);
+  --accent-red:#ef4444;
+  --accent-red-dim:rgba(239,68,68,0.15);
+  --accent-amber:#f59e0b;
+  --accent-amber-dim:rgba(245,158,11,0.15);
+  --text-primary:#f0f4ff;
+  --text-secondary:#8899b4;
+  --text-muted:#4a5a78;
+  --border:#1f2e4a;
+  --border-light:#263450;
+  --radius-sm:6px;
+  --radius-md:10px;
+  --radius-lg:14px;
+  --radius-xl:20px;
+  --radius-full:999px;
+  --sidebar-w:320px;
 }
+html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg-900);color:var(--text-primary)}
+
+/* LAYOUT */
+.app{display:flex;height:100vh;height:100dvh;width:100vw;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  background:var(--bg-800);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+  z-index:100;
+  transition:transform 0.3s ease;
+}
+.sidebar-header{
+  padding:20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:var(--bg-900);
+}
+.logo-icon{
+  width:36px;height:36px;
+  background:var(--primary-glow);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:var(--radius-md);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.logo-icon svg{width:18px;height:18px;stroke:var(--primary)}
+.logo-text{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--text-primary)}
+.logo-text span{color:var(--primary)}
+.badge-beta{
+  font-size:9px;font-weight:600;
+  background:var(--primary-glow);
+  color:var(--primary);
+  border:1px solid rgba(16,185,129,0.25);
+  padding:2px 6px;border-radius:var(--radius-full);
+  letter-spacing:0.05em;
+  margin-left:auto;
+}
+
+/* STATS CARDS */
+.stats-section{padding:10px 16px;border-bottom:1px solid var(--border)}
+.stats-title{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-card{
+  background:var(--bg-700);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:12px;
+  cursor:default;
+  transition:border-color 0.2s;
+}
+.stat-card:hover{border-color:var(--border-light)}
+.stat-card.full{grid-column:1/-1}
+.stat-label{font-size:10px;color:var(--text-muted);font-weight:500;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.stat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.stat-dot.red{background:var(--accent-red)}
+.stat-dot.green{background:var(--primary)}
+.stat-dot.blue{background:var(--accent-blue)}
+.stat-dot.amber{background:var(--accent-amber)}
+.stat-num{font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;line-height:1}
+.stat-num.red{color:var(--accent-red)}
+.stat-num.green{color:var(--primary)}
+.stat-num.blue{color:var(--accent-blue)}
+.stat-num.amber{color:var(--accent-amber)}
+
+/* CONTROLS */
+.controls-section{padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.controls-section.layers-section{padding:8px 16px}
+.section-label{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+
+/* CAPAS COMPACTAS: fila horizontal de pills */
+.layers-row{display:flex;gap:4px;flex-wrap:nowrap}
+.layer-toggle{
+  display:flex;align-items:center;gap:4px;
+  padding:4px 6px;
+  background:var(--bg-700);
+  border:1px solid var(--border);
+  border-radius:var(--radius-full);
+  cursor:pointer;
+  transition:border-color 0.2s,background 0.2s;
+  user-select:none;
+  flex:1;
+  justify-content:center;
+  min-width:0;
+  overflow:hidden;
+}
+.layer-toggle:hover{border-color:var(--border-light);background:var(--bg-600)}
+.layer-toggle.active.red{border-color:rgba(239,68,68,0.5);background:var(--accent-red-dim)}
+.layer-toggle.active.green{border-color:rgba(16,185,129,0.5);background:var(--primary-glow)}
+.layer-toggle.active.blue{border-color:rgba(59,130,246,0.5);background:var(--accent-blue-dim)}
+.layer-left{display:flex;align-items:center;gap:3px;min-width:0;overflow:hidden}
+.layer-icon{width:12px;height:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0}
+.layer-icon.red{background:var(--accent-red-dim);border:1px solid rgba(239,68,68,0.3)}
+.layer-icon.green{background:var(--primary-glow);border:1px solid rgba(16,185,129,0.3)}
+.layer-icon.blue{background:var(--accent-blue-dim);border:1px solid rgba(59,130,246,0.3)}
+.layer-name{font-size:10px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.layer-count{display:none}
+.toggle-pill{
+  width:22px;height:12px;border-radius:6px;
+  background:var(--bg-900);border:1px solid var(--border);
+  position:relative;transition:background 0.2s,border-color 0.2s;
+  flex-shrink:0;
+}
+.toggle-pill::after{
+  content:'';position:absolute;top:1px;left:1px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--text-muted);transition:transform 0.2s,background 0.2s;
+}
+.layer-toggle.active .toggle-pill{border-color:currentColor}
+.layer-toggle.active.red .toggle-pill{background:rgba(239,68,68,0.2)}
+.layer-toggle.active.red .toggle-pill::after{transform:translateX(10px);background:var(--accent-red)}
+.layer-toggle.active.green .toggle-pill{background:rgba(16,185,129,0.2)}
+.layer-toggle.active.green .toggle-pill::after{transform:translateX(10px);background:var(--primary)}
+.layer-toggle.active.blue .toggle-pill{background:rgba(59,130,246,0.2)}
+.layer-toggle.active.blue .toggle-pill::after{transform:translateX(10px);background:var(--accent-blue)}
+.search-wrap{position:relative;margin-bottom:10px}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);pointer-events:none}
+.search-input{
+  width:100%;background:var(--bg-700);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:9px 10px 9px 32px;
+  color:var(--text-primary);
+  font-size:13px;font-family:'Inter',sans-serif;
+  outline:none;transition:border-color 0.2s;
+}
+.search-input:focus{border-color:rgba(16,185,129,0.4)}
+.search-input::placeholder{color:var(--text-muted)}
+
+
+
+
+/* PET LIST */
+.pet-list-section{flex:1;overflow-y:auto;padding:10px 16px;min-height:0}
+.pet-list-section::-webkit-scrollbar{width:3px}
+.pet-list-section::-webkit-scrollbar-track{background:transparent}
+.pet-list-section::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
+.pet-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px;
+  background:var(--bg-700);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  margin-bottom:6px;
+  cursor:pointer;
+  transition:border-color 0.2s,transform 0.15s;
+}
+.pet-item:hover{border-color:var(--border-light);transform:translateX(2px)}
+.pet-thumb{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  object-fit:cover;flex-shrink:0;
+  background:var(--bg-600);
+}
+.pet-info{flex:1;min-width:0}
+.pet-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pet-desc{font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pet-badge{
+  font-size:9px;font-weight:700;letter-spacing:0.04em;
+  padding:2px 7px;border-radius:var(--radius-full);flex-shrink:0;
+}
+.pet-badge.perdido{background:var(--accent-red-dim);color:var(--accent-red);border:1px solid rgba(239,68,68,0.25)}
+.pet-badge.encontrado{background:var(--primary-glow);color:var(--primary);border:1px solid rgba(16,185,129,0.25)}
+.pet-badge.adopcion{background:var(--accent-blue-dim);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.25)}
+.empty-state{text-align:center;padding:30px 20px;color:var(--text-muted);font-size:13px}
+
+/* GEO BTN */
+.sidebar-footer{padding:16px;border-top:1px solid var(--border);background:var(--bg-900);flex-shrink:0}
+.btn-geo{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;border-radius:var(--radius-md);
+  background:var(--primary-glow);border:1px solid rgba(16,185,129,0.3);
+  color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;
+  transition:background 0.2s,transform 0.15s;font-family:'Inter',sans-serif;
+}
+.btn-geo:hover{background:rgba(16,185,129,0.2);transform:translateY(-1px)}
+.btn-geo svg{width:15px;height:15px;stroke:currentColor}
+
+/* MAP AREA */
+.map-area{flex:1;position:relative;overflow:hidden}
+#map{width:100%;height:100%;z-index:1}
+
+/* MAP TOPBAR */
+.map-topbar{
+  position:absolute;top:16px;right:16px;
+  display:flex;gap:8px;z-index:500;align-items:center;
+}
+.map-btn{
+  background:var(--bg-800);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:8px 14px;
+  color:var(--text-secondary);font-size:12px;font-weight:500;
+  cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:all 0.2s;font-family:'Inter',sans-serif;
+}
+.map-btn:hover{background:var(--bg-700);color:var(--text-primary);border-color:var(--border-light)}
+.map-btn svg{width:13px;height:13px;stroke:currentColor}
+.map-btn.active{background:var(--primary-glow);border-color:rgba(16,185,129,0.35);color:var(--primary)}
+
+/* SIDEBAR TOGGLE (mobile) */
+.sidebar-toggle{
+  position:absolute;top:16px;left:16px;z-index:600;
+  display:none;
+  background:var(--bg-800);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:8px;cursor:pointer;
+}
+.sidebar-toggle svg{width:18px;height:18px;stroke:var(--text-primary);display:block}
+
+/* LOADING OVERLAY */
+.loading-overlay{
+  position:absolute;inset:0;z-index:5000;
+  background:var(--bg-900);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  transition:opacity 0.5s ease;
+}
+.loading-overlay.hidden{opacity:0;pointer-events:none}
+.loading-spinner{
+  width:40px;height:40px;
+  border:2px solid var(--border);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse-hamburger{
+  0%{box-shadow:0 0px 32px rgba(16,185,129,1), 0 4px 16px rgba(16,185,129,1);}
+  50%{box-shadow:0 0px 8px rgba(16,185,129,0.3), 0 4px 16px rgba(16,185,129,0.3);}
+  100%{box-shadow:0 0px 32px rgba(16,185,129,1), 0 4px 16px rgba(16,185,129,1);}
+}
+.loading-text{color:var(--text-secondary);font-size:14px}
+.loading-sub{color:var(--text-muted);font-size:12px}
+
+/* POPUP CARD */
+.gp-popup{font-family:'Inter',sans-serif;min-width:220px}
+.gp-popup-img{
+  width:100%;height:130px;object-fit:cover;
+  border-radius:var(--radius-md);margin-bottom:10px;
+  background:var(--bg-600);
+}
+.gp-popup-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.gp-popup-name{font-size:15px;font-weight:700;color:#1e293b}
+.gp-popup-desc{font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.4}
+.gp-popup-badge{
+  font-size:9px;font-weight:700;letter-spacing:0.04em;
+  padding:2px 8px;border-radius:999px;
+}
+.gp-popup-badge.perdido{background:#fee2e2;color:#dc2626}
+.gp-popup-badge.encontrado{background:#d1fae5;color:#059669}
+.gp-popup-badge.adopcion{background:#dbeafe;color:#2563eb}
+.gp-popup-tel{font-size:11px;color:#94a3b8;margin-bottom:12px}
+.gp-popup-btn{
+  display:block;width:100%;padding:9px;text-align:center;
+  background:#10b981;color:white;
+  border:none;border-radius:8px;
+  font-size:13px;font-weight:600;cursor:pointer;
+  text-decoration:none;transition:background 0.2s;
+  font-family:'Inter',sans-serif;
+}
+.gp-popup-btn:hover{background:#0d9167}
+
+/* LEAFLET OVERRIDES */
+.leaflet-container{background:#0f1629}
+.leaflet-popup-content-wrapper{
+  background:#ffffff;
+  border-radius:14px !important;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4) !important;
+  padding:0 !important;
+  overflow:hidden;
+}
+.leaflet-popup-content{margin:16px !important;width:auto !important}
+.leaflet-popup-tip{background:#ffffff}
+.leaflet-popup-close-button{
+  color:#64748b !important;
+  font-size:20px !important;
+  right:12px !important;
+  top:10px !important;
+}
+.leaflet-control-zoom{border:none !important}
+.leaflet-control-zoom a{
+  background:var(--bg-800) !important;
+  color:var(--text-secondary) !important;
+  border:1px solid var(--border) !important;
+  transition:all 0.2s !important;
+}
+.leaflet-control-zoom a:hover{background:var(--bg-700) !important;color:var(--text-primary) !important}
+.leaflet-bar{box-shadow:none !important}
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(16,185,129,0.15) !important}
+.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{background:rgba(16,185,129,0.3) !important;color:var(--primary) !important;font-weight:700 !important;font-family:'Inter',sans-serif !important}
+
+/* NOTIFICATION */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:var(--bg-700);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:14px 18px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  transform:translateY(80px);opacity:0;
+  transition:transform 0.3s ease,opacity 0.3s ease;
+  max-width:300px;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;animation:pulse-dot 1.5s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.toast-text{font-size:13px;color:var(--text-primary)}
+.toast-sub{font-size:11px;color:var(--text-muted)}
+
+/* CUSTOM MARKERS */
+.custom-marker{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;border:2px solid white;
+  box-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+.custom-marker.perdido{background:#ef4444}
+.custom-marker.encontrado{background:#10b981}
+.custom-marker.adopcion{background:#3b82f6}
+
+/* HEATMAP LEGEND */
+.map-legend{
+  position:absolute;bottom:30px;left:16px;z-index:400;
+  background:var(--bg-800);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:12px 14px;
+  font-size:11px;width:fit-content;height:fit-content;
+}
+.map-legend-title{font-weight:600;color:var(--text-secondary);margin-bottom:8px;font-size:10px;text-transform:uppercase;letter-spacing:0.06em}
+.legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-label{color:var(--text-secondary)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{position:absolute;left:0;top:0;height:100%;transform:translateX(-100%);transition:transform 0.3s ease;z-index:600}
+  .sidebar.open{transform:translateX(0)}
+
+  /* Botones de acción → barra inferior centrada */
+  .map-topbar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    top:auto;
+    z-index:500;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    background:var(--bg-900);
+    border-top:1px solid var(--border);
+    padding:10px 16px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  }
+  .map-topbar .map-btn{
+    flex:1;
+    max-width:120px;
+    justify-content:center;
+    font-size:11px;
+    padding:9px 8px;
+  }
+
+  /* Intercambiar posición de botones en móvil */
+  .map-topbar .map-btn:nth-child(1) { /* Volver al inicio */
+    order: 3;
+  }
+  .map-topbar .map-btn:nth-child(2) { /* Satélite */
+    order: 2;
+  }
+  .map-topbar .map-btn:nth-child(3) { /* Ver todo */
+    order: 1;
+  }
+
+  /* Leyenda → esquina superior derecha, compacta */
+  .map-legend{
+    position:fixed !important;
+    top:12px !important;
+    right:12px !important;
+    bottom:auto !important;
+    left:auto !important;
+    z-index:490 !important;
+    width:fit-content !important;
+    height:fit-content !important;
+    min-width:0 !important;
+    max-width:160px !important;
+    padding:8px 12px !important;
+  }
+
+  /* Hamburguesa → esquina inferior derecha, sobre la barra */
+  .sidebar-toggle{
+    position:fixed;
+    bottom:calc(64px + env(safe-area-inset-bottom));
+    right:16px;
+    top:auto;
+    left:auto;
+    z-index:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:44px;
+    height:44px;
+    border-radius:var(--radius-full);
+    background:var(--bg-700);
+    border:1px solid var(--border-light);
+    box-shadow:0 4px 16px rgba(0,0,0,0.4);
+    transition:all 0.3s ease;
+  }
+  .sidebar-toggle.pulse{
+    animation:pulse-hamburger 0.5s ease-in-out 4;
+  }
+
+  /* Toast no tape la barra inferior */
+  .toast{
+    bottom:calc(80px + env(safe-area-inset-bottom));
+    right:12px;
+  }
+
+  /* Zoom controls del mapa, no tapar barra inferior */
+  .leaflet-control-zoom{
+    margin-bottom:calc(80px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Cargando GeoPets Dashboard</div>
+  <div class="loading-sub">Inicializando capas del mapa...</div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-icon"></div>
+  <div>
+    <div class="toast-text" id="toastText">Datos cargados</div>
+    <div class="toast-sub" id="toastSub">Mapa actualizado</div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 5.172C10 3.444 8.008 2.289 6.586 3.211a2.5 2.5 0 0 0 0 4.216C8.008 8.35 10 7.195 10 5.469"/>
+          <path d="M14 5.172c0-1.728 1.992-2.883 3.414-1.961a2.5 2.5 0 0 1 0 4.216C15.992 8.35 14 7.195 14 5.469"/>
+          <path d="M8 14c.5.667 1.5 2 4 2s3.5-1.333 4-2"/>
+          <ellipse cx="12" cy="17" rx="6" ry="5"/>
+        </svg>
+      </div>
+      <span class="logo-text">Geo<span>Pets</span></span>
+      <span class="badge-beta">BETA</span>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-section">
+      <div class="stats-title">Resumen de mascotas</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-dot red"></span>Perdidas</div>
+          <div class="stat-num red" id="countPerdido">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-dot green"></span>Encontradas</div>
+          <div class="stat-num green" id="countEncontrado">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-dot blue"></span>En Adopción</div>
+          <div class="stat-num blue" id="countAdopcion">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label"><span class="stat-dot amber"></span>Total</div>
+          <div class="stat-num amber" id="countTotal">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLS: Búsqueda -->
+    <div class="controls-section">
+      <div class="section-label">Búsqueda y filtros</div>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o descripción...">
+      </div>
+    </div>
+
+    <!-- PET LIST -->
+    <div class="pet-list-section">
+      <div class="section-label" style="margin-bottom:10px">Lista de mascotas</div>
+      <div id="petList"></div>
+    </div>
+
+    <!-- CAPAS DEL MAPA -->
+    <div class="controls-section layers-section" style="flex-shrink:0">
+      <div class="section-label">Capas del mapa</div>
+      <div class="layers-row">
+        <div class="layer-toggle active red" id="togglePerdido" onclick="toggleLayer('perdido')">
+          <div class="layer-left">
+            <div class="layer-icon red">🔴</div>
+            <div class="layer-name">Perdidas</div>
+            <div class="layer-count" id="layerCountPerdido">0</div>
+          </div>
+          <div class="toggle-pill"></div>
+        </div>
+        <div class="layer-toggle active green" id="toggleEncontrado" onclick="toggleLayer('encontrado')">
+          <div class="layer-left">
+            <div class="layer-icon green">🟢</div>
+            <div class="layer-name">Encontradas</div>
+            <div class="layer-count" id="layerCountEncontrado">0</div>
+          </div>
+          <div class="toggle-pill"></div>
+        </div>
+        <div class="layer-toggle active blue" id="toggleAdopcion" onclick="toggleLayer('adopcion')">
+          <div class="layer-left">
+            <div class="layer-icon blue">🔵</div>
+            <div class="layer-name">Adopción</div>
+            <div class="layer-count" id="layerCountAdopcion">0</div>
+          </div>
+          <div class="toggle-pill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn-geo" onclick="geolocate()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8" stroke-opacity="0.3"/></svg>
+        Centrar en mi ubicación
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAP -->
+  <div class="map-area">
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="map-topbar">
+      <button class="map-btn" id="btnHome" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Volver al inicio
+      </button>
+      <button class="map-btn" id="btnSatelite" onclick="toggleBasemap()" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Satélite
+      </button>
+      <button class="map-btn" onclick="fitAllMarkers()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        Ver todo
+      </button>
+    </div>
+    <div id="map"></div>
+    <div class="map-legend">
+      <div class="map-legend-title">Leyenda</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#ef4444"></div><span class="legend-label">Perdida</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background:#10b981"></div><span class="legend-label">Encontrada</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background:#3b82f6"></div><span class="legend-label">En adopción</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js">
+// Botón volver al inicio - forzar navegación en móvil
+(function(){
+  var btn = document.getElementById('btnHome');
+  if(!btn) return;
+  btn.addEventListener('touchend', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    location.replace('https://soygeopets.vercel.app');
+  }, {passive: false});
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    location.replace('https://soygeopets.vercel.app');
+  });
+})();
+
+</script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script>
+// =============================================
+// DATOS DE MASCOTAS
+// =============================================
+const MASCOTAS = [
+  // Perdidas
+  {id:1,nombre:"Luna",tipo:"perdido",descripcion:"Perra labrador blanca con manchas negras",telefono:"3102223344",img:"perro_perdidos/lupita.jpg",lat:4.6233,lng:-74.1135,fecha:"2024-12-10"},
+  {id:2,nombre:"Max",tipo:"perdido",descripcion:"Labrador amarillo, collar rojo, muy amigable",telefono:"3211234567",img:"perro_perdidos/max.jpg",lat:4.6250,lng:-74.1100,fecha:"2024-12-12"},
+  {id:3,nombre:"Kira",tipo:"perdido",descripcion:"Husky siberiana, ojos azules, muy activa",telefono:"3004455667",img:"",lat:4.6310,lng:-74.0980,fecha:"2024-12-14"},
+  {id:4,nombre:"Rocky",tipo:"perdido",descripcion:"Bulldog francés gris, sin cola",telefono:"3157889900",img:"",lat:4.6195,lng:-74.1050,fecha:"2024-12-15"},
+  {id:5,nombre:"Coco",tipo:"perdido",descripcion:"Poodle café pequeño, lleva moño rosa",telefono:"3209988776",img:"",lat:4.6420,lng:-74.1200,fecha:"2024-12-16"},
+  // Encontradas
+  {id:6,nombre:"Bella",tipo:"encontrado",descripcion:"Golden Retriever encontrada en parque El Virrey",telefono:"3123456789",img:"",lat:4.6380,lng:-74.0860,fecha:"2024-12-11"},
+  {id:7,nombre:"Toby",tipo:"encontrado",descripcion:"Beagle tricolor encontrado en la Séptima",telefono:"3014567890",img:"",lat:4.6150,lng:-74.0780,fecha:"2024-12-13"},
+  {id:8,nombre:"Nala",tipo:"encontrado",descripcion:"Gata siamesa encontrada, muy tranquila",telefono:"3201234567",img:"",lat:4.6290,lng:-74.1190,fecha:"2024-12-15"},
+  // En adopción
+  {id:9,nombre:"Simba",tipo:"adopcion",descripcion:"Macho, 1 año, vacunas al día, busca hogar",telefono:"3165556677",img:"",lat:4.6470,lng:-74.0920,fecha:"2024-12-08"},
+  {id:10,nombre:"Mia",tipo:"adopcion",descripcion:"Hembra, 2 años, esterilizada, muy cariñosa",telefono:"3128889900",img:"",lat:4.6080,lng:-74.0990,fecha:"2024-12-09"},
+  {id:11,nombre:"Thor",tipo:"adopcion",descripcion:"Mestizo grande, 3 años, ideal para casa con patio",telefono:"3174443322",img:"",lat:4.6560,lng:-74.1080,fecha:"2024-12-07"},
+  {id:12,nombre:"Lila",tipo:"adopcion",descripcion:"Gatita gris persa, 8 meses, juguetona",telefono:"3192227788",img:"",lat:4.6340,lng:-74.0750,fecha:"2024-12-06"},
+];
+
+const FALLBACK_IMG = "https://cdn-icons-png.flaticon.com/512/616/616408.png";
+const LABEL = {perdido:"PERDIDA",encontrado:"ENCONTRADA",adopcion:"ADOPCIÓN"};
+
+// =============================================
+// MAPA INIT
+// =============================================
+const map = L.map('map',{zoomControl:true}).setView([4.65,-74.1],12);
+
+const layerOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  maxZoom:19,attribution:'&copy; OpenStreetMap',
+  className:'osm-dark'
+});
+const layerSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+  maxZoom:19,attribution:'Tiles &copy; Esri'
+});
+layerOSM.addTo(map);
+
+// Intentar cargar capa WMS de GeoServer (silencioso)
+try{
+  L.tileLayer.wms("http://localhost:8080/geoserver/geopets/wms",{
+    layers:"geopets:localidades",format:"image/png",
+    transparent:true,attribution:"GeoPets"
+  }).addTo(map);
+}catch(e){}
+
+// =============================================
+// ICONOS PERSONALIZADOS
+// =============================================
+function makeIcon(tipo){
+  const colors={perdido:'#ef4444',encontrado:'#10b981',adopcion:'#3b82f6'};
+  const emojis={perdido:'🐾',encontrado:'✓',adopcion:'🏠'};
+  return L.divIcon({
+    html:`<div style="
+      width:36px;height:36px;border-radius:50%;
+      background:${colors[tipo]};
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;border:3px solid white;
+      box-shadow:0 2px 12px rgba(0,0,0,0.4);
+      color:white;font-weight:700;
+    ">${emojis[tipo]}</div>`,
+    className:'',iconSize:[36,36],iconAnchor:[18,18],popupAnchor:[0,-20]
+  });
+}
+
+// =============================================
+// CLUSTERS Y CAPAS
+// =============================================
+const clusterOpts = {
+  iconCreateFunction:function(cluster){
+    return L.divIcon({
+      html:`<div style="
+        background:rgba(16,185,129,0.2);border:2px solid #10b981;
+        border-radius:50%;width:38px;height:38px;
+        display:flex;align-items:center;justify-content:center;
+        color:#10b981;font-weight:700;font-size:13px;
+        font-family:'Inter',sans-serif;
+      ">${cluster.getChildCount()}</div>`,
+      className:'',iconSize:[38,38]
+    });
+  },
+  maxClusterRadius:60,spiderfyOnMaxZoom:true
+};
+
+const layers={
+  perdido:L.markerClusterGroup({...clusterOpts,iconCreateFunction:function(c){return makeClusterIcon(c,'#ef4444')}}),
+  encontrado:L.markerClusterGroup({...clusterOpts,iconCreateFunction:function(c){return makeClusterIcon(c,'#10b981')}}),
+  adopcion:L.markerClusterGroup({...clusterOpts,iconCreateFunction:function(c){return makeClusterIcon(c,'#3b82f6')}})
+};
+const layerState={perdido:true,encontrado:true,adopcion:true};
+const allMarkers={};
+
+function makeClusterIcon(cluster,color){
+  return L.divIcon({
+    html:`<div style="background:${color}22;border:2px solid ${color};border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:${color};font-weight:700;font-size:13px;font-family:'Inter',sans-serif;">${cluster.getChildCount()}</div>`,
+    className:'',iconSize:[38,38]
+  });
+}
+
+// =============================================
+// POPUP TEMPLATE
+// =============================================
+function buildPopup(m){
+  const badgeClass=m.tipo;
+  const label=LABEL[m.tipo]||m.tipo.toUpperCase();
+  const imgUrl=m.img||FALLBACK_IMG;
+  return `<div class="gp-popup">
+    <img class="gp-popup-img" src="${imgUrl}" alt="${m.nombre}" onerror="this.src='${FALLBACK_IMG}'">
+    <div class="gp-popup-header">
+      <span class="gp-popup-name">${m.nombre}</span>
+      <span class="gp-popup-badge ${badgeClass}">${label}</span>
+    </div>
+    <div class="gp-popup-desc">${m.descripcion}</div>
+    <div class="gp-popup-tel">📞 ${m.telefono}</div>
+    <a href="https://wa.me/57${m.telefono}?text=Hola!%20Vi%20a%20${encodeURIComponent(m.nombre)}%20en%20GeoPets" target="_blank" class="gp-popup-btn">💬 Contactar por WhatsApp</a>
+  </div>`;
+}
+
+// =============================================
+// CARGAR MARCADORES
+// =============================================
+function loadMarkers(data){
+  data.forEach(m=>{
+    const marker=L.marker([m.lat,m.lng],{icon:makeIcon(m.tipo)});
+    marker.bindPopup(buildPopup(m),{maxWidth:260,minWidth:240});
+    marker.petData=m;
+    layers[m.tipo].addLayer(marker);
+    allMarkers[m.id]=marker;
+  });
+  Object.values(layers).forEach(l=>map.addLayer(l));
+  updateCounts();
+  renderPetList();
+}
+
+// =============================================
+// STATS
+// =============================================
+function updateCounts(){
+  const counts={perdido:0,encontrado:0,adopcion:0};
+  getFilteredData().forEach(m=>counts[m.tipo]++);
+  animCount('countPerdido',counts.perdido);
+  animCount('countEncontrado',counts.encontrado);
+  animCount('countAdopcion',counts.adopcion);
+  animCount('countTotal',counts.perdido+counts.encontrado+counts.adopcion);
+  document.getElementById('layerCountPerdido').textContent=counts.perdido;
+  document.getElementById('layerCountEncontrado').textContent=counts.encontrado;
+  document.getElementById('layerCountAdopcion').textContent=counts.adopcion;
+}
+
+function animCount(id,val){
+  const el=document.getElementById(id);
+  const start=parseInt(el.textContent)||0;
+  if(start===val)return;
+  const step=(val-start)/12;
+  let cur=start;
+  const t=setInterval(()=>{
+    cur+=step;
+    if((step>0&&cur>=val)||(step<0&&cur<=val)){cur=val;clearInterval(t);}
+    el.textContent=Math.round(cur);
+  },30);
+}
+
+// =============================================
+// FILTROS Y BÚSQUEDA
+// =============================================
+let searchQuery='';
+function getFilteredData(){
+  return MASCOTAS.filter(m=>{
+    const tipoOk=layerState[m.tipo];
+    const q=searchQuery.toLowerCase();
+    const textOk=!q||m.nombre.toLowerCase().includes(q)||m.descripcion.toLowerCase().includes(q);
+    return tipoOk&&textOk;
+  });
+}
+
+function applyFilters(){
+  Object.keys(layers).forEach(tipo=>{
+    layers[tipo].clearLayers();
+  });
+  getFilteredData().forEach(m=>{
+    if(layerState[m.tipo]){
+      const marker=allMarkers[m.id];
+      if(marker)layers[m.tipo].addLayer(marker);
+    }
+  });
+  updateCounts();
+  renderPetList();
+}
+
+document.getElementById('searchInput').addEventListener('input',function(){
+  searchQuery=this.value;
+  applyFilters();
+});
+
+// =============================================
+// LAYER TOGGLES
+// =============================================
+function toggleLayer(tipo){
+  layerState[tipo]=!layerState[tipo];
+  const btn=document.getElementById('toggle'+tipo.charAt(0).toUpperCase()+tipo.slice(1));
+  if(layerState[tipo]){
+    btn.classList.add('active');
+    map.addLayer(layers[tipo]);
+  }else{
+    btn.classList.remove('active');
+    map.removeLayer(layers[tipo]);
+  }
+  updateCounts();
+  renderPetList();
+}
+
+// =============================================
+// PET LIST
+// =============================================
+function renderPetList(){
+  const list=document.getElementById('petList');
+  const data=getFilteredData();
+  if(!data.length){
+    list.innerHTML='<div class="empty-state">No se encontraron mascotas<br>con los filtros aplicados</div>';
+    return;
+  }
+  list.innerHTML=data.map(m=>`
+    <div class="pet-item" onclick="focusPet(${m.id})">
+      <img class="pet-thumb" src="${m.img||FALLBACK_IMG}" alt="${m.nombre}" onerror="this.src='${FALLBACK_IMG}'">
+      <div class="pet-info">
+        <div class="pet-name">${m.nombre}</div>
+        <div class="pet-desc">${m.descripcion}</div>
+      </div>
+      <span class="pet-badge ${m.tipo}">${LABEL[m.tipo]}</span>
+    </div>
+  `).join('');
+}
+
+// =============================================
+// FOCUS PET
+// =============================================
+function focusPet(id){
+  const m=MASCOTAS.find(x=>x.id===id);
+  if(!m)return;
+  map.flyTo([m.lat,m.lng],16,{animate:true,duration:1});
+  setTimeout(()=>{
+    const marker=allMarkers[id];
+    if(marker)marker.openPopup();
+  },1100);
+  // Cerrar sidebar en mobile
+  if(window.innerWidth<=768)toggleSidebar();
+}
+
+// =============================================
+// GEOLOCALIZACIÓN
+// =============================================
+function geolocate(){
+  if(!navigator.geolocation){showToast('Sin soporte','Tu navegador no soporta geolocalización');return;}
+  showToast('Buscando...','Obteniendo tu ubicación');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const{latitude:lat,longitude:lng}=pos.coords;
+    map.flyTo([lat,lng],15,{animate:true,duration:1.5});
+    L.circleMarker([lat,lng],{radius:10,color:'#10b981',fillColor:'#10b981',fillOpacity:0.3,weight:2}).addTo(map)
+      .bindPopup('<b>Tu ubicación</b>').openPopup();
+    showToast('¡Listo!','Mapa centrado en tu ubicación');
+  },()=>showToast('Error','No se pudo obtener la ubicación'));
+}
+
+function navigateHome(){
+  try { location.replace("https://soygeopets.vercel.app"); } catch(e) { location.href="https://soygeopets.vercel.app"; }
+}
+
+// =============================================
+// BASEMAP TOGGLE
+// =============================================
+let isSat=false;
+function toggleBasemap(){
+  const btn=document.getElementById('btnSatelite');
+  if(isSat){map.removeLayer(layerSat);map.addLayer(layerOSM);btn.textContent='🌐 Satélite';btn.classList.remove('active');}
+  else{map.removeLayer(layerOSM);map.addLayer(layerSat);btn.innerHTML='<svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Mapa';btn.classList.add('active');}
+  isSat=!isSat;
+}
+
+// =============================================
+// FIT ALL
+// =============================================
+function fitAllMarkers(){
+  const pts=MASCOTAS.map(m=>[m.lat,m.lng]);
+  if(pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[40,40]});
+}
+
+// =============================================
+// SIDEBAR TOGGLE (MOBILE)
+// =============================================
+function toggleSidebar(){
+  const sidebar = document.getElementById('sidebar');
+  const isOpen = sidebar.classList.contains('open');
+  
+  if(isOpen){
+    // Si está abierto, cerrar y animar
+    sidebar.classList.remove('open');
+    const toggleBtn=document.getElementById('sidebarToggle');
+    toggleBtn.classList.add('pulse');
+    setTimeout(()=>{
+      toggleBtn.classList.remove('pulse');
+    },2100);
+  } else {
+    // Si está cerrado, abrir normalmente
+    sidebar.classList.add('open');
+  }
+}
+
+// =============================================
+// TOAST
+// =============================================
+let toastTimer;
+function showToast(text,sub){
+  const t=document.getElementById('toast');
+  document.getElementById('toastText').textContent=text;
+  document.getElementById('toastSub').textContent=sub||'';
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// =============================================
+// INIT
+// =============================================
+window.addEventListener('load',()=>{
+  loadMarkers(MASCOTAS);
+  
+  // Auto-abrir sidebar y animar botón en móvil
+  const isMobile=window.innerWidth<=768;
+  if(isMobile){
+    setTimeout(()=>{
+      document.getElementById('sidebar').classList.add('open');
+      const toggleBtn=document.getElementById('sidebarToggle');
+      toggleBtn.classList.add('pulse');
+      // Remover la animación, guardar (cerrar) y animar nuevamente
+      setTimeout(()=>{
+        toggleBtn.classList.remove('pulse');
+        document.getElementById('sidebar').classList.remove('open');
+        // Volver a animar al cerrar
+        setTimeout(()=>{
+          toggleBtn.classList.add('pulse');
+          setTimeout(()=>{
+            toggleBtn.classList.remove('pulse');
+          },2100);
+        },100);
+      },2100);
+    },800);
+  }
+  
+  setTimeout(()=>{
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    // Solo mostrar toast en PC, no en móvil
+    if(!isMobile){
+      showToast('¡GeoPets cargado!',MASCOTAS.length+' mascotas en el mapa');
+    }
+  },1200);
+});
+</script>
+</body>
+</html>
