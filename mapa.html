@@ -35,7 +35,7 @@
   --radius-lg:14px;
   --radius-xl:20px;
   --radius-full:999px;
-  --sidebar-w:320px;
+  --sidebar-w:360px;
 }
 html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg-900);color:var(--text-primary)}
 
@@ -360,6 +360,19 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .legend-label{color:var(--text-secondary)}
+
+/* PC adjustments */
+@media(min-width:769px){
+  .pet-item{
+    padding:12px;
+  }
+  .pet-name{
+    font-size:14px;
+  }
+  .pet-desc{
+    font-size:12px;
+  }
+}
 
 /* MOBILE */
 @media(max-width:768px){
