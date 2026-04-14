@@ -406,10 +406,13 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   }
 
   /* Intercambiar posición de botones en móvil */
-  .map-topbar .map-btn:nth-child(1) {
+  .map-topbar .map-btn:nth-child(1) { /* Volver al inicio */
     order: 3;
   }
-  .map-topbar .map-btn:nth-child(3) {
+  .map-topbar .map-btn:nth-child(2) { /* Satélite */
+    order: 2;
+  }
+  .map-topbar .map-btn:nth-child(3) { /* Ver todo */
     order: 1;
   }
 
@@ -583,7 +586,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="map-topbar">
-      <button class="map-btn" onclick="window.location.href='index.html'">
+      <button class="map-btn" onclick="window.location.href='./index.html'">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         Volver al inicio
       </button>
