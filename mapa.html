@@ -405,6 +405,14 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
     padding:9px 8px;
   }
 
+  /* Intercambiar posición de botones en móvil */
+  .map-topbar .map-btn:nth-child(1) {
+    order: 3;
+  }
+  .map-topbar .map-btn:nth-child(3) {
+    order: 1;
+  }
+
   /* Leyenda → esquina superior derecha, compacta */
   .map-legend{
     position:fixed !important;
