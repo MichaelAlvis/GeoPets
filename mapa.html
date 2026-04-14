@@ -887,7 +887,21 @@ function fitAllMarkers(){
 // SIDEBAR TOGGLE (MOBILE)
 // =============================================
 function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
+  const sidebar = document.getElementById('sidebar');
+  const isOpen = sidebar.classList.contains('open');
+  
+  if(isOpen){
+    // Si está abierto, cerrar y animar
+    sidebar.classList.remove('open');
+    const toggleBtn=document.getElementById('sidebarToggle');
+    toggleBtn.classList.add('pulse');
+    setTimeout(()=>{
+      toggleBtn.classList.remove('pulse');
+    },2100);
+  } else {
+    // Si está cerrado, abrir normalmente
+    sidebar.classList.add('open');
+  }
 }
 
 // =============================================
