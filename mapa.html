@@ -651,11 +651,7 @@ const clusterBaseOpts = {
   animate: true
 };
 
-const layers = {
-  perdido:    L.markerClusterGroup({ ...clusterBaseOpts, iconCreateFunction: c => makeClusterIcon(c, '#ef4444') }),
-  encontrado: L.markerClusterGroup({ ...clusterBaseOpts, iconCreateFunction: c => makeClusterIcon(c, '#10b981') }),
-  adopcion:   L.markerClusterGroup({ ...clusterBaseOpts, iconCreateFunction: c => makeClusterIcon(c, '#3b82f6') })
-};
+const clusterGroup = L.markerClusterGroup(clusterBaseOpts);
 
 // ╔══════════════════════════════════════════════════════╗
 // ║  ICONOS PERSONALIZADOS POR CATEGORÍA                 ║
@@ -701,7 +697,6 @@ function buildPopup(m) {
   const label  = LABEL[m.tipo] || m.tipo.toUpperCase();
   const imgUrl = m.img || FALLBACK_IMG;
   const tel    = m.telefono || 'Sin contacto';
-  const waLink = `https://wa.me/57${tel}?text=Hola!%20Vi%20a%20${encodeURIComponent(m.nombre)}%20en%20GeoPets`;
 
   return `<div class="gp-popup">
     <img class="gp-popup-img"
@@ -719,13 +714,6 @@ function buildPopup(m) {
       </svg>
       ${tel}
     </div>
-    <div class="gp-popup-divider"></div>
-    <a href="${waLink}" target="_blank" class="gp-popup-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-      </svg>
-      Contactar por WhatsApp
-    </a>
   </div>`;
 }
 
@@ -797,7 +785,6 @@ async function cargarMascotas() {
 
     // Ocultar overlay
     document.getElementById('loadingOverlay').classList.add('hidden');
-    showToast('¡GeoPets cargado!', `${MASCOTAS.length} mascotas en el mapa`);
 
   } catch (err) {
     console.error('Error en cargarMascotas:', err);
@@ -812,20 +799,20 @@ async function cargarMascotas() {
 // ╚══════════════════════════════════════════════════════╝
 function loadMarkers(data) {
   // Limpiar markers anteriores
-  Object.values(layers).forEach(l => l.clearLayers());
+  clusterGroup.clearLayers();
   Object.keys(allMarkers).forEach(k => delete allMarkers[k]);
 
-  // Crear y distribuir markers en sus clusters
+  // Crear y agregar markers al cluster único
   data.forEach(m => {
     const marker = L.marker([m.lat, m.lng], { icon: makeIcon(m.tipo) });
     marker.bindPopup(buildPopup(m), { maxWidth: 300, minWidth: 280 });
     marker.petData = m;
-    layers[m.tipo].addLayer(marker);
+    clusterGroup.addLayer(marker);
     allMarkers[m.id] = marker;
   });
 
-  // Agregar todos los cluster groups al mapa
-  Object.values(layers).forEach(l => map.addLayer(l));
+  // Agregar el cluster group al mapa
+  map.addLayer(clusterGroup);
 
   // Centrar el mapa sobre todos los puntos si hay datos
   if (data.length > 0) {
