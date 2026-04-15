@@ -39,63 +39,42 @@
 }
 html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg-900);color:var(--text-primary)}
 
-/* LAYOUT */
+/* ── LAYOUT ─────────────────────────────── */
 .app{display:flex;height:100vh;height:100dvh;width:100vw;overflow:hidden}
 
-/* SIDEBAR */
+/* ── SIDEBAR ─────────────────────────────── */
 .sidebar{
-  width:var(--sidebar-w);
-  min-width:var(--sidebar-w);
-  background:var(--bg-800);
-  border-right:1px solid var(--border);
-  display:flex;
-  flex-direction:column;
-  height:100vh;
-  height:100dvh;
-  overflow:hidden;
-  z-index:100;
-  transition:transform 0.3s ease;
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:var(--bg-800);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  height:100vh;height:100dvh;overflow:hidden;
+  z-index:100;transition:transform 0.3s ease;
 }
 .sidebar-header{
-  padding:20px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:var(--bg-900);
+  padding:20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;background:var(--bg-900);
 }
 .logo-icon{
-  width:36px;height:36px;
-  background:var(--primary-glow);
-  border:1px solid rgba(16,185,129,0.3);
-  border-radius:var(--radius-md);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
+  width:36px;height:36px;background:var(--primary-glow);
+  border:1px solid rgba(16,185,129,0.3);border-radius:var(--radius-md);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .logo-icon svg{width:18px;height:18px;stroke:var(--primary)}
 .logo-text{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--text-primary)}
 .logo-text span{color:var(--primary)}
 .badge-beta{
-  font-size:9px;font-weight:600;
-  background:var(--primary-glow);
-  color:var(--primary);
-  border:1px solid rgba(16,185,129,0.25);
-  padding:2px 6px;border-radius:var(--radius-full);
-  letter-spacing:0.05em;
-  margin-left:auto;
+  font-size:9px;font-weight:600;background:var(--primary-glow);color:var(--primary);
+  border:1px solid rgba(16,185,129,0.25);padding:2px 6px;border-radius:var(--radius-full);
+  letter-spacing:0.05em;margin-left:auto;
 }
 
-/* STATS CARDS */
+/* ── STATS CARDS ─────────────────────────── */
 .stats-section{padding:10px 16px;border-bottom:1px solid var(--border)}
 .stats-title{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .stat-card{
-  background:var(--bg-700);
-  border:1px solid var(--border);
-  border-radius:var(--radius-md);
-  padding:12px;
-  cursor:default;
-  transition:border-color 0.2s;
+  background:var(--bg-700);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:12px;cursor:default;transition:border-color 0.2s;
 }
 .stat-card:hover{border-color:var(--border-light)}
 .stat-card.full{grid-column:1/-1}
@@ -111,26 +90,18 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .stat-num.blue{color:var(--accent-blue)}
 .stat-num.amber{color:var(--accent-amber)}
 
-/* CONTROLS */
+/* ── CONTROLS ────────────────────────────── */
 .controls-section{padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
 .controls-section.layers-section{padding:8px 16px}
 .section-label{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
 
-/* CAPAS COMPACTAS: fila horizontal de pills */
+/* Pills de filtro */
 .layers-row{display:flex;gap:4px;flex-wrap:nowrap}
 .layer-toggle{
-  display:flex;align-items:center;gap:4px;
-  padding:4px 6px;
-  background:var(--bg-700);
-  border:1px solid var(--border);
-  border-radius:var(--radius-full);
-  cursor:pointer;
-  transition:border-color 0.2s,background 0.2s;
-  user-select:none;
-  flex:1;
-  justify-content:center;
-  min-width:0;
-  overflow:hidden;
+  display:flex;align-items:center;gap:4px;padding:4px 6px;
+  background:var(--bg-700);border:1px solid var(--border);border-radius:var(--radius-full);
+  cursor:pointer;transition:border-color 0.2s,background 0.2s;
+  user-select:none;flex:1;justify-content:center;min-width:0;overflow:hidden;
 }
 .layer-toggle:hover{border-color:var(--border-light);background:var(--bg-600)}
 .layer-toggle.active.red{border-color:rgba(239,68,68,0.5);background:var(--accent-red-dim)}
@@ -146,8 +117,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .toggle-pill{
   width:22px;height:12px;border-radius:6px;
   background:var(--bg-900);border:1px solid var(--border);
-  position:relative;transition:background 0.2s,border-color 0.2s;
-  flex-shrink:0;
+  position:relative;transition:background 0.2s,border-color 0.2s;flex-shrink:0;
 }
 .toggle-pill::after{
   content:'';position:absolute;top:1px;left:1px;
@@ -161,57 +131,53 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .layer-toggle.active.green .toggle-pill::after{transform:translateX(10px);background:var(--primary)}
 .layer-toggle.active.blue .toggle-pill{background:rgba(59,130,246,0.2)}
 .layer-toggle.active.blue .toggle-pill::after{transform:translateX(10px);background:var(--accent-blue)}
+
+/* Search */
 .search-wrap{position:relative;margin-bottom:10px}
 .search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);pointer-events:none}
 .search-input{
-  width:100%;background:var(--bg-700);
-  border:1px solid var(--border);
-  border-radius:var(--radius-md);
-  padding:9px 10px 9px 32px;
-  color:var(--text-primary);
-  font-size:13px;font-family:'Inter',sans-serif;
+  width:100%;background:var(--bg-700);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:9px 10px 9px 32px;
+  color:var(--text-primary);font-size:13px;font-family:'Inter',sans-serif;
   outline:none;transition:border-color 0.2s;
 }
 .search-input:focus{border-color:rgba(16,185,129,0.4)}
 .search-input::placeholder{color:var(--text-muted)}
 
-
-
-
-/* PET LIST */
+/* ── PET LIST ────────────────────────────── */
 .pet-list-section{flex:1;overflow-y:auto;padding:10px 16px;min-height:0}
 .pet-list-section::-webkit-scrollbar{width:3px}
 .pet-list-section::-webkit-scrollbar-track{background:transparent}
 .pet-list-section::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
 .pet-item{
-  display:flex;align-items:center;gap:10px;
-  padding:10px;
-  background:var(--bg-700);
-  border:1px solid var(--border);
-  border-radius:var(--radius-md);
-  margin-bottom:6px;
-  cursor:pointer;
-  transition:border-color 0.2s,transform 0.15s;
+  display:flex;align-items:center;gap:10px;padding:10px;
+  background:var(--bg-700);border:1px solid var(--border);
+  border-radius:var(--radius-md);margin-bottom:6px;
+  cursor:pointer;transition:border-color 0.2s,transform 0.15s;
 }
 .pet-item:hover{border-color:var(--border-light);transform:translateX(2px)}
-.pet-thumb{
-  width:38px;height:38px;border-radius:var(--radius-sm);
-  object-fit:cover;flex-shrink:0;
-  background:var(--bg-600);
-}
+.pet-thumb{width:38px;height:38px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0;background:var(--bg-600)}
 .pet-info{flex:1;min-width:0}
 .pet-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pet-desc{font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pet-badge{
-  font-size:9px;font-weight:700;letter-spacing:0.04em;
-  padding:2px 7px;border-radius:var(--radius-full);flex-shrink:0;
-}
+.pet-badge{font-size:9px;font-weight:700;letter-spacing:0.04em;padding:2px 7px;border-radius:var(--radius-full);flex-shrink:0}
 .pet-badge.perdido{background:var(--accent-red-dim);color:var(--accent-red);border:1px solid rgba(239,68,68,0.25)}
 .pet-badge.encontrado{background:var(--primary-glow);color:var(--primary);border:1px solid rgba(16,185,129,0.25)}
 .pet-badge.adopcion{background:var(--accent-blue-dim);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.25)}
 .empty-state{text-align:center;padding:30px 20px;color:var(--text-muted);font-size:13px}
 
-/* GEO BTN */
+/* Estado de carga de la lista */
+.list-loading{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:30px 20px;gap:10px;
+}
+.list-spinner{
+  width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--primary);
+  border-radius:50%;animation:spin 0.8s linear infinite;
+}
+.list-loading-text{font-size:12px;color:var(--text-muted)}
+
+/* ── SIDEBAR FOOTER ──────────────────────── */
 .sidebar-footer{padding:16px;border-top:1px solid var(--border);background:var(--bg-900);flex-shrink:0}
 .btn-geo{
   width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
@@ -223,21 +189,18 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .btn-geo:hover{background:rgba(16,185,129,0.2);transform:translateY(-1px)}
 .btn-geo svg{width:15px;height:15px;stroke:currentColor}
 
-/* MAP AREA */
+/* ── MAP AREA ────────────────────────────── */
 .map-area{flex:1;position:relative;overflow:hidden}
 #map{width:100%;height:100%;z-index:1}
 
-/* MAP TOPBAR */
+/* ── MAP TOPBAR ──────────────────────────── */
 .map-topbar{
   position:absolute;top:16px;right:16px;
   display:flex;gap:8px;z-index:500;align-items:center;
 }
 .map-btn{
-  background:var(--bg-800);
-  border:1px solid var(--border);
-  border-radius:var(--radius-md);
-  padding:8px 14px;
-  color:var(--text-secondary);font-size:12px;font-weight:500;
+  background:var(--bg-800);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:8px 14px;color:var(--text-secondary);font-size:12px;font-weight:500;
   cursor:pointer;display:flex;align-items:center;gap:6px;
   transition:all 0.2s;font-family:'Inter',sans-serif;
 }
@@ -245,97 +208,107 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .map-btn svg{width:13px;height:13px;stroke:currentColor}
 .map-btn.active{background:var(--primary-glow);border-color:rgba(16,185,129,0.35);color:var(--primary)}
 
-/* SIDEBAR TOGGLE (mobile) */
+/* ── SIDEBAR TOGGLE (mobile) ─────────────── */
 .sidebar-toggle{
   position:absolute;top:16px;left:16px;z-index:600;
-  display:none;
-  background:var(--bg-800);border:1px solid var(--border);
+  display:none;background:var(--bg-800);border:1px solid var(--border);
   border-radius:var(--radius-md);padding:8px;cursor:pointer;
 }
 .sidebar-toggle svg{width:18px;height:18px;stroke:var(--text-primary);display:block}
 
-/* LOADING OVERLAY */
+/* ── LOADING OVERLAY ─────────────────────── */
 .loading-overlay{
-  position:absolute;inset:0;z-index:5000;
-  background:var(--bg-900);
+  position:absolute;inset:0;z-index:5000;background:var(--bg-900);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
   transition:opacity 0.5s ease;
 }
 .loading-overlay.hidden{opacity:0;pointer-events:none}
 .loading-spinner{
-  width:40px;height:40px;
-  border:2px solid var(--border);
-  border-top-color:var(--primary);
-  border-radius:50%;
-  animation:spin 0.8s linear infinite;
+  width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--primary);
+  border-radius:50%;animation:spin 0.8s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse-hamburger{
-  0%{box-shadow:0 0px 32px rgba(16,185,129,1), 0 4px 16px rgba(16,185,129,1);}
-  50%{box-shadow:0 0px 8px rgba(16,185,129,0.3), 0 4px 16px rgba(16,185,129,0.3);}
-  100%{box-shadow:0 0px 32px rgba(16,185,129,1), 0 4px 16px rgba(16,185,129,1);}
+  0%{box-shadow:0 0px 32px rgba(16,185,129,1),0 4px 16px rgba(16,185,129,1);}
+  50%{box-shadow:0 0px 8px rgba(16,185,129,0.3),0 4px 16px rgba(16,185,129,0.3);}
+  100%{box-shadow:0 0px 32px rgba(16,185,129,1),0 4px 16px rgba(16,185,129,1);}
 }
 .loading-text{color:var(--text-secondary);font-size:14px}
 .loading-sub{color:var(--text-muted);font-size:12px}
 
-/* POPUP CARD */
-.gp-popup{font-family:'Inter',sans-serif;min-width:220px}
+/* ── POPUP CARD (mejorado) ───────────────── */
+.gp-popup{font-family:'Inter',sans-serif;width:260px}
 .gp-popup-img{
-  width:100%;height:130px;object-fit:cover;
-  border-radius:var(--radius-md);margin-bottom:10px;
-  background:var(--bg-600);
+  width:100%;height:160px;object-fit:cover;
+  border-radius:var(--radius-md);margin-bottom:12px;
+  background:#e2e8f0;display:block;
 }
-.gp-popup-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.gp-popup-name{font-size:15px;font-weight:700;color:#1e293b}
-.gp-popup-desc{font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.4}
+.gp-popup-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;gap:8px}
+.gp-popup-name{font-size:16px;font-weight:700;color:#0f172a;line-height:1.2;flex:1}
 .gp-popup-badge{
-  font-size:9px;font-weight:700;letter-spacing:0.04em;
-  padding:2px 8px;border-radius:999px;
+  font-size:9px;font-weight:700;letter-spacing:0.05em;
+  padding:3px 9px;border-radius:999px;flex-shrink:0;margin-top:2px;
 }
-.gp-popup-badge.perdido{background:#fee2e2;color:#dc2626}
-.gp-popup-badge.encontrado{background:#d1fae5;color:#059669}
-.gp-popup-badge.adopcion{background:#dbeafe;color:#2563eb}
-.gp-popup-tel{font-size:11px;color:#94a3b8;margin-bottom:12px}
+.gp-popup-badge.perdido{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
+.gp-popup-badge.encontrado{background:#d1fae5;color:#059669;border:1px solid #6ee7b7}
+.gp-popup-badge.adopcion{background:#dbeafe;color:#2563eb;border:1px solid #93c5fd}
+.gp-popup-desc{font-size:12px;color:#475569;margin-bottom:10px;line-height:1.5}
+.gp-popup-tel{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;color:#374151;
+  background:#f8fafc;border:1px solid #e2e8f0;
+  padding:7px 10px;border-radius:8px;margin-bottom:12px;
+}
+.gp-popup-tel svg{width:13px;height:13px;stroke:#6b7280;flex-shrink:0}
+.gp-popup-divider{height:1px;background:#f1f5f9;margin-bottom:12px}
 .gp-popup-btn{
-  display:block;width:100%;padding:9px;text-align:center;
-  background:#10b981;color:white;
-  border:none;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:10px;text-align:center;
+  background:#10b981;color:white;border:none;border-radius:8px;
   font-size:13px;font-weight:600;cursor:pointer;
-  text-decoration:none;transition:background 0.2s;
+  text-decoration:none;transition:background 0.2s,transform 0.1s;
   font-family:'Inter',sans-serif;
 }
-.gp-popup-btn:hover{background:#0d9167}
+.gp-popup-btn:hover{background:#059669;transform:translateY(-1px)}
+.gp-popup-btn svg{width:14px;height:14px;stroke:currentColor;fill:none}
 
-/* LEAFLET OVERRIDES */
+/* ── LEAFLET OVERRIDES ───────────────────── */
 .leaflet-container{background:#0f1629}
 .leaflet-popup-content-wrapper{
-  background:#ffffff;
-  border-radius:14px !important;
-  box-shadow:0 20px 60px rgba(0,0,0,0.4) !important;
-  padding:0 !important;
-  overflow:hidden;
+  background:#ffffff;border-radius:16px !important;
+  box-shadow:0 24px 64px rgba(0,0,0,0.45) !important;
+  padding:0 !important;overflow:hidden;
 }
 .leaflet-popup-content{margin:16px !important;width:auto !important}
 .leaflet-popup-tip{background:#ffffff}
 .leaflet-popup-close-button{
-  color:#64748b !important;
-  font-size:20px !important;
-  right:12px !important;
-  top:10px !important;
+  color:#94a3b8 !important;font-size:20px !important;
+  right:12px !important;top:10px !important;z-index:10;
 }
+.leaflet-popup-close-button:hover{color:#475569 !important}
 .leaflet-control-zoom{border:none !important}
 .leaflet-control-zoom a{
-  background:var(--bg-800) !important;
-  color:var(--text-secondary) !important;
-  border:1px solid var(--border) !important;
-  transition:all 0.2s !important;
+  background:var(--bg-800) !important;color:var(--text-secondary) !important;
+  border:1px solid var(--border) !important;transition:all 0.2s !important;
 }
 .leaflet-control-zoom a:hover{background:var(--bg-700) !important;color:var(--text-primary) !important}
 .leaflet-bar{box-shadow:none !important}
-.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(16,185,129,0.15) !important}
-.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{background:rgba(16,185,129,0.3) !important;color:var(--primary) !important;font-weight:700 !important;font-family:'Inter',sans-serif !important}
 
-/* NOTIFICATION */
+/* Clusters por categoría (coloreados) */
+.cluster-perdido{
+  background:rgba(239,68,68,0.15) !important;border:2px solid #ef4444 !important;
+}
+.cluster-perdido div{background:rgba(239,68,68,0.25) !important;color:#ef4444 !important}
+.cluster-encontrado{
+  background:rgba(16,185,129,0.15) !important;border:2px solid #10b981 !important;
+}
+.cluster-encontrado div{background:rgba(16,185,129,0.25) !important;color:#10b981 !important}
+.cluster-adopcion{
+  background:rgba(59,130,246,0.15) !important;border:2px solid #3b82f6 !important;
+}
+.cluster-adopcion div{background:rgba(59,130,246,0.25) !important;color:#3b82f6 !important}
+
+/* ── TOAST ───────────────────────────────── */
 .toast{
   position:fixed;bottom:24px;right:24px;z-index:9999;
   background:var(--bg-700);border:1px solid var(--border);
@@ -343,27 +316,25 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   display:flex;align-items:center;gap:10px;
   box-shadow:0 8px 32px rgba(0,0,0,0.4);
   transform:translateY(80px);opacity:0;
-  transition:transform 0.3s ease,opacity 0.3s ease;
-  max-width:300px;
+  transition:transform 0.3s ease,opacity 0.3s ease;max-width:300px;
 }
 .toast.show{transform:translateY(0);opacity:1}
 .toast-icon{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;animation:pulse-dot 1.5s ease infinite}
 @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
-.toast-text{font-size:13px;color:var(--text-primary)}
+.toast-text{font-size:13px;color:var(--text-primary);font-weight:500}
 .toast-sub{font-size:11px;color:var(--text-muted)}
 
-/* CUSTOM MARKERS */
+/* ── CUSTOM MARKERS ──────────────────────── */
 .custom-marker{
   width:36px;height:36px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;border:2px solid white;
-  box-shadow:0 2px 8px rgba(0,0,0,0.4);
+  font-size:16px;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.4);
 }
 .custom-marker.perdido{background:#ef4444}
 .custom-marker.encontrado{background:#10b981}
 .custom-marker.adopcion{background:#3b82f6}
 
-/* HEATMAP LEGEND */
+/* ── MAP LEGEND ──────────────────────────── */
 .map-legend{
   position:absolute;bottom:30px;left:16px;z-index:400;
   background:var(--bg-800);border:1px solid var(--border);
@@ -375,109 +346,52 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .legend-label{color:var(--text-secondary)}
 
-/* MOBILE */
+/* ── MOBILE ──────────────────────────────── */
 @media(max-width:768px){
   .sidebar{position:absolute;left:0;top:0;height:100%;transform:translateX(-100%);transition:transform 0.3s ease;z-index:600}
   .sidebar.open{transform:translateX(0)}
-
-  /* Botones de acción → barra inferior centrada */
   .map-topbar{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    top:auto;
-    z-index:500;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    background:var(--bg-900);
-    border-top:1px solid var(--border);
-    padding:10px 16px;
-    padding-bottom:calc(10px + env(safe-area-inset-bottom));
+    position:fixed;bottom:0;left:0;right:0;top:auto;z-index:500;
+    display:flex;justify-content:center;align-items:center;gap:8px;
+    background:var(--bg-900);border-top:1px solid var(--border);
+    padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));
   }
   .map-topbar .map-btn{
-    flex:1;
-    max-width:120px;
-    justify-content:center;
-    font-size:11px;
-    padding:9px 8px;
+    flex:1;max-width:120px;justify-content:center;font-size:11px;padding:9px 8px;
   }
-
-  /* Intercambiar posición de botones en móvil */
-  .map-topbar .map-btn:nth-child(1) { /* Volver al inicio */
-    order: 3;
-  }
-  .map-topbar .map-btn:nth-child(2) { /* Satélite */
-    order: 2;
-  }
-  .map-topbar .map-btn:nth-child(3) { /* Ver todo */
-    order: 1;
-  }
-
-  /* Leyenda → esquina superior derecha, compacta */
+  .map-topbar .map-btn:nth-child(1){order:3}
+  .map-topbar .map-btn:nth-child(2){order:2}
+  .map-topbar .map-btn:nth-child(3){order:1}
   .map-legend{
-    position:fixed !important;
-    top:12px !important;
-    right:12px !important;
-    bottom:auto !important;
-    left:auto !important;
-    z-index:490 !important;
-    width:fit-content !important;
-    height:fit-content !important;
-    min-width:0 !important;
-    max-width:160px !important;
-    padding:8px 12px !important;
+    position:fixed !important;top:12px !important;right:12px !important;
+    bottom:auto !important;left:auto !important;z-index:490 !important;
+    width:fit-content !important;height:fit-content !important;
+    min-width:0 !important;max-width:160px !important;padding:8px 12px !important;
   }
-
-  /* Hamburguesa → esquina inferior derecha, sobre la barra */
   .sidebar-toggle{
-    position:fixed;
-    bottom:calc(64px + env(safe-area-inset-bottom));
-    right:16px;
-    top:auto;
-    left:auto;
-    z-index:700;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:44px;
-    height:44px;
-    border-radius:var(--radius-full);
-    background:var(--bg-700);
-    border:1px solid var(--border-light);
-    box-shadow:0 4px 16px rgba(0,0,0,0.4);
-    transition:all 0.3s ease;
+    position:fixed;bottom:calc(64px + env(safe-area-inset-bottom));right:16px;
+    top:auto;left:auto;z-index:700;
+    display:flex;align-items:center;justify-content:center;
+    width:44px;height:44px;border-radius:var(--radius-full);
+    background:var(--bg-700);border:1px solid var(--border-light);
+    box-shadow:0 4px 16px rgba(0,0,0,0.4);transition:all 0.3s ease;
   }
-  .sidebar-toggle.pulse{
-    animation:pulse-hamburger 0.5s ease-in-out 4;
-  }
-
-  /* Toast no tape la barra inferior */
-  .toast{
-    bottom:calc(80px + env(safe-area-inset-bottom));
-    right:12px;
-  }
-
-  /* Zoom controls del mapa, no tapar barra inferior */
-  .leaflet-control-zoom{
-    margin-bottom:calc(80px + env(safe-area-inset-bottom)) !important;
-  }
+  .sidebar-toggle.pulse{animation:pulse-hamburger 0.5s ease-in-out 4}
+  .toast{bottom:calc(80px + env(safe-area-inset-bottom));right:12px}
+  .leaflet-control-zoom{margin-bottom:calc(80px + env(safe-area-inset-bottom)) !important}
 }
-
-
-
 </style>
 </head>
 <body>
 
+<!-- LOADING OVERLAY -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
   <div class="loading-text">Cargando GeoPets Dashboard</div>
-  <div class="loading-sub">Inicializando capas del mapa...</div>
+  <div class="loading-sub" id="loadingSubText">Conectando con la base de datos...</div>
 </div>
 
+<!-- TOAST NOTIFICATION -->
 <div class="toast" id="toast">
   <div class="toast-icon"></div>
   <div>
@@ -488,8 +402,10 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 
 <div class="app">
 
-  <!-- SIDEBAR -->
+  <!-- ══ SIDEBAR ══════════════════════════════════════ -->
   <aside class="sidebar" id="sidebar">
+
+    <!-- Logo -->
     <div class="sidebar-header">
       <div class="logo-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -503,7 +419,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
       <span class="badge-beta">BETA</span>
     </div>
 
-    <!-- STATS -->
+    <!-- Stats dinámicas (se llenan desde Supabase) -->
     <div class="stats-section">
       <div class="stats-title">Resumen de mascotas</div>
       <div class="stats-grid">
@@ -526,28 +442,36 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
       </div>
     </div>
 
-    <!-- CONTROLS: Búsqueda -->
+    <!-- Búsqueda -->
     <div class="controls-section">
       <div class="section-label">Búsqueda y filtros</div>
       <div class="search-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
         <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre o descripción...">
       </div>
     </div>
 
-    <!-- PET LIST -->
+    <!-- Lista de mascotas -->
     <div class="pet-list-section">
       <div class="section-label" style="margin-bottom:10px">Lista de mascotas</div>
-      <div id="petList"></div>
+      <!-- Estado de carga inicial -->
+      <div id="petList">
+        <div class="list-loading">
+          <div class="list-spinner"></div>
+          <div class="list-loading-text">Cargando mascotas...</div>
+        </div>
+      </div>
     </div>
 
-    <!-- CAPAS DEL MAPA -->
+    <!-- Filtros por categoría (conectados al mapa) -->
     <div class="controls-section layers-section" style="flex-shrink:0">
       <div class="section-label">Capas del mapa</div>
       <div class="layers-row">
         <div class="layer-toggle active red" id="togglePerdido" onclick="toggleLayer('perdido')">
           <div class="layer-left">
-            <div class="layer-icon red">🔴</div>
+            <div class="layer-icon red">●</div>
             <div class="layer-name">Perdidas</div>
             <div class="layer-count" id="layerCountPerdido">0</div>
           </div>
@@ -555,7 +479,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
         </div>
         <div class="layer-toggle active green" id="toggleEncontrado" onclick="toggleLayer('encontrado')">
           <div class="layer-left">
-            <div class="layer-icon green">🟢</div>
+            <div class="layer-icon green">●</div>
             <div class="layer-name">Encontradas</div>
             <div class="layer-count" id="layerCountEncontrado">0</div>
           </div>
@@ -563,7 +487,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
         </div>
         <div class="layer-toggle active blue" id="toggleAdopcion" onclick="toggleLayer('adopcion')">
           <div class="layer-left">
-            <div class="layer-icon blue">🔵</div>
+            <div class="layer-icon blue">●</div>
             <div class="layer-name">Adopción</div>
             <div class="layer-count" id="layerCountAdopcion">0</div>
           </div>
@@ -572,34 +496,57 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
       </div>
     </div>
 
+    <!-- Geolocalización -->
     <div class="sidebar-footer">
       <button class="btn-geo" onclick="geolocate()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8" stroke-opacity="0.3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          <circle cx="12" cy="12" r="8" stroke-opacity="0.3"/>
+        </svg>
         Centrar en mi ubicación
       </button>
     </div>
   </aside>
 
-  <!-- MAP -->
+  <!-- ══ MAPA ══════════════════════════════════════════ -->
   <div class="map-area">
+    <!-- Botón hamburguesa (solo mobile) -->
     <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
     </button>
+
+    <!-- Controles superiores -->
     <div class="map-topbar">
-      <button class="map-btn" id="btnHome" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <button class="map-btn" id="btnHome" onclick="navigateHome()" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
         Volver al inicio
       </button>
       <button class="map-btn" id="btnSatelite" onclick="toggleBasemap()" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
         Satélite
       </button>
       <button class="map-btn" onclick="fitAllMarkers()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+        </svg>
         Ver todo
       </button>
     </div>
+
+    <!-- Contenedor del mapa -->
     <div id="map"></div>
+
+    <!-- Leyenda -->
     <div class="map-legend">
       <div class="map-legend-title">Leyenda</div>
       <div class="legend-row"><div class="legend-dot" style="background:#ef4444"></div><span class="legend-label">Perdida</span></div>
@@ -609,439 +556,538 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   </div>
 </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js">
-// Botón volver al inicio - forzar navegación en móvil
-(function(){
-  var btn = document.getElementById('btnHome');
-  if(!btn) return;
-  btn.addEventListener('touchend', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    location.replace('https://soygeopets.vercel.app');
-  }, {passive: false});
-  btn.addEventListener('click', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    location.replace('https://soygeopets.vercel.app');
-  });
-})();
-
-</script>
+<!-- ══ SCRIPTS ════════════════════════════════════════ -->
+<!-- Leaflet core -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- MarkerCluster plugin -->
 <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-// =============================================
-// DATOS DE MASCOTAS
-// =============================================
-const MASCOTAS = [
-  // Perdidas
-  {id:1,nombre:"Luna",tipo:"perdido",descripcion:"Perra labrador blanca con manchas negras",telefono:"3102223344",img:"perro_perdidos/lupita.jpg",lat:4.6233,lng:-74.1135,fecha:"2024-12-10"},
-  {id:2,nombre:"Max",tipo:"perdido",descripcion:"Labrador amarillo, collar rojo, muy amigable",telefono:"3211234567",img:"perro_perdidos/max.jpg",lat:4.6250,lng:-74.1100,fecha:"2024-12-12"},
-  {id:3,nombre:"Kira",tipo:"perdido",descripcion:"Husky siberiana, ojos azules, muy activa",telefono:"3004455667",img:"",lat:4.6310,lng:-74.0980,fecha:"2024-12-14"},
-  {id:4,nombre:"Rocky",tipo:"perdido",descripcion:"Bulldog francés gris, sin cola",telefono:"3157889900",img:"",lat:4.6195,lng:-74.1050,fecha:"2024-12-15"},
-  {id:5,nombre:"Coco",tipo:"perdido",descripcion:"Poodle café pequeño, lleva moño rosa",telefono:"3209988776",img:"",lat:4.6420,lng:-74.1200,fecha:"2024-12-16"},
-  // Encontradas
-  {id:6,nombre:"Bella",tipo:"encontrado",descripcion:"Golden Retriever encontrada en parque El Virrey",telefono:"3123456789",img:"",lat:4.6380,lng:-74.0860,fecha:"2024-12-11"},
-  {id:7,nombre:"Toby",tipo:"encontrado",descripcion:"Beagle tricolor encontrado en la Séptima",telefono:"3014567890",img:"",lat:4.6150,lng:-74.0780,fecha:"2024-12-13"},
-  {id:8,nombre:"Nala",tipo:"encontrado",descripcion:"Gata siamesa encontrada, muy tranquila",telefono:"3201234567",img:"",lat:4.6290,lng:-74.1190,fecha:"2024-12-15"},
-  // En adopción
-  {id:9,nombre:"Simba",tipo:"adopcion",descripcion:"Macho, 1 año, vacunas al día, busca hogar",telefono:"3165556677",img:"",lat:4.6470,lng:-74.0920,fecha:"2024-12-08"},
-  {id:10,nombre:"Mia",tipo:"adopcion",descripcion:"Hembra, 2 años, esterilizada, muy cariñosa",telefono:"3128889900",img:"",lat:4.6080,lng:-74.0990,fecha:"2024-12-09"},
-  {id:11,nombre:"Thor",tipo:"adopcion",descripcion:"Mestizo grande, 3 años, ideal para casa con patio",telefono:"3174443322",img:"",lat:4.6560,lng:-74.1080,fecha:"2024-12-07"},
-  {id:12,nombre:"Lila",tipo:"adopcion",descripcion:"Gatita gris persa, 8 meses, juguetona",telefono:"3192227788",img:"",lat:4.6340,lng:-74.0750,fecha:"2024-12-06"},
-];
+// ╔══════════════════════════════════════════════════════╗
+// ║  CONFIGURACIÓN SUPABASE                              ║
+// ╚══════════════════════════════════════════════════════╝
+const supabaseUrl = "https://gjqfunnekzwcfuvzwkto.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWZ1bm5la3p3Y2Z1dnp3a3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTgzODYsImV4cCI6MjA5MTc3NDM4Nn0.z9-Fv09j90v7cKz1SZHbbc136Ay7dfI1jX3iZ2FSy2E";
+const sbClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+// ╔══════════════════════════════════════════════════════╗
+// ║  CONSTANTES Y ESTADO GLOBAL                          ║
+// ╚══════════════════════════════════════════════════════╝
 const FALLBACK_IMG = "https://cdn-icons-png.flaticon.com/512/616/616408.png";
-const LABEL = {perdido:"PERDIDA",encontrado:"ENCONTRADA",adopcion:"ADOPCIÓN"};
 
-// =============================================
-// MAPA INIT
-// =============================================
-const map = L.map('map',{zoomControl:true}).setView([4.65,-74.1],12);
+// Mapeo campo 'categoria' de Supabase → tipo interno
+const CAT_MAP = { PERDIDO:'perdido', ENCONTRADO:'encontrado', ADOPCION:'adopcion' };
 
-const layerOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  maxZoom:19,attribution:'&copy; OpenStreetMap',
-  className:'osm-dark'
+// Etiquetas legibles para cada tipo
+const LABEL = { perdido:'PERDIDA', encontrado:'ENCONTRADA', adopcion:'ADOPCIÓN' };
+
+// Array maestro: se puebla desde Supabase
+let MASCOTAS = [];
+
+// Estado de visibilidad de capas
+const layerState = { perdido:true, encontrado:true, adopcion:true };
+
+// Mapa de id → marker de Leaflet
+const allMarkers = {};
+
+// Query de búsqueda activa
+let searchQuery = '';
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  INICIALIZACIÓN DEL MAPA                             ║
+// ╚══════════════════════════════════════════════════════╝
+const map = L.map('map', { zoomControl:true }).setView([4.65, -74.1], 12);
+
+// Capa base OSM
+const layerOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom:19, attribution:'&copy; OpenStreetMap'
 });
-const layerSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-  maxZoom:19,attribution:'Tiles &copy; Esri'
-});
+
+// Capa satélite (Esri)
+const layerSat = L.tileLayer(
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { maxZoom:19, attribution:'Tiles &copy; Esri' }
+);
+
 layerOSM.addTo(map);
 
-// Intentar cargar capa WMS de GeoServer (silencioso)
-try{
-  L.tileLayer.wms("http://localhost:8080/geoserver/geopets/wms",{
-    layers:"geopets:localidades",format:"image/png",
-    transparent:true,attribution:"GeoPets"
+// Capa WMS local (silenciosa, solo si existe GeoServer)
+try {
+  L.tileLayer.wms("http://localhost:8080/geoserver/geopets/wms", {
+    layers:"geopets:localidades", format:"image/png",
+    transparent:true, attribution:"GeoPets"
   }).addTo(map);
-}catch(e){}
+} catch(e) {}
 
-// =============================================
-// CARGAR MASCOTAS DE SUPABASE
-// =============================================
-async function cargarMascotas() {
-  try {
-    const { data, error } = await client.from('mascota').select('*');
-    if (error) {
-      console.error('Error al consultar Supabase:', error);
-      return;
-    }
-    console.log('Datos de mascotas:', data);
-    
-    // Crear GeoJSON FeatureCollection
-    const geoJsonData = {
-      type: 'FeatureCollection',
-      features: data.map(m => ({
-        type: 'Feature',
-        geometry: m.geom, // Geometría PostGIS en formato GeoJSON
-        properties: {
-          nombre: m.nombre,
-          descripcion: m.descripcion,
-          numero: m.numero,
-          imagen: m.imagen
-        }
-      }))
-    };
-    
-    // Agregar a Leaflet
-    L.geoJSON(geoJsonData, {
-      onEachFeature: function (feature, layer) {
-        const props = feature.properties;
-        layer.bindPopup(`
-          <div>
-            <h3>${props.nombre}</h3>
-            <p>${props.descripcion}</p>
-            <img src="${props.imagen}" alt="${props.nombre}" style="width:100px;height:100px;">
-            <p>Número: ${props.numero}</p>
-          </div>
-        `);
-      }
-    }).addTo(map);
-    
-  } catch (err) {
-    console.error('Error en cargarMascotas:', err);
-  }
-}
-
-// =============================================
-// ICONOS PERSONALIZADOS
-// =============================================
-function makeIcon(tipo){
-  const colors={perdido:'#ef4444',encontrado:'#10b981',adopcion:'#3b82f6'};
-  const emojis={perdido:'🐾',encontrado:'✓',adopcion:'🏠'};
+// ╔══════════════════════════════════════════════════════╗
+// ║  CLUSTERS POR CATEGORÍA                              ║
+// ║  Cada tipo tiene su propio MarkerClusterGroup con    ║
+// ║  un color diferenciador en los íconos de cluster.   ║
+// ╚══════════════════════════════════════════════════════╝
+function makeClusterIcon(cluster, color) {
+  const count = cluster.getChildCount();
+  // Tamaño dinámico: más grande cuando hay más puntos
+  const size = count < 10 ? 36 : count < 50 ? 42 : 48;
   return L.divIcon({
-    html:`<div style="
-      width:36px;height:36px;border-radius:50%;
-      background:${colors[tipo]};
+    html: `<div style="
+      background:${color}22;border:2px solid ${color};border-radius:50%;
+      width:${size}px;height:${size}px;
       display:flex;align-items:center;justify-content:center;
-      font-size:14px;border:3px solid white;
-      box-shadow:0 2px 12px rgba(0,0,0,0.4);
-      color:white;font-weight:700;
-    ">${emojis[tipo]}</div>`,
-    className:'',iconSize:[36,36],iconAnchor:[18,18],popupAnchor:[0,-20]
+      color:${color};font-weight:700;font-size:${count<100?13:11}px;
+      font-family:'Inter',sans-serif;
+      box-shadow:0 2px 8px ${color}44;
+    ">${count}</div>`,
+    className:'', iconSize:[size, size]
   });
 }
 
-// =============================================
-// CLUSTERS Y CAPAS
-// =============================================
-const clusterOpts = {
-  iconCreateFunction:function(cluster){
-    return L.divIcon({
-      html:`<div style="
-        background:rgba(16,185,129,0.2);border:2px solid #10b981;
-        border-radius:50%;width:38px;height:38px;
-        display:flex;align-items:center;justify-content:center;
-        color:#10b981;font-weight:700;font-size:13px;
-        font-family:'Inter',sans-serif;
-      ">${cluster.getChildCount()}</div>`,
-      className:'',iconSize:[38,38]
-    });
-  },
-  maxClusterRadius:60,spiderfyOnMaxZoom:true
+const clusterBaseOpts = {
+  maxClusterRadius: 60,
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true,
+  animate: true
 };
 
-const layers={
-  perdido:L.markerClusterGroup({...clusterOpts,iconCreateFunction:function(c){return makeClusterIcon(c,'#ef4444')}}),
-  encontrado:L.markerClusterGroup({...clusterOpts,iconCreateFunction:function(c){return makeClusterIcon(c,'#10b981')}}),
-  adopcion:L.markerClusterGroup({...clusterOpts,iconCreateFunction:function(c){return makeClusterIcon(c,'#3b82f6')}})
+const layers = {
+  perdido:    L.markerClusterGroup({ ...clusterBaseOpts, iconCreateFunction: c => makeClusterIcon(c, '#ef4444') }),
+  encontrado: L.markerClusterGroup({ ...clusterBaseOpts, iconCreateFunction: c => makeClusterIcon(c, '#10b981') }),
+  adopcion:   L.markerClusterGroup({ ...clusterBaseOpts, iconCreateFunction: c => makeClusterIcon(c, '#3b82f6') })
 };
-const layerState={perdido:true,encontrado:true,adopcion:true};
-const allMarkers={};
 
-function makeClusterIcon(cluster,color){
+// ╔══════════════════════════════════════════════════════╗
+// ║  ICONOS PERSONALIZADOS POR CATEGORÍA                 ║
+// ║  SVG inline para máxima claridad visual.             ║
+// ╚══════════════════════════════════════════════════════╝
+const ICON_SVG = {
+  perdido: `<svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+  </svg>`,
+  encontrado: `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>`,
+  adopcion: `<svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  </svg>`
+};
+
+const ICON_COLORS = { perdido:'#ef4444', encontrado:'#10b981', adopcion:'#3b82f6' };
+
+function makeIcon(tipo) {
+  const color = ICON_COLORS[tipo] || '#888';
+  const svg   = ICON_SVG[tipo]   || '';
   return L.divIcon({
-    html:`<div style="background:${color}22;border:2px solid ${color};border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:${color};font-weight:700;font-size:13px;font-family:'Inter',sans-serif;">${cluster.getChildCount()}</div>`,
-    className:'',iconSize:[38,38]
+    html: `<div style="
+      width:38px;height:38px;border-radius:50%;
+      background:${color};
+      display:flex;align-items:center;justify-content:center;
+      border:3px solid white;
+      box-shadow:0 3px 12px rgba(0,0,0,0.45), 0 0 0 2px ${color}44;
+      transition:transform 0.15s;
+    ">${svg}</div>`,
+    className: '',
+    iconSize:   [38, 38],
+    iconAnchor: [19, 19],
+    popupAnchor:[0, -22]
   });
 }
 
-// =============================================
-// POPUP TEMPLATE
-// =============================================
-function buildPopup(m){
-  const badgeClass=m.tipo;
-  const label=LABEL[m.tipo]||m.tipo.toUpperCase();
-  const imgUrl=m.img||FALLBACK_IMG;
+// ╔══════════════════════════════════════════════════════╗
+// ║  POPUP MEJORADO (card UI)                            ║
+// ╚══════════════════════════════════════════════════════╝
+function buildPopup(m) {
+  const label  = LABEL[m.tipo] || m.tipo.toUpperCase();
+  const imgUrl = m.img || FALLBACK_IMG;
+  const tel    = m.telefono || 'Sin contacto';
+  const waLink = `https://wa.me/57${tel}?text=Hola!%20Vi%20a%20${encodeURIComponent(m.nombre)}%20en%20GeoPets`;
+
   return `<div class="gp-popup">
-    <img class="gp-popup-img" src="${imgUrl}" alt="${m.nombre}" onerror="this.src='${FALLBACK_IMG}'">
+    <img class="gp-popup-img"
+         src="${imgUrl}"
+         alt="${m.nombre}"
+         onerror="this.src='${FALLBACK_IMG}';this.onerror=null;">
     <div class="gp-popup-header">
       <span class="gp-popup-name">${m.nombre}</span>
-      <span class="gp-popup-badge ${badgeClass}">${label}</span>
+      <span class="gp-popup-badge ${m.tipo}">${label}</span>
     </div>
-    <div class="gp-popup-desc">${m.descripcion}</div>
-    <div class="gp-popup-tel">📞 ${m.telefono}</div>
-    <a href="https://wa.me/57${m.telefono}?text=Hola!%20Vi%20a%20${encodeURIComponent(m.nombre)}%20en%20GeoPets" target="_blank" class="gp-popup-btn">💬 Contactar por WhatsApp</a>
+    <div class="gp-popup-desc">${m.descripcion || 'Sin descripción'}</div>
+    <div class="gp-popup-tel">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      ${tel}
+    </div>
+    <div class="gp-popup-divider"></div>
+    <a href="${waLink}" target="_blank" class="gp-popup-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Contactar por WhatsApp
+    </a>
   </div>`;
 }
 
-// =============================================
-// CARGAR MARCADORES
-// =============================================
-function loadMarkers(data){
-  data.forEach(m=>{
-    const marker=L.marker([m.lat,m.lng],{icon:makeIcon(m.tipo)});
-    marker.bindPopup(buildPopup(m),{maxWidth:260,minWidth:240});
-    marker.petData=m;
+// ╔══════════════════════════════════════════════════════╗
+// ║  CARGAR MASCOTAS DESDE SUPABASE                      ║
+// ║  Normaliza el campo 'categoria' y extrae lat/lng     ║
+// ║  del campo 'geom' (GeoJSON de PostGIS).              ║
+// ╚══════════════════════════════════════════════════════╝
+async function cargarMascotas() {
+  try {
+    document.getElementById('loadingSubText').textContent = 'Consultando base de datos...';
+
+    const { data, error } = await sbClient.from('mascota').select('*');
+
+    if (error) {
+      console.error('Error Supabase:', error);
+      showToast('Error de conexión', 'No se pudo cargar la base de datos');
+      // Ocultar overlay aunque falle, para que el mapa sea visible
+      document.getElementById('loadingOverlay').classList.add('hidden');
+      document.getElementById('petList').innerHTML =
+        '<div class="empty-state">❌ No se pudo conectar con la base de datos</div>';
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      document.getElementById('loadingOverlay').classList.add('hidden');
+      document.getElementById('petList').innerHTML =
+        '<div class="empty-state">No hay mascotas registradas aún</div>';
+      return;
+    }
+
+    // Transformar registros de Supabase al formato interno
+    MASCOTAS = data
+      .map(row => {
+        // Extraer coordenadas desde el campo geom (GeoJSON Point de PostGIS)
+        let lat = null, lng = null;
+        if (row.geom) {
+          if (row.geom.type === 'Point' && Array.isArray(row.geom.coordinates)) {
+            // GeoJSON: coordinates = [longitude, latitude]
+            lng = row.geom.coordinates[0];
+            lat = row.geom.coordinates[1];
+          }
+        }
+        // Saltar registros sin geometría válida
+        if (lat === null || lng === null || isNaN(lat) || isNaN(lng)) return null;
+
+        // Normalizar categoría: "PERDIDO" → "perdido"
+        const catRaw = (row.categoria || '').toUpperCase().trim();
+        const tipo = CAT_MAP[catRaw] || 'perdido';
+
+        return {
+          id:         row.id,
+          nombre:     row.nombre     || 'Sin nombre',
+          descripcion:row.descripcion|| '',
+          telefono:   row.numero     || '',
+          img:        row.imagen     || '',
+          tipo:       tipo,
+          fecha:      row.fecha      || '',
+          lat:        lat,
+          lng:        lng
+        };
+      })
+      .filter(Boolean); // Eliminar nulos (sin geom)
+
+    console.log(`GeoPets: ${MASCOTAS.length} mascotas cargadas desde Supabase`);
+
+    // Cargar markers en el mapa y actualizar UI
+    loadMarkers(MASCOTAS);
+
+    // Ocultar overlay
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    showToast('¡GeoPets cargado!', `${MASCOTAS.length} mascotas en el mapa`);
+
+  } catch (err) {
+    console.error('Error en cargarMascotas:', err);
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    showToast('Error inesperado', 'Revisa la consola para más detalles');
+  }
+}
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  CARGAR MARKERS EN EL MAPA                           ║
+// ║  Usa el array MASCOTAS ya normalizado.               ║
+// ╚══════════════════════════════════════════════════════╝
+function loadMarkers(data) {
+  // Limpiar markers anteriores
+  Object.values(layers).forEach(l => l.clearLayers());
+  Object.keys(allMarkers).forEach(k => delete allMarkers[k]);
+
+  // Crear y distribuir markers en sus clusters
+  data.forEach(m => {
+    const marker = L.marker([m.lat, m.lng], { icon: makeIcon(m.tipo) });
+    marker.bindPopup(buildPopup(m), { maxWidth: 300, minWidth: 280 });
+    marker.petData = m;
     layers[m.tipo].addLayer(marker);
-    allMarkers[m.id]=marker;
+    allMarkers[m.id] = marker;
   });
-  Object.values(layers).forEach(l=>map.addLayer(l));
+
+  // Agregar todos los cluster groups al mapa
+  Object.values(layers).forEach(l => map.addLayer(l));
+
+  // Centrar el mapa sobre todos los puntos si hay datos
+  if (data.length > 0) {
+    fitAllMarkers();
+  }
+
+  // Actualizar contadores y lista lateral
   updateCounts();
   renderPetList();
 }
 
-// =============================================
-// STATS
-// =============================================
-function updateCounts(){
-  const counts={perdido:0,encontrado:0,adopcion:0};
-  getFilteredData().forEach(m=>counts[m.tipo]++);
-  animCount('countPerdido',counts.perdido);
-  animCount('countEncontrado',counts.encontrado);
-  animCount('countAdopcion',counts.adopcion);
-  animCount('countTotal',counts.perdido+counts.encontrado+counts.adopcion);
-  document.getElementById('layerCountPerdido').textContent=counts.perdido;
-  document.getElementById('layerCountEncontrado').textContent=counts.encontrado;
-  document.getElementById('layerCountAdopcion').textContent=counts.adopcion;
-}
-
-function animCount(id,val){
-  const el=document.getElementById(id);
-  const start=parseInt(el.textContent)||0;
-  if(start===val)return;
-  const step=(val-start)/12;
-  let cur=start;
-  const t=setInterval(()=>{
-    cur+=step;
-    if((step>0&&cur>=val)||(step<0&&cur<=val)){cur=val;clearInterval(t);}
-    el.textContent=Math.round(cur);
-  },30);
-}
-
-// =============================================
-// FILTROS Y BÚSQUEDA
-// =============================================
-let searchQuery='';
-function getFilteredData(){
-  return MASCOTAS.filter(m=>{
-    const tipoOk=layerState[m.tipo];
-    const q=searchQuery.toLowerCase();
-    const textOk=!q||m.nombre.toLowerCase().includes(q)||m.descripcion.toLowerCase().includes(q);
-    return tipoOk&&textOk;
+// ╔══════════════════════════════════════════════════════╗
+// ║  FILTROS Y BÚSQUEDA                                  ║
+// ╚══════════════════════════════════════════════════════╝
+function getFilteredData() {
+  return MASCOTAS.filter(m => {
+    const tipoOk = layerState[m.tipo];
+    const q      = searchQuery.toLowerCase();
+    const textOk = !q
+      || m.nombre.toLowerCase().includes(q)
+      || m.descripcion.toLowerCase().includes(q);
+    return tipoOk && textOk;
   });
 }
 
-function applyFilters(){
-  Object.keys(layers).forEach(tipo=>{
-    layers[tipo].clearLayers();
-  });
-  getFilteredData().forEach(m=>{
-    if(layerState[m.tipo]){
-      const marker=allMarkers[m.id];
-      if(marker)layers[m.tipo].addLayer(marker);
+function applyFilters() {
+  // Reasignar markers a sus clusters según filtros activos
+  Object.keys(layers).forEach(tipo => layers[tipo].clearLayers());
+
+  getFilteredData().forEach(m => {
+    if (layerState[m.tipo]) {
+      const marker = allMarkers[m.id];
+      if (marker) layers[m.tipo].addLayer(marker);
     }
   });
+
   updateCounts();
   renderPetList();
 }
 
-document.getElementById('searchInput').addEventListener('input',function(){
-  searchQuery=this.value;
+document.getElementById('searchInput').addEventListener('input', function() {
+  searchQuery = this.value;
   applyFilters();
 });
 
-// =============================================
-// LAYER TOGGLES
-// =============================================
-function toggleLayer(tipo){
-  layerState[tipo]=!layerState[tipo];
-  const btn=document.getElementById('toggle'+tipo.charAt(0).toUpperCase()+tipo.slice(1));
-  if(layerState[tipo]){
+// ╔══════════════════════════════════════════════════════╗
+// ║  TOGGLE DE CAPAS (switches)                          ║
+// ╚══════════════════════════════════════════════════════╝
+function toggleLayer(tipo) {
+  layerState[tipo] = !layerState[tipo];
+  const btn = document.getElementById('toggle' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+
+  if (layerState[tipo]) {
     btn.classList.add('active');
     map.addLayer(layers[tipo]);
-  }else{
+  } else {
     btn.classList.remove('active');
     map.removeLayer(layers[tipo]);
   }
+
   updateCounts();
   renderPetList();
 }
 
-// =============================================
-// PET LIST
-// =============================================
-function renderPetList(){
-  const list=document.getElementById('petList');
-  const data=getFilteredData();
-  if(!data.length){
-    list.innerHTML='<div class="empty-state">No se encontraron mascotas<br>con los filtros aplicados</div>';
+// ╔══════════════════════════════════════════════════════╗
+// ║  LISTA LATERAL DE MASCOTAS                           ║
+// ╚══════════════════════════════════════════════════════╝
+function renderPetList() {
+  const list = document.getElementById('petList');
+  const data = getFilteredData();
+
+  if (!data.length) {
+    list.innerHTML = '<div class="empty-state">No se encontraron mascotas<br>con los filtros aplicados</div>';
     return;
   }
-  list.innerHTML=data.map(m=>`
+
+  list.innerHTML = data.map(m => `
     <div class="pet-item" onclick="focusPet(${m.id})">
-      <img class="pet-thumb" src="${m.img||FALLBACK_IMG}" alt="${m.nombre}" onerror="this.src='${FALLBACK_IMG}'">
+      <img class="pet-thumb"
+           src="${m.img || FALLBACK_IMG}"
+           alt="${m.nombre}"
+           onerror="this.src='${FALLBACK_IMG}';this.onerror=null;">
       <div class="pet-info">
         <div class="pet-name">${m.nombre}</div>
-        <div class="pet-desc">${m.descripcion}</div>
+        <div class="pet-desc">${m.descripcion || 'Sin descripción'}</div>
       </div>
       <span class="pet-badge ${m.tipo}">${LABEL[m.tipo]}</span>
     </div>
   `).join('');
 }
 
-// =============================================
-// FOCUS PET
-// =============================================
-function focusPet(id){
-  const m=MASCOTAS.find(x=>x.id===id);
-  if(!m)return;
-  map.flyTo([m.lat,m.lng],16,{animate:true,duration:1});
-  setTimeout(()=>{
-    const marker=allMarkers[id];
-    if(marker)marker.openPopup();
-  },1100);
-  // Cerrar sidebar en mobile
-  if(window.innerWidth<=768)toggleSidebar();
+// ╔══════════════════════════════════════════════════════╗
+// ║  CONTADORES DINÁMICOS DEL DASHBOARD                  ║
+// ╚══════════════════════════════════════════════════════╝
+function updateCounts() {
+  const counts = { perdido:0, encontrado:0, adopcion:0 };
+  getFilteredData().forEach(m => counts[m.tipo]++);
+
+  animCount('countPerdido',    counts.perdido);
+  animCount('countEncontrado', counts.encontrado);
+  animCount('countAdopcion',   counts.adopcion);
+  animCount('countTotal',      counts.perdido + counts.encontrado + counts.adopcion);
+
+  document.getElementById('layerCountPerdido').textContent    = counts.perdido;
+  document.getElementById('layerCountEncontrado').textContent = counts.encontrado;
+  document.getElementById('layerCountAdopcion').textContent   = counts.adopcion;
 }
 
-// =============================================
-// GEOLOCALIZACIÓN
-// =============================================
-function geolocate(){
-  if(!navigator.geolocation){showToast('Sin soporte','Tu navegador no soporta geolocalización');return;}
-  showToast('Buscando...','Obteniendo tu ubicación');
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const{latitude:lat,longitude:lng}=pos.coords;
-    map.flyTo([lat,lng],15,{animate:true,duration:1.5});
-    L.circleMarker([lat,lng],{radius:10,color:'#10b981',fillColor:'#10b981',fillOpacity:0.3,weight:2}).addTo(map)
-      .bindPopup('<b>Tu ubicación</b>').openPopup();
-    showToast('¡Listo!','Mapa centrado en tu ubicación');
-  },()=>showToast('Error','No se pudo obtener la ubicación'));
+// Animación de contadores numéricos
+function animCount(id, val) {
+  const el  = document.getElementById(id);
+  if (!el) return;
+  const start = parseInt(el.textContent) || 0;
+  if (start === val) return;
+  const step  = (val - start) / 12;
+  let cur     = start;
+  const t = setInterval(() => {
+    cur += step;
+    if ((step > 0 && cur >= val) || (step < 0 && cur <= val)) {
+      cur = val; clearInterval(t);
+    }
+    el.textContent = Math.round(cur);
+  }, 30);
 }
 
-function navigateHome(){
-  try { location.replace("https://soygeopets.vercel.app"); } catch(e) { location.href="https://soygeopets.vercel.app"; }
+// ╔══════════════════════════════════════════════════════╗
+// ║  FOCUS EN MASCOTA (click en lista lateral)           ║
+// ╚══════════════════════════════════════════════════════╝
+function focusPet(id) {
+  const m = MASCOTAS.find(x => x.id === id);
+  if (!m) return;
+  map.flyTo([m.lat, m.lng], 16, { animate:true, duration:1 });
+  setTimeout(() => {
+    const marker = allMarkers[id];
+    if (marker) marker.openPopup();
+  }, 1100);
+  if (window.innerWidth <= 768) toggleSidebar();
 }
 
-// =============================================
-// BASEMAP TOGGLE
-// =============================================
-let isSat=false;
-function toggleBasemap(){
-  const btn=document.getElementById('btnSatelite');
-  if(isSat){map.removeLayer(layerSat);map.addLayer(layerOSM);btn.textContent='🌐 Satélite';btn.classList.remove('active');}
-  else{map.removeLayer(layerOSM);map.addLayer(layerSat);btn.innerHTML='<svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Mapa';btn.classList.add('active');}
-  isSat=!isSat;
+// ╔══════════════════════════════════════════════════════╗
+// ║  FIT ALL MARKERS                                     ║
+// ╚══════════════════════════════════════════════════════╝
+function fitAllMarkers() {
+  const pts = MASCOTAS.map(m => [m.lat, m.lng]);
+  if (pts.length) map.fitBounds(L.latLngBounds(pts), { padding:[40, 40] });
 }
 
-// =============================================
-// FIT ALL
-// =============================================
-function fitAllMarkers(){
-  const pts=MASCOTAS.map(m=>[m.lat,m.lng]);
-  if(pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[40,40]});
+// ╔══════════════════════════════════════════════════════╗
+// ║  GEOLOCALIZACIÓN                                     ║
+// ╚══════════════════════════════════════════════════════╝
+function geolocate() {
+  if (!navigator.geolocation) {
+    showToast('Sin soporte', 'Tu navegador no soporta geolocalización'); return;
+  }
+  showToast('Buscando...', 'Obteniendo tu ubicación');
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude:lat, longitude:lng } = pos.coords;
+      map.flyTo([lat, lng], 15, { animate:true, duration:1.5 });
+      L.circleMarker([lat, lng], {
+        radius:10, color:'#10b981', fillColor:'#10b981',
+        fillOpacity:0.3, weight:2
+      }).addTo(map).bindPopup('<b>Tu ubicación</b>').openPopup();
+      showToast('¡Listo!', 'Mapa centrado en tu ubicación');
+    },
+    () => showToast('Error', 'No se pudo obtener la ubicación')
+  );
 }
 
-// =============================================
-// SIDEBAR TOGGLE (MOBILE)
-// =============================================
-function toggleSidebar(){
-  const sidebar = document.getElementById('sidebar');
-  const isOpen = sidebar.classList.contains('open');
-  
-  if(isOpen){
-    // Si está abierto, cerrar y animar
-    sidebar.classList.remove('open');
-    const toggleBtn=document.getElementById('sidebarToggle');
-    toggleBtn.classList.add('pulse');
-    setTimeout(()=>{
-      toggleBtn.classList.remove('pulse');
-    },2100);
+// ╔══════════════════════════════════════════════════════╗
+// ║  BASEMAP TOGGLE                                      ║
+// ╚══════════════════════════════════════════════════════╝
+let isSat = false;
+function toggleBasemap() {
+  const btn = document.getElementById('btnSatelite');
+  if (isSat) {
+    map.removeLayer(layerSat);
+    map.addLayer(layerOSM);
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;stroke:currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Satélite`;
+    btn.classList.remove('active');
   } else {
-    // Si está cerrado, abrir normalmente
+    map.removeLayer(layerOSM);
+    map.addLayer(layerSat);
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;stroke:currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Mapa`;
+    btn.classList.add('active');
+  }
+  isSat = !isSat;
+}
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  NAVEGACIÓN                                          ║
+// ╚══════════════════════════════════════════════════════╝
+function navigateHome() {
+  try { location.replace("https://soygeopets.vercel.app"); }
+  catch(e) { location.href = "https://soygeopets.vercel.app"; }
+}
+
+// ╔══════════════════════════════════════════════════════╗
+// ║  SIDEBAR TOGGLE (MOBILE)                             ║
+// ╚══════════════════════════════════════════════════════╝
+function toggleSidebar() {
+  const sidebar   = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const isOpen    = sidebar.classList.contains('open');
+
+  if (isOpen) {
+    sidebar.classList.remove('open');
+    toggleBtn.classList.add('pulse');
+    setTimeout(() => toggleBtn.classList.remove('pulse'), 2100);
+  } else {
     sidebar.classList.add('open');
   }
 }
 
-// =============================================
-// TOAST
-// =============================================
+// ╔══════════════════════════════════════════════════════╗
+// ║  TOAST                                               ║
+// ╚══════════════════════════════════════════════════════╝
 let toastTimer;
-function showToast(text,sub){
-  const t=document.getElementById('toast');
-  document.getElementById('toastText').textContent=text;
-  document.getElementById('toastSub').textContent=sub||'';
+function showToast(text, sub) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastText').textContent = text;
+  document.getElementById('toastSub').textContent  = sub || '';
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// =============================================
-// INIT
-// =============================================
-window.addEventListener('load',()=>{
+// ╔══════════════════════════════════════════════════════╗
+// ║  INIT — Punto de entrada principal                   ║
+// ╚══════════════════════════════════════════════════════╝
+window.addEventListener('load', () => {
+  // Cargar datos reales de Supabase
   cargarMascotas();
-  
-  // Auto-abrir sidebar y animar botón en móvil
-  const isMobile=window.innerWidth<=768;
-  if(isMobile){
-    setTimeout(()=>{
+
+  // Comportamiento mobile: mostrar sidebar brevemente al abrir
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    setTimeout(() => {
       document.getElementById('sidebar').classList.add('open');
-      const toggleBtn=document.getElementById('sidebarToggle');
+      const toggleBtn = document.getElementById('sidebarToggle');
       toggleBtn.classList.add('pulse');
-      // Remover la animación, guardar (cerrar) y animar nuevamente
-      setTimeout(()=>{
+      setTimeout(() => {
         toggleBtn.classList.remove('pulse');
         document.getElementById('sidebar').classList.remove('open');
-        // Volver a animar al cerrar
-        setTimeout(()=>{
+        setTimeout(() => {
           toggleBtn.classList.add('pulse');
-          setTimeout(()=>{
-            toggleBtn.classList.remove('pulse');
-          },2100);
-        },100);
-      },2100);
-    },800);
+          setTimeout(() => toggleBtn.classList.remove('pulse'), 2100);
+        }, 100);
+      }, 2100);
+    }, 800);
   }
-  
-  setTimeout(()=>{
-    document.getElementById('loadingOverlay').classList.add('hidden');
-    // Solo mostrar toast en PC, no en móvil
-    if(!isMobile){
-      showToast('¡GeoPets cargado!',MASCOTAS.length+' mascotas en el mapa');
-    }
-  },1200);
+
+  // Botón volver: soporte touch en mobile
+  const btnHome = document.getElementById('btnHome');
+  if (btnHome) {
+    btnHome.addEventListener('touchend', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateHome();
+    }, { passive:false });
+  }
 });
 </script>
 </body>
 </html>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  const supabaseUrl = "https://gjqfunnekzwcfuvzwkto.supabase.co";
-  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWZ1bm5la3p3Y2Z1dnp3a3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTgzODYsImV4cCI6MjA5MTc3NDM4Nn0.z9-Fv09j90v7cKz1SZHbbc136Ay7dfI1jX3iZ2FSy2E";
-
-  const client = supabase.createClient(supabaseUrl, supabaseKey);
-</script>
