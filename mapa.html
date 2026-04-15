@@ -688,7 +688,9 @@ async function cargarMascotas() {
     console.log('Datos de mascotas:', data);
     data.forEach(m => {
       if (m.lat && m.lon) {
-        const marker = L.marker([m.lat, m.lon]);
+        const { data, error } = await client
+  .from('mascota')
+  .select('id,nombre,descripcion,imagen,numero,geom');
         marker.addTo(map);
         marker.bindPopup(`
           <div>
