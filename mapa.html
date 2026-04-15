@@ -982,3 +982,24 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const supabaseUrl = "https://gjqfunnekzwcfuvzwkto.supabase.co";
+  const supabaseKey = "TU_ANON_KEY";
+
+  const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+  async function testConexion() {
+    const { data, error } = await client
+      .from('mascotas')
+      .select('*');
+
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
+  }
+
+  testConexion();
+</script>
