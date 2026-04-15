@@ -84,10 +84,12 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .stat-dot.green{background:var(--primary)}
 .stat-dot.blue{background:var(--accent-blue)}
 .stat-dot.amber{background:var(--accent-amber)}
+.stat-dot.orange{background:#f97316}
 .stat-num{font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;line-height:1}
 .stat-num.red{color:var(--accent-red)}
 .stat-num.green{color:var(--primary)}
 .stat-num.blue{color:var(--accent-blue)}
+.stat-num.orange{color:#f97316}
 .stat-num.amber{color:var(--accent-amber)}
 
 /* ── CONTROLS ────────────────────────────── */
@@ -111,6 +113,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .layer-icon{width:12px;height:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0}
 .layer-icon.red{background:var(--accent-red-dim);border:1px solid rgba(239,68,68,0.3)}
 .layer-icon.green{background:var(--primary-glow);border:1px solid rgba(16,185,129,0.3)}
+.layer-icon.orange{background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3)}
 .layer-icon.blue{background:var(--accent-blue-dim);border:1px solid rgba(59,130,246,0.3)}
 .layer-name{font-size:10px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .layer-count{display:none}
@@ -129,6 +132,8 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .layer-toggle.active.red .toggle-pill::after{transform:translateX(10px);background:var(--accent-red)}
 .layer-toggle.active.green .toggle-pill{background:rgba(16,185,129,0.2)}
 .layer-toggle.active.green .toggle-pill::after{transform:translateX(10px);background:var(--primary)}
+.layer-toggle.active.orange .toggle-pill{background:rgba(249,115,22,0.2)}
+.layer-toggle.active.orange .toggle-pill::after{transform:translateX(10px);background:#f97316}
 .layer-toggle.active.blue .toggle-pill{background:rgba(59,130,246,0.2)}
 .layer-toggle.active.blue .toggle-pill::after{transform:translateX(10px);background:var(--accent-blue)}
 
@@ -162,7 +167,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .pet-desc{font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pet-badge{font-size:9px;font-weight:700;letter-spacing:0.04em;padding:2px 7px;border-radius:var(--radius-full);flex-shrink:0}
 .pet-badge.perdido{background:var(--accent-red-dim);color:var(--accent-red);border:1px solid rgba(239,68,68,0.25)}
-.pet-badge.encontrado{background:var(--primary-glow);color:var(--primary);border:1px solid rgba(16,185,129,0.25)}
+.pet-badge.visto{background:rgba(249,115,22,0.15);color:#f97316;border:1px solid rgba(249,115,22,0.25)}
 .pet-badge.adopcion{background:var(--accent-blue-dim);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.25)}
 .empty-state{text-align:center;padding:30px 20px;color:var(--text-muted);font-size:13px}
 
@@ -250,7 +255,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   padding:3px 9px;border-radius:999px;flex-shrink:0;margin-top:2px;
 }
 .gp-popup-badge.perdido{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
-.gp-popup-badge.encontrado{background:#d1fae5;color:#059669;border:1px solid #6ee7b7}
+.gp-popup-badge.visto{background:#fff0e5;color:#c2410c;border:1px solid #fb923c}
 .gp-popup-badge.adopcion{background:#dbeafe;color:#2563eb;border:1px solid #93c5fd}
 .gp-popup-desc{font-size:12px;color:#475569;margin-bottom:10px;line-height:1.5}
 .gp-popup-tel{
@@ -299,10 +304,10 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   background:rgba(239,68,68,0.15) !important;border:2px solid #ef4444 !important;
 }
 .cluster-perdido div{background:rgba(239,68,68,0.25) !important;color:#ef4444 !important}
-.cluster-encontrado{
-  background:rgba(16,185,129,0.15) !important;border:2px solid #10b981 !important;
+.cluster-visto{
+  background:rgba(249,115,22,0.15) !important;border:2px solid #f97316 !important;
 }
-.cluster-encontrado div{background:rgba(16,185,129,0.25) !important;color:#10b981 !important}
+.cluster-visto div{background:rgba(249,115,22,0.25) !important;color:#f97316 !important}
 .cluster-adopcion{
   background:rgba(59,130,246,0.15) !important;border:2px solid #3b82f6 !important;
 }
@@ -331,7 +336,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   font-size:16px;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.4);
 }
 .custom-marker.perdido{background:#ef4444}
-.custom-marker.encontrado{background:#10b981}
+.custom-marker.visto{background:#f97316}
 .custom-marker.adopcion{background:#3b82f6}
 
 /* ── MAP LEGEND ──────────────────────────── */
@@ -428,8 +433,8 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
           <div class="stat-num red" id="countPerdido">0</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label"><span class="stat-dot green"></span>Encontradas</div>
-          <div class="stat-num green" id="countEncontrado">0</div>
+          <div class="stat-label"><span class="stat-dot orange"></span>Vistos</div>
+          <div class="stat-num orange" id="countVisto">0</div>
         </div>
         <div class="stat-card">
           <div class="stat-label"><span class="stat-dot blue"></span>En Adopción</div>
@@ -477,11 +482,11 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
           </div>
           <div class="toggle-pill"></div>
         </div>
-        <div class="layer-toggle active green" id="toggleEncontrado" onclick="toggleLayer('encontrado')">
+        <div class="layer-toggle active orange" id="toggleVisto" onclick="toggleLayer('visto')">
           <div class="layer-left">
-            <div class="layer-icon green">●</div>
-            <div class="layer-name">Encontradas</div>
-            <div class="layer-count" id="layerCountEncontrado">0</div>
+            <div class="layer-icon orange">●</div>
+            <div class="layer-name">Vistos</div>
+            <div class="layer-count" id="layerCountVisto">0</div>
           </div>
           <div class="toggle-pill"></div>
         </div>
@@ -550,7 +555,7 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
     <div class="map-legend">
       <div class="map-legend-title">Leyenda</div>
       <div class="legend-row"><div class="legend-dot" style="background:#ef4444"></div><span class="legend-label">Perdida</span></div>
-      <div class="legend-row"><div class="legend-dot" style="background:#10b981"></div><span class="legend-label">Encontrada</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background:#f97316"></div><span class="legend-label">Visto</span></div>
       <div class="legend-row"><div class="legend-dot" style="background:#3b82f6"></div><span class="legend-label">En adopción</span></div>
     </div>
   </div>
@@ -578,16 +583,16 @@ const sbClient = supabase.createClient(supabaseUrl, supabaseKey);
 const FALLBACK_IMG = "https://cdn-icons-png.flaticon.com/512/616/616408.png";
 
 // Mapeo campo 'categoria' de Supabase → tipo interno
-const CAT_MAP = { PERDIDO:'perdido', ENCONTRADO:'encontrado', ADOPCION:'adopcion' };
+const CAT_MAP = { PERDIDO:'perdido', ENCONTRADO:'visto', VISTO:'visto', ADOPCION:'adopcion' };
 
 // Etiquetas legibles para cada tipo
-const LABEL = { perdido:'PERDIDA', encontrado:'ENCONTRADA', adopcion:'ADOPCIÓN' };
+const LABEL = { perdido:'PERDIDA', visto:'VISTO', adopcion:'ADOPCIÓN' };
 
 // Array maestro: se puebla desde Supabase
 let MASCOTAS = [];
 
 // Estado de visibilidad de capas
-const layerState = { perdido:true, encontrado:true, adopcion:true };
+const layerState = { perdido:true, visto:true, adopcion:true };
 
 // Mapa de id → marker de Leaflet
 const allMarkers = {};
@@ -661,15 +666,16 @@ const ICON_SVG = {
   perdido: `<svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
   </svg>`,
-  encontrado: `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-    <polyline points="20 6 9 17 4 12"/>
+  visto: `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <circle cx="12" cy="12" r="5"/>
+    <path d="M12 7v5l3 3"/>
   </svg>`,
   adopcion: `<svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
   </svg>`
 };
 
-const ICON_COLORS = { perdido:'#ef4444', encontrado:'#10b981', adopcion:'#3b82f6' };
+const ICON_COLORS = { perdido:'#ef4444', visto:'#f97316', adopcion:'#3b82f6' };
 
 function makeIcon(tipo) {
   const color = ICON_COLORS[tipo] || '#888';
@@ -896,17 +902,17 @@ function renderPetList() {
 // ║  CONTADORES DINÁMICOS DEL DASHBOARD                  ║
 // ╚══════════════════════════════════════════════════════╝
 function updateCounts() {
-  const counts = { perdido:0, encontrado:0, adopcion:0 };
+  const counts = { perdido:0, visto:0, adopcion:0 };
   getFilteredData().forEach(m => counts[m.tipo]++);
 
-  animCount('countPerdido',    counts.perdido);
-  animCount('countEncontrado', counts.encontrado);
-  animCount('countAdopcion',   counts.adopcion);
-  animCount('countTotal',      counts.perdido + counts.encontrado + counts.adopcion);
+  animCount('countPerdido',  counts.perdido);
+  animCount('countVisto',    counts.visto);
+  animCount('countAdopcion', counts.adopcion);
+  animCount('countTotal',    counts.perdido + counts.visto + counts.adopcion);
 
-  document.getElementById('layerCountPerdido').textContent    = counts.perdido;
-  document.getElementById('layerCountEncontrado').textContent = counts.encontrado;
-  document.getElementById('layerCountAdopcion').textContent   = counts.adopcion;
+  document.getElementById('layerCountPerdido').textContent = counts.perdido;
+  document.getElementById('layerCountVisto').textContent   = counts.visto;
+  document.getElementById('layerCountAdopcion').textContent= counts.adopcion;
 }
 
 // Animación de contadores numéricos
