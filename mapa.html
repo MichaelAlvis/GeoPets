@@ -686,21 +686,37 @@ async function cargarMascotas() {
       return;
     }
     console.log('Datos de mascotas:', data);
-    data.forEach(m => {
-      if (m.lat && m.lon) {
-        const { data, error } = await client
-  .from('mascota')
-  .select('id,nombre,descripcion,imagen,numero,geom');
-        marker.addTo(map);
-        marker.bindPopup(`
+    
+    // Crear GeoJSON FeatureCollection
+    const geoJsonData = {
+      type: 'FeatureCollection',
+      features: data.map(m => ({
+        type: 'Feature',
+        geometry: m.geom, // Geometría PostGIS en formato GeoJSON
+        properties: {
+          nombre: m.nombre,
+          descripcion: m.descripcion,
+          numero: m.numero,
+          imagen: m.imagen
+        }
+      }))
+    };
+    
+    // Agregar a Leaflet
+    L.geoJSON(geoJsonData, {
+      onEachFeature: function (feature, layer) {
+        const props = feature.properties;
+        layer.bindPopup(`
           <div>
-            <h3>${m.nombre}</h3>
-            <img src="${m.foto_url}" alt="${m.nombre}" style="width:100px;height:100px;">
-            <p>Estado: ${m.estado}</p>
+            <h3>${props.nombre}</h3>
+            <p>${props.descripcion}</p>
+            <img src="${props.imagen}" alt="${props.nombre}" style="width:100px;height:100px;">
+            <p>Número: ${props.numero}</p>
           </div>
         `);
       }
-    });
+    }).addTo(map);
+    
   } catch (err) {
     console.error('Error en cargarMascotas:', err);
   }
