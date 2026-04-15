@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>GeoPets | Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
@@ -626,23 +627,17 @@ document.addEventListener('DOMContentLoaded', function(){
 // =============================================
 // DATOS DE MASCOTAS
 // =============================================
-const MASCOTAS = [
-  // Perdidas
-  {id:1,nombre:"Luna",tipo:"perdido",descripcion:"Perra labrador blanca con manchas negras",telefono:"3102223344",img:"perro_perdidos/lupita.jpg",lat:4.6233,lng:-74.1135,fecha:"2024-12-10"},
-  {id:2,nombre:"Max",tipo:"perdido",descripcion:"Labrador amarillo, collar rojo, muy amigable",telefono:"3211234567",img:"perro_perdidos/max.jpg",lat:4.6250,lng:-74.1100,fecha:"2024-12-12"},
-  {id:3,nombre:"Kira",tipo:"perdido",descripcion:"Husky siberiana, ojos azules, muy activa",telefono:"3004455667",img:"",lat:4.6310,lng:-74.0980,fecha:"2024-12-14"},
-  {id:4,nombre:"Rocky",tipo:"perdido",descripcion:"Bulldog francés gris, sin cola",telefono:"3157889900",img:"",lat:4.6195,lng:-74.1050,fecha:"2024-12-15"},
-  {id:5,nombre:"Coco",tipo:"perdido",descripcion:"Poodle café pequeño, lleva moño rosa",telefono:"3209988776",img:"",lat:4.6420,lng:-74.1200,fecha:"2024-12-16"},
-  // Encontradas
-  {id:6,nombre:"Bella",tipo:"encontrado",descripcion:"Golden Retriever encontrada en parque El Virrey",telefono:"3123456789",img:"",lat:4.6380,lng:-74.0860,fecha:"2024-12-11"},
-  {id:7,nombre:"Toby",tipo:"encontrado",descripcion:"Beagle tricolor encontrado en la Séptima",telefono:"3014567890",img:"",lat:4.6150,lng:-74.0780,fecha:"2024-12-13"},
-  {id:8,nombre:"Nala",tipo:"encontrado",descripcion:"Gata siamesa encontrada, muy tranquila",telefono:"3201234567",img:"",lat:4.6290,lng:-74.1190,fecha:"2024-12-15"},
-  // En adopción
-  {id:9,nombre:"Simba",tipo:"adopcion",descripcion:"Macho, 1 año, vacunas al día, busca hogar",telefono:"3165556677",img:"",lat:4.6470,lng:-74.0920,fecha:"2024-12-08"},
-  {id:10,nombre:"Mia",tipo:"adopcion",descripcion:"Hembra, 2 años, esterilizada, muy cariñosa",telefono:"3128889900",img:"",lat:4.6080,lng:-74.0990,fecha:"2024-12-09"},
-  {id:11,nombre:"Thor",tipo:"adopcion",descripcion:"Mestizo grande, 3 años, ideal para casa con patio",telefono:"3174443322",img:"",lat:4.6560,lng:-74.1080,fecha:"2024-12-07"},
-  {id:12,nombre:"Lila",tipo:"adopcion",descripcion:"Gatita gris persa, 8 meses, juguetona",telefono:"3192227788",img:"",lat:4.6340,lng:-74.0750,fecha:"2024-12-06"},
-];
+// =============================================
+// SUPABASE CONFIG
+// =============================================
+const SUPABASE_URL = "https://gjqfunnekzwcfuvzwkto.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWZ1bm5la3p3Y2Z1dnp3a3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTgzODYsImV4cCI6MjA5MTc3NDM4Nn0.z9-Fv09j90v7cKz1SZHbbc136Ay7dfI1jX3iZ2FSy2E";
+const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// =============================================
+// DATOS DE MASCOTAS (cargados desde Supabase)
+// =============================================
+let MASCOTAS = [];
 
 const FALLBACK_IMG = "https://cdn-icons-png.flaticon.com/512/616/616408.png";
 const LABEL = {perdido:"PERDIDA",encontrado:"ENCONTRADA",adopcion:"ADOPCIÓN"};
@@ -946,8 +941,52 @@ function showToast(text,sub){
 // =============================================
 // INIT
 // =============================================
+async function cargarDesdeSupa(){
+  showToast('Cargando...','Obteniendo mascotas de la base de datos');
+  try {
+    const { data, error } = await sbClient
+      .from('mascota')
+      .select('id, nombre, tipo, descripcion, telefono, imagen, fecha, geom');
+    if(error) throw error;
+
+    MASCOTAS = data.map((row, i) => {
+      let lat = null, lng = null;
+      if(row.geom){
+        if(typeof row.geom === 'object' && row.geom.coordinates){
+          lng = row.geom.coordinates[0];
+          lat = row.geom.coordinates[1];
+        } else if(typeof row.geom === 'string'){
+          try{
+            const g = JSON.parse(row.geom);
+            lng = g.coordinates[0];
+            lat = g.coordinates[1];
+          }catch(e){}
+        }
+      }
+      if(!lat && row.lat)  lat = parseFloat(row.lat);
+      if(!lng && row.lng)  lng = parseFloat(row.lng);
+      return {
+        id:          row.id || i,
+        nombre:      row.nombre      || 'Sin nombre',
+        tipo:        (row.tipo       || 'perdido').toLowerCase(),
+        descripcion: row.descripcion || '',
+        telefono:    row.telefono    || '',
+        img:         row.imagen      || '',
+        lat, lng,
+        fecha:       row.fecha       || ''
+      };
+    }).filter(m => m.lat && m.lng);
+
+    loadMarkers(MASCOTAS);
+    showToast('¡Listo!', MASCOTAS.length + ' mascotas cargadas');
+  } catch(err){
+    console.error('Error Supabase:', err);
+    showToast('Error','No se pudieron cargar las mascotas');
+  }
+}
+
 window.addEventListener('load',()=>{
-  loadMarkers(MASCOTAS);
+  cargarDesdeSupa();
   
   // Auto-abrir sidebar y animar botón en móvil
   const isMobile=window.innerWidth<=768;
@@ -982,24 +1021,3 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  const supabaseUrl = "https://gjqfunnekzwcfuvzwkto.supabase.co";
-  const supabaseKey = "TU_ANON_KEY";
-
-  const client = supabase.createClient(supabaseUrl, supabaseKey);
-
-  async function testConexion() {
-    const { data, error } = await client
-      .from('mascotas')
-      .select('*');
-
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
-  }
-
-  testConexion();
-</script>
