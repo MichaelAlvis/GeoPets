@@ -781,7 +781,7 @@ async function cargarMascotas() {
     console.log(`GeoPets: ${MASCOTAS.length} mascotas cargadas desde Supabase`);
 
     // Cargar markers en el mapa y actualizar UI
-    loadMarkers(MASCOTAS);
+    loadMarkers();
 
     // Ocultar overlay
     document.getElementById('loadingOverlay').classList.add('hidden');
@@ -797,13 +797,13 @@ async function cargarMascotas() {
 // ║  CARGAR MARKERS EN EL MAPA                           ║
 // ║  Usa el array MASCOTAS ya normalizado.               ║
 // ╚══════════════════════════════════════════════════════╝
-function loadMarkers(data) {
+function loadMarkers() {
   // Limpiar markers anteriores
   clusterGroup.clearLayers();
   Object.keys(allMarkers).forEach(k => delete allMarkers[k]);
 
-  // Crear y agregar markers al cluster único
-  data.forEach(m => {
+  // Crear y agregar markers filtrados al cluster único
+  getFilteredData().forEach(m => {
     const marker = L.marker([m.lat, m.lng], { icon: makeIcon(m.tipo) });
     marker.bindPopup(buildPopup(m), { maxWidth: 300, minWidth: 280 });
     marker.petData = m;
@@ -815,7 +815,7 @@ function loadMarkers(data) {
   map.addLayer(clusterGroup);
 
   // Centrar el mapa sobre todos los puntos si hay datos
-  if (data.length > 0) {
+  if (getFilteredData().length > 0) {
     fitAllMarkers();
   }
 
@@ -839,18 +839,8 @@ function getFilteredData() {
 }
 
 function applyFilters() {
-  // Reasignar markers a sus clusters según filtros activos
-  Object.keys(layers).forEach(tipo => layers[tipo].clearLayers());
-
-  getFilteredData().forEach(m => {
-    if (layerState[m.tipo]) {
-      const marker = allMarkers[m.id];
-      if (marker) layers[m.tipo].addLayer(marker);
-    }
-  });
-
-  updateCounts();
-  renderPetList();
+  // Actualizar mapa, stats y lista con filtros aplicados
+  loadMarkers();
 }
 
 document.getElementById('searchInput').addEventListener('input', function() {
@@ -867,14 +857,12 @@ function toggleLayer(tipo) {
 
   if (layerState[tipo]) {
     btn.classList.add('active');
-    map.addLayer(layers[tipo]);
   } else {
     btn.classList.remove('active');
-    map.removeLayer(layers[tipo]);
   }
 
-  updateCounts();
-  renderPetList();
+  // Actualizar mapa, stats y lista
+  loadMarkers();
 }
 
 // ╔══════════════════════════════════════════════════════╗
