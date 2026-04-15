@@ -676,6 +676,35 @@ try{
 }catch(e){}
 
 // =============================================
+// CARGAR MASCOTAS DE SUPABASE
+// =============================================
+async function cargarMascotas() {
+  try {
+    const { data, error } = await client.from('mascota').select('*');
+    if (error) {
+      console.error('Error al consultar Supabase:', error);
+      return;
+    }
+    console.log('Datos de mascotas:', data);
+    data.forEach(m => {
+      if (m.lat && m.lon) {
+        const marker = L.marker([m.lat, m.lon]);
+        marker.addTo(map);
+        marker.bindPopup(`
+          <div>
+            <h3>${m.nombre}</h3>
+            <img src="${m.foto_url}" alt="${m.nombre}" style="width:100px;height:100px;">
+            <p>Estado: ${m.estado}</p>
+          </div>
+        `);
+      }
+    });
+  } catch (err) {
+    console.error('Error en cargarMascotas:', err);
+  }
+}
+
+// =============================================
 // ICONOS PERSONALIZADOS
 // =============================================
 function makeIcon(tipo){
@@ -953,7 +982,7 @@ function showToast(text,sub){
 // INIT
 // =============================================
 window.addEventListener('load',()=>{
-  loadMarkers(MASCOTAS);
+  cargarMascotas();
   
   // Auto-abrir sidebar y animar botón en móvil
   const isMobile=window.innerWidth<=768;
@@ -988,3 +1017,13 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const supabaseUrl = "https://gjqfunnekzwcfuvzwkto.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWZ1bm5la3p3Y2Z1dnp3a3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTgzODYsImV4cCI6MjA5MTc3NDM4Nn0.z9-Fv09j90v7cKz1SZHbbc136Ay7dfI1jX3iZ2FSy2E";
+
+  const client = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
