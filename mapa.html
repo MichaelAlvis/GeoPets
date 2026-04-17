@@ -277,6 +277,36 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 .gp-popup-btn:hover{background:#059669;transform:translateY(-1px)}
 .gp-popup-btn svg{width:14px;height:14px;stroke:currentColor;fill:none}
 
+.photo-modal{
+  position:fixed;inset:0;z-index:11000;display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.photo-modal.hidden{display:none}
+.photo-modal-backdrop{
+  position:absolute;inset:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(6px);pointer-events:auto;
+}
+.photo-modal-card{
+  position:relative;z-index:1;max-width:95vw;max-height:95vh;
+  width:min(100%,900px);pointer-events:auto;
+}
+.photo-modal-img{
+  width:100%;height:auto;max-height:calc(100vh - 96px);
+  border-radius:20px;object-fit:contain;display:block;
+  box-shadow:0 24px 80px rgba(0,0,0,0.35);
+}
+.photo-modal-close{
+  position:absolute;top:-10px;right:-10px;width:40px;height:40px;
+  border:none;border-radius:50%;background:rgba(255,255,255,0.96);
+  color:#111;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 14px 38px rgba(0,0,0,0.22);
+}
+.photo-modal-close:hover{background:#f8fafc}
+@media(max-width:768px){
+  .photo-modal{padding:12px}
+  .photo-modal-card{max-width:100%;max-height:100%}
+  .photo-modal-close{top:8px;right:8px}
+}
+
 /* ── LEAFLET OVERRIDES ───────────────────── */
 .leaflet-container{background:#0f1629}
 .leaflet-popup-content-wrapper{
@@ -561,6 +591,14 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
   </div>
 </div>
 
+<div id="photoModal" class="photo-modal hidden" aria-hidden="true">
+  <div class="photo-modal-backdrop"></div>
+  <div class="photo-modal-card">
+    <button type="button" class="photo-modal-close" aria-label="Cerrar imagen">×</button>
+    <img id="photoModalImg" class="photo-modal-img" src="" alt="Imagen ampliada" />
+  </div>
+</div>
+
 <!-- ══ SCRIPTS ════════════════════════════════════════ -->
 <!-- Leaflet core -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -708,6 +746,8 @@ function buildPopup(m) {
     <img class="gp-popup-img"
          src="${imgUrl}"
          alt="${m.nombre}"
+         title="Toca para ver la imagen completa"
+         data-full="${imgUrl}"
          onerror="this.src='${FALLBACK_IMG}';this.onerror=null;">
     <div class="gp-popup-header">
       <span class="gp-popup-name">${m.nombre}</span>
@@ -728,7 +768,48 @@ function buildPopup(m) {
 // ║  Normaliza el campo 'categoria' y extrae lat/lng     ║
 // ║  del campo 'geom' (GeoJSON de PostGIS).              ║
 // ╚══════════════════════════════════════════════════════╝
-async function cargarMascotas() {
+async function openPhotoViewer(src, alt) {
+  const modal = document.getElementById('photoModal');
+  const img   = document.getElementById('photoModalImg');
+  if (!modal || !img) return;
+  img.src = src;
+  img.alt = alt || 'Foto ampliada';
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePhotoViewer() {
+  const modal = document.getElementById('photoModal');
+  const img   = document.getElementById('photoModalImg');
+  if (!modal || !img) return;
+  modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  img.src = '';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', event => {
+  const target = event.target;
+  if (target.matches('.gp-popup-img')) {
+    openPhotoViewer(target.dataset.full || target.src, target.alt || 'Foto ampliada');
+    return;
+  }
+  if (target.matches('.photo-modal-close')) {
+    closePhotoViewer();
+    return;
+  }
+  if (target.matches('#photoModal') || target.matches('.photo-modal-backdrop')) {
+    closePhotoViewer();
+    return;
+  }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closePhotoViewer();
+});
+
+function cargarMascotas() {
   try {
     document.getElementById('loadingSubText').textContent = 'Consultando base de datos...';
 
