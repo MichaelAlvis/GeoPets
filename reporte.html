@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>GeoPets | Reportar Mascota</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0f1e;
+  --bg2:#0f1629;
+  --bg3:#151e35;
+  --card:#1a2236;
+  --border:#1f2e4a;
+  --border2:#263450;
+  --green:#10b981;
+  --green-glow:rgba(16,185,129,0.15);
+  --red:#ef4444;
+  --orange:#f97316;
+  --blue:#3b82f6;
+  --text:#f0f4ff;
+  --text2:#8899b4;
+  --text3:#4a5a78;
+  --r:12px;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+
+/* ── NAVBAR ── */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:14px 20px;display:flex;align-items:center;gap:12px;
+}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-icon{width:32px;height:32px;background:var(--green-glow);border:1px solid rgba(16,185,129,0.3);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:16px;height:16px;stroke:var(--green)}
+.logo-text{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--text)}
+.logo-text span{color:var(--green)}
+.nav-back{margin-left:auto;display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:12px;font-weight:500;text-decoration:none;transition:all 0.2s}
+.nav-back:hover{border-color:var(--border2);color:var(--text)}
+.nav-back svg{width:13px;height:13px;stroke:currentColor}
+
+/* ── LAYOUT ── */
+.page{max-width:900px;margin:0 auto;padding:28px 16px 60px}
+.page-header{text-align:center;margin-bottom:36px}
+.page-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-glow);border:1px solid rgba(16,185,129,0.25);color:var(--green);font-size:11px;font-weight:600;letter-spacing:0.06em;padding:5px 14px;border-radius:999px;margin-bottom:16px}
+.page-title{font-family:'Outfit',sans-serif;font-size:clamp(26px,5vw,38px);font-weight:800;line-height:1.2;margin-bottom:10px}
+.page-title span{color:var(--green)}
+.page-sub{color:var(--text2);font-size:14px;line-height:1.6;max-width:460px;margin:0 auto}
+
+/* ── GRID FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}}
+
+/* ── SECCIONES ── */
+.section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;grid-column:1/-1}
+.section.half{grid-column:auto}
+.section-title{display:flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.section-title svg{width:16px;height:16px;stroke:var(--green)}
+.section-title span{color:var(--green)}
+
+/* ── CAMPOS ── */
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px}
+.field label .req{color:var(--red);margin-left:2px}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'Inter',sans-serif;font-size:13px;
+  padding:10px 14px;outline:none;transition:border-color 0.2s;
+  appearance:none;-webkit-appearance:none;
+}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238899b4' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.field textarea{resize:vertical;min-height:80px;line-height:1.5}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(16,185,129,0.5)}
+.field input::placeholder,.field textarea::placeholder{color:var(--text3)}
+
+/* ── CATEGORIA PILLS ── */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.cat-pill{
+  display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 8px;
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  cursor:pointer;transition:all 0.2s;user-select:none;
+}
+.cat-pill:hover{border-color:var(--border2);background:var(--bg2)}
+.cat-pill.sel-perdido{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.5)}
+.cat-pill.sel-visto{background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.5)}
+.cat-pill.sel-adopcion{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.5)}
+.cat-emoji{font-size:20px}
+.cat-label{font-size:11px;font-weight:600;color:var(--text2)}
+.cat-pill.sel-perdido .cat-label{color:var(--red)}
+.cat-pill.sel-visto .cat-label{color:var(--orange)}
+.cat-pill.sel-adopcion .cat-label{color:var(--blue)}
+input[name="categoria"]{display:none}
+
+/* ── FOTO ── */
+.photo-area{
+  border:2px dashed var(--border2);border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;cursor:pointer;transition:border-color 0.2s;background:var(--bg3);
+  min-height:180px;position:relative;overflow:hidden;
+}
+.photo-area:hover{border-color:rgba(16,185,129,0.4)}
+.photo-area.has-photo{border-style:solid;border-color:rgba(16,185,129,0.4)}
+.photo-preview{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:8px;display:none}
+.photo-overlay{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px;text-align:center;position:relative;z-index:2}
+.photo-overlay svg{width:28px;height:28px;stroke:var(--text3)}
+.photo-overlay p{font-size:12px;color:var(--text2);line-height:1.4}
+.photo-overlay small{font-size:10px;color:var(--text3)}
+.photo-btns{display:flex;gap:8px;margin-top:6px}
+.photo-btn{
+  display:flex;align-items:center;gap:5px;padding:7px 12px;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.2s;
+}
+.photo-btn:hover{background:var(--green-glow);border-color:rgba(16,185,129,0.3);color:var(--green)}
+.photo-btn svg{width:13px;height:13px;stroke:currentColor}
+.photo-change{position:absolute;top:8px;right:8px;z-index:3;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:white;font-size:10px;padding:4px 8px;border-radius:6px;cursor:pointer;display:none}
+#fotoInput,#camaraInput{display:none}
+
+/* ── GPS ── */
+.gps-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:16px;display:flex;flex-direction:column;gap:12px;
+}
+.gps-row{display:flex;align-items:center;gap:12px}
+.gps-icon{width:40px;height:40px;background:var(--green-glow);border:1px solid rgba(16,185,129,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gps-icon svg{width:18px;height:18px;stroke:var(--green)}
+.gps-info{flex:1}
+.gps-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.gps-sub{font-size:11px;color:var(--text3)}
+.btn-gps{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px;border-radius:8px;background:var(--green-glow);
+  border:1px solid rgba(16,185,129,0.3);color:var(--green);
+  font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;
+  font-family:'Inter',sans-serif;
+}
+.btn-gps:hover{background:rgba(16,185,129,0.2)}
+.btn-gps:disabled{opacity:0.5;cursor:not-allowed}
+.btn-gps svg{width:15px;height:15px;stroke:currentColor}
+.gps-result{
+  background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);
+  border-radius:8px;padding:10px 12px;font-size:12px;color:var(--green);
+  display:none;align-items:center;gap:8px;
+}
+.gps-result svg{width:13px;height:13px;stroke:currentColor;flex-shrink:0}
+.gps-error{
+  background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);
+  border-radius:8px;padding:10px 12px;font-size:12px;color:var(--red);
+  display:none;align-items:center;gap:8px;
+}
+
+/* ── MINI MAP ── */
+#miniMap{width:100%;height:180px;border-radius:8px;border:1px solid var(--border);display:none;margin-top:8px}
+
+/* ── SUBMIT ── */
+.submit-area{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:4px}
+.btn-submit{
+  width:100%;max-width:380px;padding:15px;border-radius:12px;
+  background:var(--green);border:none;color:white;
+  font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;
+  cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-submit:hover{background:#0d9167;transform:translateY(-1px);box-shadow:0 8px 24px rgba(16,185,129,0.3)}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.btn-submit svg{width:17px;height:17px;stroke:currentColor;fill:none}
+.btn-submit .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+.submit-note{font-size:11px;color:var(--text3);text-align:center}
+
+/* ── SUCCESS MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:36px 28px;max-width:400px;width:100%;text-align:center;
+  transform:scale(0.9);transition:transform 0.3s;
+}
+.modal-overlay.show .modal{transform:scale(1)}
+.modal-icon{width:64px;height:64px;background:var(--green-glow);border:2px solid rgba(16,185,129,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.modal-icon svg{width:28px;height:28px;stroke:var(--green)}
+.modal h2{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px}
+.modal p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:24px}
+.modal-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.modal-btn{padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.modal-btn.primary{background:var(--green);color:white;border:none}
+.modal-btn.primary:hover{background:#0d9167}
+.modal-btn.secondary{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.modal-btn.secondary:hover{color:var(--text);border-color:var(--border2)}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 5.172C10 3.444 8.008 2.289 6.586 3.211a2.5 2.5 0 0 0 0 4.216C8.008 8.35 10 7.195 10 5.469"/>
+        <path d="M14 5.172c0-1.728 1.992-2.883 3.414-1.961a2.5 2.5 0 0 1 0 4.216C15.992 8.35 14 7.195 14 5.469"/>
+        <path d="M8 14c.5.667 1.5 2 4 2s3.5-1.333 4-2"/>
+        <ellipse cx="12" cy="17" rx="6" ry="5"/>
+      </svg>
+    </div>
+    <span class="logo-text">Geo<span>Pets</span></span>
+  </a>
+  <a href="mapa.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    Ver mapa
+  </a>
+</nav>
+
+<!-- PÁGINA PRINCIPAL -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-badge">🐾 Reporte de mascota</div>
+    <h1 class="page-title">Reporta una <span>mascota</span></h1>
+    <p class="page-sub">Completa el formulario para agregar el reporte al mapa en tiempo real y ayudar a la comunidad.</p>
+  </div>
+
+  <div class="form-grid">
+
+    <!-- ── CATEGORÍA ── -->
+    <div class="section" style="grid-column:1/-1">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <span>Tipo de reporte</span> <span style="color:var(--text2);font-weight:400;font-size:12px">¿Cuál es la situación?</span>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-pill" id="pill-perdido" onclick="selCat('PERDIDO')">
+          <span class="cat-emoji">🔴</span>
+          <span class="cat-label">Perdida</span>
+        </div>
+        <div class="cat-pill" id="pill-visto" onclick="selCat('ENCONTRADO')">
+          <span class="cat-emoji">🟠</span>
+          <span class="cat-label">La vi / encontré</span>
+        </div>
+        <div class="cat-pill" id="pill-adopcion" onclick="selCat('ADOPCION')">
+          <span class="cat-emoji">🔵</span>
+          <span class="cat-label">En adopción</span>
+        </div>
+      </div>
+      <input type="hidden" name="categoria" id="categoriaInput" value="">
+    </div>
+
+    <!-- ── DATOS BÁSICOS ── -->
+    <div class="section half">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Datos de la mascota</span>
+      </div>
+      <div class="field">
+        <label>Nombre <span class="req">*</span></label>
+        <input type="text" id="nombre" placeholder="Ej: Max, Luna, Firulais..." maxlength="60">
+      </div>
+      <div class="field">
+        <label>Especie</label>
+        <select id="especie">
+          <option value="">Seleccionar...</option>
+          <option value="Perro">🐶 Perro</option>
+          <option value="Gato">🐱 Gato</option>
+          <option value="Ave">🦜 Ave</option>
+          <option value="Otro">🐾 Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Descripción <span class="req">*</span></label>
+        <textarea id="descripcion" placeholder="Color, tamaño, señas particulares, collar, barrio donde se perdió..."></textarea>
+      </div>
+      <div class="field">
+        <label>Teléfono de contacto <span class="req">*</span></label>
+        <input type="tel" id="numero" placeholder="Ej: 3001234567" maxlength="20">
+      </div>
+    </div>
+
+    <!-- ── FOTO ── -->
+    <div class="section half">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Foto de la mascota</span>
+      </div>
+
+      <div class="photo-area" id="photoArea">
+        <img id="photoPreview" class="photo-preview" alt="Vista previa">
+        <button type="button" class="photo-change" id="photoChange" onclick="resetPhoto()">✕ Cambiar</button>
+        <div class="photo-overlay" id="photoOverlay">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <p>Agrega una foto para facilitar la búsqueda</p>
+          <small>JPG, PNG, WEBP – máx. 5 MB</small>
+          <div class="photo-btns">
+            <button type="button" class="photo-btn" onclick="document.getElementById('camaraInput').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              Tomar foto
+            </button>
+            <button type="button" class="photo-btn" onclick="document.getElementById('fotoInput').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Subir archivo
+            </button>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="fotoInput" accept="image/*">
+      <input type="file" id="camaraInput" accept="image/*" capture="environment">
+
+      <!-- GPS -->
+      <div style="margin-top:16px">
+        <div class="section-title" style="margin-bottom:12px">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8" stroke-opacity="0.3"/></svg>
+          <span>Ubicación del reporte</span> <span style="color:var(--red);font-size:12px;font-weight:400">requerida</span>
+        </div>
+        <div class="gps-card">
+          <button type="button" class="btn-gps" id="btnGps" onclick="tomarGPS()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+            Tomar mi ubicación GPS
+          </button>
+          <div class="gps-result" id="gpsResult">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="gpsText">Ubicación capturada</span>
+          </div>
+          <div class="gps-error" id="gpsError">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="gpsErrorText">No se pudo obtener la ubicación</span>
+          </div>
+          <div id="miniMap"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BOTÓN ENVIAR ── -->
+    <div class="submit-area">
+      <button type="button" class="btn-submit" id="btnEnviar" onclick="enviarReporte()">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        <span id="btnText">Publicar reporte en el mapa</span>
+        <div class="spinner" id="btnSpinner"></div>
+      </button>
+      <p class="submit-note">Tu reporte aparecerá en el mapa de GeoPets de forma inmediata 🗺️</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL ÉXITO -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>¡Reporte publicado! 🐾</h2>
+    <p>Tu reporte ya está visible en el mapa de GeoPets. La comunidad podrá verlo y ayudarte a encontrar a tu mascota.</p>
+    <div class="modal-btns">
+      <a href="mapa.html" class="modal-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" style="width:14px;height:14px;stroke:currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Ver en el mapa
+      </a>
+      <button class="modal-btn secondary" onclick="nuevoReporte()">Nuevo reporte</button>
+    </div>
+  </div>
+</div>
+
+<!-- Leaflet para mini mapa -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// ╔══════════════════════════════════════╗
+// ║  SUPABASE CONFIG (igual que mapa.html)
+// ╚══════════════════════════════════════╝
+const SUPA_URL = "https://gjqfunnekzwcfuvzwkto.supabase.co";
+const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWZ1bm5la3p3Y2Z1dnp3a3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTgzODYsImV4cCI6MjA5MTc3NDM4Nn0.z9-Fv09j90v7cKz1SZHbbc136Ay7dfI1jX3iZ2FSy2E";
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Estado global
+let lat = null, lng = null;
+let fotoFile = null;
+let miniMapObj = null, miniMarker = null;
+
+// ╔══════════════════════════════════════╗
+// ║  SELECCIÓN DE CATEGORÍA
+// ╚══════════════════════════════════════╝
+function selCat(valor) {
+  // Limpiar selecciones
+  document.querySelectorAll('.cat-pill').forEach(p => {
+    p.className = 'cat-pill';
+  });
+  // Aplicar selección
+  const map = { 'PERDIDO': 'perdido', 'ENCONTRADO': 'visto', 'ADOPCION': 'adopcion' };
+  const key = map[valor] || 'perdido';
+  document.getElementById('pill-' + key).className = 'cat-pill sel-' + key;
+  document.getElementById('categoriaInput').value = valor;
+}
+
+// ╔══════════════════════════════════════╗
+// ║  MANEJO DE FOTO
+// ╚══════════════════════════════════════╝
+function manejarFoto(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    alert('La imagen es demasiado grande. Máximo 5 MB.');
+    return;
+  }
+  fotoFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('photoPreview');
+    prev.src = e.target.result;
+    prev.style.display = 'block';
+    document.getElementById('photoOverlay').style.display = 'none';
+    document.getElementById('photoChange').style.display = 'block';
+    document.getElementById('photoArea').classList.add('has-photo');
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetPhoto() {
+  fotoFile = null;
+  document.getElementById('photoPreview').style.display = 'none';
+  document.getElementById('photoPreview').src = '';
+  document.getElementById('photoOverlay').style.display = 'flex';
+  document.getElementById('photoChange').style.display = 'none';
+  document.getElementById('photoArea').classList.remove('has-photo');
+  document.getElementById('fotoInput').value = '';
+  document.getElementById('camaraInput').value = '';
+}
+
+document.getElementById('fotoInput').addEventListener('change', e => manejarFoto(e.target.files[0]));
+document.getElementById('camaraInput').addEventListener('change', e => manejarFoto(e.target.files[0]));
+
+// ╔══════════════════════════════════════╗
+// ║  GPS
+// ╚══════════════════════════════════════╝
+function tomarGPS() {
+  const btn = document.getElementById('btnGps');
+  const resDiv = document.getElementById('gpsResult');
+  const errDiv = document.getElementById('gpsError');
+
+  btn.disabled = true;
+  btn.innerHTML = `<div style="width:14px;height:14px;border:2px solid rgba(16,185,129,0.3);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite"></div> Obteniendo ubicación...`;
+  resDiv.style.display = 'none';
+  errDiv.style.display = 'none';
+
+  if (!navigator.geolocation) {
+    mostrarErrorGPS('Tu navegador no soporta GPS. Intenta desde el celular.');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      lat = pos.coords.latitude;
+      lng = pos.coords.longitude;
+      const precision = pos.coords.accuracy ? `±${Math.round(pos.coords.accuracy)}m` : '';
+
+      btn.disabled = false;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;stroke:currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg> Actualizar ubicación`;
+
+      document.getElementById('gpsText').textContent =
+        `📍 ${lat.toFixed(5)}, ${lng.toFixed(5)} ${precision}`;
+      resDiv.style.display = 'flex';
+
+      // Mini mapa
+      iniciarMiniMapa(lat, lng);
+    },
+    err => {
+      btn.disabled = false;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;stroke:currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg> Reintentar ubicación`;
+
+      const msgs = {
+        1: 'Permiso de ubicación denegado. Actívalo en la configuración del navegador.',
+        2: 'No se pudo obtener la posición. Verifica tu conexión o GPS.',
+        3: 'Tiempo agotado. Intenta de nuevo.'
+      };
+      mostrarErrorGPS(msgs[err.code] || 'Error desconocido al obtener el GPS.');
+    },
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+  );
+}
+
+function mostrarErrorGPS(msg) {
+  document.getElementById('btnGps').disabled = false;
+  document.getElementById('btnGps').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;stroke:currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg> Reintentar GPS`;
+  document.getElementById('gpsErrorText').textContent = msg;
+  document.getElementById('gpsError').style.display = 'flex';
+}
+
+function iniciarMiniMapa(lat, lng) {
+  const el = document.getElementById('miniMap');
+  el.style.display = 'block';
+
+  if (!miniMapObj) {
+    miniMapObj = L.map('miniMap', { zoomControl: false, attributionControl: false })
+      .setView([lat, lng], 16);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(miniMapObj);
+  }
+
+  if (miniMarker) miniMapObj.removeLayer(miniMarker);
+  miniMarker = L.circleMarker([lat, lng], {
+    radius: 10, color: '#10b981', fillColor: '#10b981', fillOpacity: 0.4, weight: 3
+  }).addTo(miniMapObj);
+  miniMapObj.setView([lat, lng], 16);
+  setTimeout(() => miniMapObj.invalidateSize(), 100);
+}
+
+// ╔══════════════════════════════════════╗
+// ║  SUBIR FOTO A SUPABASE STORAGE
+// ╚══════════════════════════════════════╝
+async function subirFoto(file) {
+  const ext = file.name.split('.').pop();
+  const nombre = `mascota_${Date.now()}.${ext}`;
+  const path = `fotos/${nombre}`;
+
+  const { error } = await sb.storage.from('mascotas').upload(path, file, {
+    contentType: file.type,
+    upsert: false
+  });
+
+  if (error) {
+    console.warn('Error subiendo foto:', error.message);
+    return null;
+  }
+
+  const { data } = sb.storage.from('mascotas').getPublicUrl(path);
+  return data?.publicUrl || null;
+}
+
+// ╔══════════════════════════════════════╗
+// ║  ENVIAR REPORTE A SUPABASE
+// ╚══════════════════════════════════════╝
+async function enviarReporte() {
+  // Validaciones
+  const nombre = document.getElementById('nombre').value.trim();
+  const descripcion = document.getElementById('descripcion').value.trim();
+  const numero = document.getElementById('numero').value.trim();
+  const categoria = document.getElementById('categoriaInput').value;
+
+  if (!categoria) { alert('Por favor selecciona el tipo de reporte (Perdida, Vista o Adopción).'); return; }
+  if (!nombre) { alert('Por favor escribe el nombre de la mascota.'); return; }
+  if (!descripcion) { alert('Por favor escribe una descripción.'); return; }
+  if (!numero) { alert('Por favor escribe un número de contacto.'); return; }
+  if (lat === null || lng === null) { alert('Por favor toma la ubicación GPS antes de enviar.'); return; }
+
+  // Activar loading
+  const btn = document.getElementById('btnEnviar');
+  const btnText = document.getElementById('btnText');
+  const spinner = document.getElementById('btnSpinner');
+  btn.disabled = true;
+  btnText.textContent = 'Publicando...';
+  spinner.style.display = 'block';
+
+  try {
+    // 1. Subir foto si existe
+    let imgUrl = null;
+    if (fotoFile) {
+      btnText.textContent = 'Subiendo foto...';
+      imgUrl = await subirFoto(fotoFile);
+    }
+
+    // 2. Insertar registro en Supabase
+    // El campo 'geom' es un GeoJSON Point (PostGIS espera {type, coordinates:[lng, lat]})
+    btnText.textContent = 'Guardando en base de datos...';
+    const especie = document.getElementById('especie').value;
+    const descFinal = especie ? `[${especie}] ${descripcion}` : descripcion;
+
+    const { data, error } = await sb.from('mascota').insert([{
+      nombre:      nombre,
+      descripcion: descFinal,
+      numero:      numero,
+      categoria:   categoria,
+      imagen:      imgUrl,
+      fecha:       new Date().toISOString().split('T')[0],
+      geom: {
+        type: 'Point',
+        coordinates: [lng, lat]   // PostGIS: [longitud, latitud]
+      }
+    }]).select();
+
+    if (error) throw error;
+
+    // ¡Éxito!
+    document.getElementById('modalOverlay').classList.add('show');
+
+  } catch (err) {
+    console.error('Error al enviar reporte:', err);
+    alert('Ocurrió un error al publicar el reporte: ' + (err.message || 'Error desconocido') + '\n\nRevisa la consola para más detalles.');
+  } finally {
+    btn.disabled = false;
+    btnText.textContent = 'Publicar reporte en el mapa';
+    spinner.style.display = 'none';
+  }
+}
+
+// ╔══════════════════════════════════════╗
+// ║  NUEVO REPORTE (reset del form)
+// ╚══════════════════════════════════════╝
+function nuevoReporte() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  document.getElementById('nombre').value = '';
+  document.getElementById('descripcion').value = '';
+  document.getElementById('numero').value = '';
+  document.getElementById('especie').value = '';
+  document.getElementById('categoriaInput').value = '';
+  document.querySelectorAll('.cat-pill').forEach(p => p.className = 'cat-pill');
+  resetPhoto();
+  lat = null; lng = null;
+  document.getElementById('gpsResult').style.display = 'none';
+  document.getElementById('gpsError').style.display = 'none';
+  document.getElementById('miniMap').style.display = 'none';
+  document.getElementById('btnGps').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;stroke:currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg> Tomar mi ubicación GPS`;
+  if (miniMarker && miniMapObj) { miniMapObj.removeLayer(miniMarker); miniMarker = null; }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
