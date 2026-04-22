@@ -503,6 +503,15 @@ html,body{height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',sans-se
 
     <!-- Geolocalización -->
     <div class="sidebar-footer">
+      <a href="reporte.html" style="
+        width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+        padding:11px;border-radius:10px;margin-bottom:8px;
+        background:#ef4444;color:white;text-decoration:none;
+        font-size:13px;font-weight:700;font-family:'Inter',sans-serif;
+        transition:background 0.2s,transform 0.15s;
+      " onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+        🐾 Reportar mascota perdida
+      </a>
       <button class="btn-geo" onclick="geolocate()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"/>
@@ -1040,6 +1049,54 @@ function showToast(text, sub) {
 window.addEventListener('load', () => {
   // Cargar datos reales de Supabase
   cargarMascotas();
+
+  // ── REALTIME: nuevos registros aparecen en el mapa sin recargar ──
+  sbClient
+    .channel('mascotas-realtime')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mascota' }, payload => {
+      const row = payload.new;
+      if (!row || !row.geom) return;
+
+      let lat = null, lng = null;
+      if (row.geom.type === 'Point' && Array.isArray(row.geom.coordinates)) {
+        lng = row.geom.coordinates[0];
+        lat = row.geom.coordinates[1];
+      }
+      if (!lat || !lng) return;
+
+      const catRaw = (row.categoria || '').toUpperCase().trim();
+      const tipo = CAT_MAP[catRaw] || 'perdido';
+
+      const nueva = {
+        id:          row.id,
+        nombre:      row.nombre      || 'Sin nombre',
+        descripcion: row.descripcion || '',
+        telefono:    row.numero      || '',
+        img:         row.imagen      || '',
+        tipo:        tipo,
+        fecha:       row.fecha       || '',
+        lat:         lat,
+        lng:         lng
+      };
+
+      MASCOTAS.push(nueva);
+
+      // Agregar marker al mapa
+      const marker = L.marker([nueva.lat, nueva.lng], { icon: makeIcon(nueva.tipo) });
+      marker.bindPopup(buildPopup(nueva), { maxWidth: 300, minWidth: 280 });
+      marker.petData = nueva;
+      clusterGroup.addLayer(marker);
+      allMarkers[nueva.id] = marker;
+
+      // Actualizar contadores y lista
+      updateCounts();
+      renderPetList();
+
+      // Notificación toast
+      const labels = { perdido:'🔴 Perdida', visto:'🟠 Vista', adopcion:'🔵 Adopción' };
+      showToast(`¡Nuevo reporte! ${labels[tipo] || ''}`, nueva.nombre);
+    })
+    .subscribe();
 
   // Comportamiento mobile: mostrar sidebar brevemente al abrir
   const isMobile = window.innerWidth <= 768;
