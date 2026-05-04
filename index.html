@@ -29,6 +29,23 @@
       lastScroll = currentScroll;
     });
   });
+
+  // Modal functions
+  function openModal() {
+    document.getElementById('paymentModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('paymentModal').classList.remove('open');
+  }
+
+  // Close modal when clicking outside
+  document.addEventListener('click', function (e) {
+    const modal = document.getElementById('paymentModal');
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
 </script>
 
 <body>
@@ -59,15 +76,119 @@
   <section class="hero">
     <div class="hero-badge">Protegiendo a los que más amas 🐾</div>
     <h1>Te ayudamos a encontrar tu <span>Mascota Perdida</span></h1>
-    <p>Utilizamos tecnología geoespacial, análisis de datos y una red de comunidad activa para conectar mascotas
-      extraviadas con sus familias rápidamente y de forma segura.</p>
+    <p>Usamos inteligencia artificial para rastrear publicaciones en redes sociales en tiempo real y encontrar
+      coincidencias con tu mascota perdida. No estás solo en esto.</p>
 
     <div class="hero-buttons">
-      <button class="btn-large primary" onclick="window.location.href='mapa.html'">Ver mapa de reportes</button>
-      <button class="btn-large secondary"
-        onclick="window.location.href='https://storymaps.arcgis.com/stories/23afe9fee5ad4be4bba0299496af2ac3'">
-        Cómo lo encontramos
+      <button class="btn-large primary" onclick="openModal()">Activar Búsqueda ahora</button>
+      <button class="btn-large secondary" onclick="window.location.href='mapa.html'">
+        Ver mapa de reportes
       </button>
+    </div>
+  </section>
+
+  <!-- FEATURES BANNER (ADDED) -->
+  <section class="features-banner">
+    <div class="banner-top">
+      <div class="banner-top-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--primary)" stroke-width="3" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Sin permanencia</span>
+      </div>
+      <div class="banner-divider-v"></div>
+      <div class="banner-top-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--primary)" stroke-width="3" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Activo desde el primer día</span>
+      </div>
+      <div class="banner-divider-v"></div>
+      <div class="banner-top-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--primary)" stroke-width="3" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Pago 100% seguro</span>
+      </div>
+    </div>
+
+    <div class="banner-divider-h"></div>
+
+    <div class="banner-bottom">
+      <div class="banner-stat">
+        <strong>3x</strong>
+        <span>alertas diarias</span>
+      </div>
+      <div class="banner-divider-v tall"></div>
+      <div class="banner-stat">
+        <strong>24/7</strong>
+        <span>monitoreo activo</span>
+      </div>
+      <div class="banner-divider-v tall"></div>
+      <div class="banner-stat">
+        <strong>IA</strong>
+        <span>análisis de imágenes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-inner" style="text-align:center">
+      <div class="section-tag" style="justify-content:center">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23" />
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+        Precio claro y justo
+      </div>
+      <h2 class="section-title">Un costo accesible<br>por encontrar lo que más quieres</h2>
+      <div class="pricing-wrap">
+        <div class="pricing-card">
+          <div class="pricing-badge">Plan búsqueda activa</div>
+          <div class="pricing-price">$25.000</div>
+          <div class="pricing-period">COP · Unico pago · cancela cuando quieras</div>
+          <ul class="pricing-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>Monitoreo activo 24/7 desde el día 1</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>3 alertas diarias con coincidencias encontradas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>Análisis de imágenes con inteligencia artificial</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>Publicación en el mapa GeoPets</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>Soporte por WhatsApp con el equipo</li>
+          </ul>
+          <button class="btn-primary" style="width:100%;font-size:15px;padding:16px" onclick="openModal()">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            Activar búsqueda ahora
+          </button>
+          <div class="pay-methods">
+            <div class="pay-chip"><span class="pay-chip-dot" style="background:#6B21A8"></span>Nequi</div>
+            <div class="pay-chip"><span class="pay-chip-dot" style="background:#D62B2B"></span>Daviplata</div>
+            <div class="pay-chip"><span class="pay-chip-dot" style="background:#F5A800"></span>Bancolombia</div>
+          </div>
+          <div class="wompi-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Pagos procesados de forma segura con Wompi
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -271,6 +392,68 @@
         d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.827z" />
     </svg>
   </a>
+
+  <!-- MODAL DE PAGO -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3 class="modal-title">Activar Búsqueda</h3>
+      <p class="modal-sub">Selecciona tu método de pago preferido</p>
+
+      <div class="modal-price-row">
+        <span class="modal-price-label">Plan búsqueda activa</span>
+        <span class="modal-price-value">$25.000 COP</span>
+      </div>
+
+      <div class="modal-methods-title">Métodos de pago</div>
+      <div class="modal-methods-grid">
+        <a href="https://wa.me/573214768734?text=Hola,%20quiero%20activar%20la%20búsqueda%20de%20GeoPets%20por%20Nequi"
+          class="method-btn">
+          <div class="method-logo nequi">N</div>
+          <div class="method-info">
+            <div class="method-name">Nequi</div>
+            <div class="method-desc">Pago instantáneo</div>
+          </div>
+          <span class="method-arrow">&rarr;</span>
+        </a>
+        <a href="https://wa.me/573214768734?text=Hola,%20quiero%20activar%20la%20búsqueda%20de%20GeoPets%20por%20Daviplata"
+          class="method-btn">
+          <div class="method-logo davi">D</div>
+          <div class="method-info">
+            <div class="method-name">Daviplata</div>
+            <div class="method-desc">Pago instantáneo</div>
+          </div>
+          <span class="method-arrow">&rarr;</span>
+        </a>
+        <a href="https://wa.me/573214768734?text=Hola,%20quiero%20activar%20la%20búsqueda%20de%20GeoPets%20por%20transferencia"
+          class="method-btn">
+          <div class="method-logo banco">B</div>
+          <div class="method-info">
+            <div class="method-name">Bancolombia</div>
+            <div class="method-desc">Transferencia</div>
+          </div>
+          <span class="method-arrow">&rarr;</span>
+        </a>
+      </div>
+
+      <a href="https://wa.me/573214768734?text=Hola,%20quiero%20activar%20la%20búsqueda%20de%20GeoPets"
+        class="modal-wa-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554-0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        Realizar pago por WhatsApp
+      </a>
+
+      <div class="modal-security">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        Pago 100% seguro
+      </div>
+    </div>
+  </div>
 
 </body>
 
